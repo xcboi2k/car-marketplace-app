@@ -1,8 +1,17 @@
 import React from 'react'
 
-const FeedCard = () => {
+import { CardContainer, SellerInfo, SellerProfilePicture, SellerName, SellerLocation, ItemImage } from './styles'
+
+const FeedCard = ({ sellerProfilePic, sellerName, sellerLocation, itemImage }) => {
     return (
-        <div>FeedCard</div>
+        <CardContainer>
+            <SellerInfo>
+                <SellerProfilePicture source={sellerProfilePic} />
+                <SellerName>{sellerName}</SellerName>
+                <SellerLocation>{sellerLocation}</SellerLocation>
+            </SellerInfo>
+            <ItemImage source={itemImage} />
+        </CardContainer>
     )
 }
 
