@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { Container } from '../../../common/Styles'
 
 export const FeedContainer = styled(Container)`
     position: relative;
@@ -40,5 +41,5 @@ export const FilterButtonText = styled.Text`
 
 export const PostList = styled.FlatList`
     flex: 1;
-    padding: 16px;
+    padding: 5px;
 `;

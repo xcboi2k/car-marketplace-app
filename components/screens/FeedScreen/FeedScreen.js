@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { FeedContainer } from './styles'
+import { 
+    FeedContainer, 
+    Header, 
+    SearchBar, 
+    FilterContainer, 
+    FilterButton, 
+    FilterButtonText, 
+    PostList } from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader.js'
 import FeedCard from '../../shared/FeedCard/FeedCard';
@@ -30,6 +37,8 @@ const FeedScreen = () => {
             <ScreenHeader />
             <Header>
                 <SearchBar placeholder="Search" />
+            </Header>
+            <Header>
                 <FilterContainer>
                 {filters.map((filter) => (
                     <FilterButton key={filter} onPress={() => handleFilterPress(filter)}>
@@ -44,6 +53,7 @@ const FeedScreen = () => {
                 renderItem={renderItem}
                 // Add additional FlatList props as needed
             />
+            
         </FeedContainer>
     )
 }

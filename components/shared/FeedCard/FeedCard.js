@@ -1,15 +1,25 @@
 import React from 'react'
 
-import { CardContainer, SellerInfo, SellerProfilePicture, SellerName, SellerLocation, ItemImage } from './styles'
+import { 
+    CardContainer, 
+    SellerContainer, 
+    SellerInfo, 
+    SellerProfilePicture, 
+    SellerName, 
+    SellerLocation, 
+    ItemImage 
+} from './styles'
 
 const FeedCard = ({ sellerProfilePic, sellerName, sellerLocation, itemImage }) => {
     return (
         <CardContainer>
-            <SellerInfo>
+            <SellerContainer>
                 <SellerProfilePicture source={sellerProfilePic} />
-                <SellerName>{sellerName}</SellerName>
-                <SellerLocation>{sellerLocation}</SellerLocation>
-            </SellerInfo>
+                <SellerInfo>
+                    <SellerName>{sellerName}</SellerName>
+                    <SellerLocation>{sellerLocation}</SellerLocation>
+                </SellerInfo>
+            </SellerContainer>
             <ItemImage source={itemImage} />
         </CardContainer>
     )

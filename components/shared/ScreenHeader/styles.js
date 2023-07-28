@@ -5,14 +5,14 @@ export const HeaderContainer = styled.View`
     justify-content: space-between;
     align-items: center;
     background-color: #f0f0f0;
-    height: 60px;
+    height: 75px;
     padding: 0 16px;
 `;
 
 export const Logo = styled.Image`
   /* Add your logo styles here */
-    width: 100px;
-    height: 40px;
+    width: 65px;
+    height: 65px;
 `;
 
 export const LeftButton = styled.TouchableOpacity`

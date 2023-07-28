@@ -9,6 +9,10 @@ export const CardContainer = styled.View`
     padding: 16px;
 `;
 
+export const SellerContainer = styled.View`
+    flex-direction: row;
+`
+
 export const SellerInfo = styled.View`
     flex-direction: column;
     align-items: flex-start;

@@ -1,16 +1,18 @@
 import React from 'react'
+import Icon from '../../../common/Icon'
 
 import { HeaderContainer, LeftButton, RightButton, Logo } from './styles'
+import AppLogo from '../../../assets/images/logo.png'
 
-const ScreenHeader = ({ logoSource, onLeftPress, onRightPress }) => {
+const ScreenHeader = ({ leftIconName, onLeftPress, rightIconName, onRightPress }) => {
     return (
         <HeaderContainer>
             <LeftButton onPress={onLeftPress}>
-                <Icon name="menu" size={24} color="#000" />
+                <Icon name={leftIconName} color="#000" />
             </LeftButton>
-            <Logo source={logoSource} />
+            <Logo source={AppLogo} />
             <RightButton onPress={onRightPress}>
-                <Icon name="search" size={24} color="#000" />
+                <Icon name={rightIconName} color="#000" />
             </RightButton>
         </HeaderContainer>
     )
