@@ -4,15 +4,14 @@ export const HeaderContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: #f0f0f0;
-    height: 75px;
+    height: 70px;
     padding: 0 16px;
 `;
 
 export const Logo = styled.Image`
   /* Add your logo styles here */
-    width: 65px;
-    height: 65px;
+    width: 50px;
+    height: 50px;
 `;
 
 export const LeftButton = styled.TouchableOpacity`

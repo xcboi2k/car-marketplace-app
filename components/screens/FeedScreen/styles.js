@@ -11,17 +11,24 @@ export const FeedContainer = styled(Container)`
 export const Header = styled.View`
     flex-direction: row;
     align-items: center;
-    background-color: #f0f0f0;
     height: 60px;
     padding: 0 16px;
 `;
 
-export const SearchBar = styled.TextInput`
-    flex: 1;
-    background-color: #e0e0e0;
-    border-radius: 8px;
-    padding: 8px;
+export const SearchBarContainer = styled.View`
+    flex-direction: row;
+    align-items: center;
+    padding: 6px;
     margin-right: 16px;
+    border-bottom-width: 1px;
+    border-bottom-color: #C2C7CB;
+`;
+
+export const SearchBarInput = styled.TextInput`
+    flex: 1;
+    font-size: 16px;
+    color: #C2C7CB;
+    padding-left: 8px;
 `;
 
 export const FilterContainer = styled.View`
@@ -31,12 +38,13 @@ export const FilterContainer = styled.View`
 `;
 
 export const FilterButton = styled.TouchableOpacity`
-    margin-right: 16px;
-`;
-
-export const FilterButtonText = styled.Text`
-    font-size: 16px;
-    color: ${({ active }) => (active ? '#2196F3' : '#333')};
+    width: 72px;
+    height: 48px;
+    border-radius: 24px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    background-color: ${({ active }) => (active ? '#234791' : '#F4F6F8')};
 `;
 
 export const PostList = styled.FlatList`

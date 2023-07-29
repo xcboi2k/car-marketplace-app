@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const CardContainer = styled.View`
     width: 300px;
     border-radius: 8px;
-    background-color: #fff;
+    background-color: #F4F6F8;
     elevation: 2;
     margin: 10px;
     padding: 16px;
@@ -29,11 +29,12 @@ export const SellerProfilePicture = styled.Image`
 export const SellerName = styled.Text`
     font-size: 16px;
     font-weight: bold;
+    color: #153A56;
 `;
 
 export const SellerLocation = styled.Text`
     font-size: 14px;
-    color: #888;
+    color: #C2C7CB;
 `;
 
 export const ItemImage = styled.Image`

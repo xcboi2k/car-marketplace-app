@@ -3,4 +3,13 @@ export const ICON_NAMES = {
     BACK: "BackIcon",
     CAR: "CarIcon",
     HOME: "HomeIcon",
+    LIST: "ListIcon",
+    LOCATION: "LocationIcon",
+    MOTORCYCLE: "MotorcycleIcon",
+    SEARCH: "SearchIcon",
+    SHARE: "ShareIcon",
+    TIME: "TimeIcon",
+    TRUCK: "TruckIcon",
+    USER: "UserIcon",
+    VAN: "VanIcon",
 }
