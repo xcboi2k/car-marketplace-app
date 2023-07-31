@@ -1,13 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import CarPostDetailScreen from './components/screens/CarPostDetailScreen/CarPostDetailScreen';
 import FeedScreen from './components/screens/FeedScreen'
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <FeedScreen />
-      {/* <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" /> */}
+      <CarPostDetailScreen />
     </View>
   );
 }

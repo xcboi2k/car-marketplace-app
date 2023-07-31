@@ -16,8 +16,10 @@ export const Logo = styled.Image`
 
 export const LeftButton = styled.TouchableOpacity`
     padding: 5px;
+    margin-right: 100px
 `;
 
 export const RightButton = styled.TouchableOpacity`
     padding: 5px;
+    margin-left: 100px
 `;
