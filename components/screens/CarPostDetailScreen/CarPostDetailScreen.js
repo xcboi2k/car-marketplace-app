@@ -24,6 +24,7 @@ import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import Tabs from '../../shared/Tabs'
 import ItemPlaceholder from '../../../assets/images/item-pic-placeholder.png'
 import Sample from '../../../assets/images/sample.jpeg'
+import ButtonText from '../../shared/ButtonText/ButtonText'
 
 
 const CarPostDetailScreen = () => {
@@ -37,14 +38,14 @@ const CarPostDetailScreen = () => {
 
     return (
         <CarPostDetailContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.SEARCH} rightIconName={ICON_NAMES.LOCATION}/>
+            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}/>
             <CarImageContainer>
                 <CarImage source={Sample} />
             </CarImageContainer>
             <HolderContainer>
             <CarDateLocationContainer>
                 <CarInfoColumn>
-                    <Icon name={ICON_NAMES.SEARCH} size={15} color='#C2C7CB'/>
+                    <Icon name={ICON_NAMES.TIME} size={15} color='#C2C7CB'/>
                     <CarInfoText>July 31, 2023</CarInfoText>
                 </CarInfoColumn>
                 <CarInfoColumn>
@@ -72,6 +73,9 @@ const CarPostDetailScreen = () => {
             </YearTransmissionKmContainer>
             </HolderContainer>
             <Tabs tabs={tabs} active={tabs[0].id}/>
+            <HolderContainer>
+                <ButtonText text='Contact Seller' buttonColor='#234791' textColor='#F4F6F8'/>
+            </HolderContainer>
         </CarPostDetailContainer>
     )
 }

@@ -1,8 +1,19 @@
 import React from 'react'
 
-const ButtonText = () => {
+const ButtonText = ({text, onPress, width = "100%", textSize = 20, buttonColor, textColor}) => {
     return (
-        <div>ButtonText</div>
+        <ButtonContainer
+            onPress={onPress}
+            width={width}
+            buttonColor={buttonColor}
+        >
+            <ButtonLabel
+                textSize={textSize}
+                textColor={textColor}
+            >
+                {text}
+            </ButtonLabel>
+        </ButtonContainer>
     )
 }
 
