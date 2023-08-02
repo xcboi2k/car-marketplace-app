@@ -16,19 +16,21 @@ import {
     KMContainer,
     TitleText,
     SetTitleText,
+    ContactContainer,
+    ButtonIconContainer,
 } from './styles'
 
 import Icon from '../../../common/Icon'
 import { ICON_NAMES } from '../../../constants/constant'
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import Tabs from '../../shared/Tabs'
-import ItemPlaceholder from '../../../assets/images/item-pic-placeholder.png'
 import Sample from '../../../assets/images/sample.jpeg'
 import ButtonText from '../../shared/ButtonText/ButtonText'
+import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
 
 
 const CarPostDetailScreen = () => {
-    const sampleText = "Lorem ipsum"
+    const sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     const tabs = [
         { id: 1, title: 'Description', content: sampleText },
         { id: 2, title: 'Features', content: sampleText },
@@ -73,9 +75,12 @@ const CarPostDetailScreen = () => {
             </YearTransmissionKmContainer>
             </HolderContainer>
             <Tabs tabs={tabs} active={tabs[0].id}/>
-            <HolderContainer>
-                <ButtonText text='Contact Seller' buttonColor='#234791' textColor='#F4F6F8'/>
-            </HolderContainer>
+            <ContactContainer>
+                <ButtonIconContainer>
+                    <ButtonIcon iconName={ICON_NAMES.USER} iconSize={26} buttonColor='#FFFFFF' iconColor='#234791' borderColor='#F4F6F8'/>
+                </ButtonIconContainer>
+                <ButtonText text='Contact Seller' buttonColor='#234791' textColor='#F4F6F8' width ='70%'/>
+            </ContactContainer>
         </CarPostDetailContainer>
     )
 }

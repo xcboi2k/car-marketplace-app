@@ -1,4 +1,5 @@
 import React from 'react'
+import {ButtonContainer, ButtonLabel} from './styles'
 
 const ButtonText = ({text, onPress, width = "100%", textSize = 20, buttonColor, textColor}) => {
     return (

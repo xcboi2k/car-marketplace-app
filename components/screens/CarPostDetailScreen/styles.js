@@ -108,3 +108,13 @@ export const SetTitleText = styled.Text`
     margin-left: 2px;
     margin-right: 2px;
 `;
+
+export const ContactContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px;
+`;
+
+export const ButtonIconContainer = styled.View`
+    margin-right: 20px;
+`;

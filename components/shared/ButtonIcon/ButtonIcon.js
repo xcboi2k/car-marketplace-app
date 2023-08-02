@@ -1,8 +1,18 @@
 import React from 'react'
 
-const ButtonIcon = () => {
+import { ButtonContainer } from './styles'
+import Icon from '../../../common/Icon'
+
+const ButtonIcon = ({iconName, onPress, width = "100%", iconSize, buttonColor, borderColor, iconColor}) => {
     return (
-        <div>ButtonIcon</div>
+        <ButtonContainer
+            onPress={onPress}
+            width={width}
+            buttonColor={buttonColor}
+            borderColor={borderColor}
+        >
+            <Icon name={iconName} color={iconColor} size={iconSize}/>
+        </ButtonContainer>
     )
 }
 
