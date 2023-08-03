@@ -7,6 +7,7 @@ import ProfileViewScreen from './components/screens/ProfileViewScreen/ProfileVie
 export default function App() {
   return (
     <View style={styles.container}>
+      {/* <CarPostDetailScreen /> */}
       <ProfileViewScreen />
     </View>
   );

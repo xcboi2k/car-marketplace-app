@@ -77,9 +77,9 @@ const CarPostDetailScreen = () => {
             <Tabs tabs={tabs} active={tabs[0].id}/>
             <ContactContainer>
                 <ButtonIconContainer>
-                    <ButtonIcon iconName={ICON_NAMES.USER} iconSize={26} buttonColor='#FFFFFF' iconColor='#234791' borderColor='#F4F6F8'/>
+                    <ButtonIcon iconName={ICON_NAMES.CHAT} iconSize={26} buttonColor='#FFFFFF' iconColor='#234791' borderColor='#F4F6F8'/>
                 </ButtonIconContainer>
-                <ButtonText text='Contact Seller' buttonColor='#234791' textColor='#F4F6F8' width ='70%'/>
+                <ButtonText text='Contact the Seller' buttonColor='#234791' textColor='#F4F6F8' width ='70%' textSize='18'/>
             </ContactContainer>
         </CarPostDetailContainer>
     )

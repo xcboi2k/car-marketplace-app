@@ -1,51 +1,94 @@
 import React from 'react'
 import { FlatList } from 'react-native';
-import { ProfileViewContainer, ProfilePicture, UserName, UserBio, UserInformation, InformationItem, ListingItem } from './styles'
+import { 
+    ProfileViewContainer, 
+    HolderContainer,
+    ProfileSection,
+    ProfilePicture, 
+    UserName, 
+    UserBio, 
+    UserInformation, 
+    UserInformationColumn,
+    InformationItemContainer,
+    InformationText, 
+    ListingsSection, 
+    ListingsHeader, 
+} from './styles'
 import { ICON_NAMES } from '../../../constants/constant'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 
-import PicturePlacholder from '../../../assets/images/profile-pic-placeholder.png'
+import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
+import UserListingsCard from '../../shared/UserListingsCard/UserListingsCard';
+import Icon from '../../../common/Icon';
+
+const carListings = [
+    {
+        id: '1',
+        price: 1250000,
+        name: '2021 Toyota Camry',
+    },
+    {
+        id: '2',
+        price: 1500000,
+        name: '2022 Ford Mustang GT',
+    },
+]
 
 const ProfileViewScreen = () => {
     const user = {
         name: 'John Doe',
-        profilePicture: 'https://example.com/profile.jpg',
-        bio: 'Software Engineer | Avid Traveler',
-        age: 30,
+        bio: 'Car Enthusiast | Automotive Lover',
+        business: 'Sakura Motors',
         location: 'New York, USA',
         email: 'johndoe@example.com',
         phone: '+1 234-567-8900',
-        listings: [
-            'Item 1',
-            'Item 2',
-            'Item 3',
-            'Item 4',
-            'Item 5',
-            // Add more listings here...
-        ],
     };
     
     return (
         <ProfileViewContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}/>
-            <ProfilePicture source={PicturePlacholder} />
-            <UserName>{user.name}</UserName>
-            <UserBio>{user.bio}</UserBio>
-
-            <UserInformation>
-                <InformationItem>Age: {user.age}</InformationItem>
-                <InformationItem>Location: {user.location}</InformationItem>
-                <InformationItem>Email: {user.email}</InformationItem>
-                <InformationItem>Phone: {user.phone}</InformationItem>
-            </UserInformation>
-            
-            <UserName>Car Listings</UserName>
-            <FlatList
-                data={user.listings}
-                renderItem={({ item }) => <ListingItem>{item}</ListingItem>}
-                keyExtractor={(item, index) => index.toString()}
-            />
+            <HolderContainer>
+                <ProfileSection>
+                    <ProfilePicture source={PicturePlaceholder} />
+                    <UserName>{user.name}</UserName>
+                    <UserBio>{user.bio}</UserBio>
+                </ProfileSection>
+                
+                <UserInformation>
+                <UserInformationColumn>
+                    <InformationItemContainer>
+                        <Icon name={ICON_NAMES.SHOP} color="#153A56" size={15} />
+                        <InformationText>{user.business}</InformationText>
+                    </InformationItemContainer>
+                    <InformationItemContainer>
+                    <Icon name={ICON_NAMES.LOCATION} color="#153A56" size={13} />
+                        <InformationText>{user.location}</InformationText>
+                    </InformationItemContainer>
+                    </UserInformationColumn>
+                    <UserInformationColumn>
+                    <InformationItemContainer>
+                    <Icon name={ICON_NAMES.MAIL} color="#153A56" size={15} />
+                        <InformationText>{user.email}</InformationText>
+                    </InformationItemContainer>
+                    <InformationItemContainer>
+                    <Icon name={ICON_NAMES.PHONE} color="#153A56" size={15} />
+                        <InformationText>{user.phone}</InformationText>
+                    </InformationItemContainer>
+                    </UserInformationColumn>
+                </UserInformation>
+                
+                <ListingsSection>
+                    <ListingsHeader>Listings:</ListingsHeader>
+                    <FlatList
+                    data={carListings}
+                    renderItem={({ item }) => (
+                        <UserListingsCard price={item.price} name={item.name}/>
+                    )}
+                    keyExtractor={(item) => item.id}
+                    />
+                </ListingsSection>
+            </HolderContainer>
         </ProfileViewContainer>
     )
 }
