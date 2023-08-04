@@ -6,10 +6,12 @@ export const ProfileViewContainer = styled(Container)`
     flex: 1;
     justify-content: flex-start;
     padding-bottom: 20px;
+    width: 100%;
 `;
+
 export const HolderContainer = styled.ScrollView`
   flex-grow: 0;
-  width: 90%;
+  width: 80%;
 `;
 
 export const ProfileSection = styled.View`

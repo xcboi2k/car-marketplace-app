@@ -77,8 +77,8 @@ const ProfileViewScreen = () => {
                     </InformationItemContainer>
                     </UserInformationColumn>
                 </UserInformation>
-                
-                <ListingsSection>
+            </HolderContainer>
+            {/* <ListingsSection>
                     <ListingsHeader>Listings:</ListingsHeader>
                     <FlatList
                     data={carListings}
@@ -87,8 +87,7 @@ const ProfileViewScreen = () => {
                     )}
                     keyExtractor={(item) => item.id}
                     />
-                </ListingsSection>
-            </HolderContainer>
+                </ListingsSection> */}
         </ProfileViewContainer>
     )
 }

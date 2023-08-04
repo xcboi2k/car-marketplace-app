@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import CarPostDetailScreen from './components/screens/CarPostDetailScreen/CarPostDetailScreen';
 import FeedScreen from './components/screens/FeedScreen'
+import LoginScreen from './components/screens/LoginScreen/LoginScreen';
 import ProfileViewScreen from './components/screens/ProfileViewScreen/ProfileViewScreen';
 
 export default function App() {
@@ -9,6 +10,7 @@ export default function App() {
     <View style={styles.container}>
       {/* <CarPostDetailScreen /> */}
       <ProfileViewScreen />
+      {/* <LoginScreen /> */}
     </View>
   );
 }
