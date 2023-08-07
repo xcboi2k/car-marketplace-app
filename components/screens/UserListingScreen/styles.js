@@ -8,7 +8,10 @@ export const UserListingContainer = styled(Container)`
     padding-bottom: 20px;
 `;
 
-export const ListingsSection = styled.View``;
+export const ListingsSection = styled.View`
+    height: 100%;
+    padding-bottom: 5px;
+`;
 
 export const ListingsHeader = styled.Text`
     font-size: 24px;

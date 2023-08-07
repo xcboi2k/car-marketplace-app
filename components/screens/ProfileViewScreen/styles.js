@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Container } from '../../../common/Styles'
+import { Container } from '../../../common/Styles';
 
 export const ProfileViewContainer = styled(Container)`
     position: relative;
@@ -11,19 +11,51 @@ export const ProfileViewContainer = styled(Container)`
 
 export const HolderContainer = styled.ScrollView`
   flex-grow: 0;
-  width: 80%;
+  width: 85%;
+  margin-top: 10px;
 `;
 
 export const ProfileSection = styled.View`
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 `;
 
 export const ProfilePicture = styled.Image`
-  width: 150px;
-  height: 150px;
-  border-radius: 75px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50px;
+  margin-right: 10px;
+`;
+
+export const InformationSection = styled.View`
+  align-items: center;
+  margin-left: 28px;
+`;
+
+export const InformationValue = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4px;
+`;
+
+export const InformationLabel = styled.Text`
+  font-size: 15px;
+  color: #666;
+`;
+
+export const UserInfoContainer = styled.View`
   margin-bottom: 16px;
+`;
+
+export const UserNameWrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const EditIconWrapper = styled.View`
+  margin-left: 10px;
 `;
 
 export const UserName = styled.Text`
@@ -35,7 +67,6 @@ export const UserName = styled.Text`
 export const UserBio = styled.Text`
   font-size: 16px;
   color: #666;
-  text-align: center;
 `;
 
 export const UserInformation = styled.View`
@@ -60,11 +91,25 @@ export const InformationText = styled.Text`
   color: #666;
 `;
 
-export const ListingsSection = styled.View``;
+export const AboutContainer = styled.View`
+  margin-bottom: 50px;
+`;
 
-export const ListingsHeader = styled.Text`
+export const AboutTitle = styled.Text`
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 16px;
   color: #333;
+  margin-bottom: 8px;
+`;
+
+export const AboutText = styled.Text`
+  font-size: 16px;
+  color: #666;
+`;
+
+export const ButtonContainer = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
 `;

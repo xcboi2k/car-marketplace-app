@@ -1,5 +1,6 @@
 import React from 'react'
 import { FlatList } from 'react-native';
+import { ICON_NAMES } from '../../../constants/constant';
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import UserListingsCard from '../../shared/UserListingsCard/UserListingsCard';
 import { ListingsHeader, ListingsSection, SellerListingContainer } from './styles'

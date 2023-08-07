@@ -1,41 +1,36 @@
 import React from 'react'
-import { FlatList } from 'react-native';
 import { 
     ProfileViewContainer, 
     HolderContainer,
     ProfileSection,
     ProfilePicture, 
+    InformationSection,
+    InformationValue,
+    InformationLabel,
+    UserInfoContainer,
     UserName, 
     UserBio, 
     UserInformation, 
     UserInformationColumn,
     InformationItemContainer,
     InformationText, 
-    ListingsSection, 
-    ListingsHeader, 
+    AboutContainer, 
+    AboutTitle, 
+    AboutText,
+    ButtonContainer,
+    UserNameWrapper,
+    EditIconWrapper,
 } from './styles'
 import { ICON_NAMES } from '../../../constants/constant'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
+import ButtonText from '../../shared/ButtonText/ButtonText'
 
 import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
-import UserListingsCard from '../../shared/UserListingsCard/UserListingsCard';
 import Icon from '../../../common/Icon';
 
-const carListings = [
-    {
-        id: '1',
-        price: 1250000,
-        name: '2021 Toyota Camry',
-    },
-    {
-        id: '2',
-        price: 1500000,
-        name: '2022 Ford Mustang GT',
-    },
-]
 
-const ProfileViewScreen = () => {
+const ProfileViewScreen = ({isEdit = true}) => {
     const user = {
         name: 'John Doe',
         bio: 'Car Enthusiast | Automotive Lover',
@@ -43,17 +38,44 @@ const ProfileViewScreen = () => {
         location: 'New York, USA',
         email: 'johndoe@example.com',
         phone: '+1 234-567-8900',
+        currentListings: 10,
+        soldListings: 120,
+        rating: 4.5,
+        about: "Hi, I'm John Doe, a passionate car enthusiast with a love for all things automotive. I have been in the car dealership business for over a decade and take pride in providing top-notch service to my customers. Feel free to reach out to me for any car-related inquiries!",
     };
     
     return (
         <ProfileViewContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}/>
+            
             <HolderContainer>
                 <ProfileSection>
                     <ProfilePicture source={PicturePlaceholder} />
-                    <UserName>{user.name}</UserName>
-                    <UserBio>{user.bio}</UserBio>
+                    <InformationSection>
+                    <InformationValue>{user.currentListings}</InformationValue>
+                    <InformationLabel>For Sale</InformationLabel>
+                    </InformationSection>
+                    <InformationSection>
+                    <InformationValue>{user.soldListings}</InformationValue>
+                    <InformationLabel>Sold</InformationLabel>
+                    </InformationSection>
+                    <InformationSection>
+                    <InformationValue>{user.rating}</InformationValue>
+                    <InformationLabel>Rating</InformationLabel>
+                    </InformationSection>
                 </ProfileSection>
+                <UserInfoContainer>
+                    <UserNameWrapper>
+                        <UserName>{user.name}</UserName>
+                        { isEdit &&
+                            <EditIconWrapper>
+                                <Icon name={ICON_NAMES.EDIT} color="#153A56" size={25}/>
+                            </EditIconWrapper>
+                        }
+                    </UserNameWrapper>
+                    
+                    <UserBio>{user.bio}</UserBio>
+                </UserInfoContainer>
                 
                 <UserInformation>
                 <UserInformationColumn>
@@ -77,17 +99,20 @@ const ProfileViewScreen = () => {
                     </InformationItemContainer>
                     </UserInformationColumn>
                 </UserInformation>
+
+                <AboutContainer>
+                    <AboutTitle>About:</AboutTitle>
+                    <AboutText>{user.about}</AboutText>
+                </AboutContainer>
+
+                <ButtonContainer>
+                    <ButtonText text='View Listings' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'/>
+                </ButtonContainer>
+                <ButtonContainer>
+                    <ButtonText text='View Ratings' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'/>
+                </ButtonContainer>
             </HolderContainer>
-            {/* <ListingsSection>
-                    <ListingsHeader>Listings:</ListingsHeader>
-                    <FlatList
-                    data={carListings}
-                    renderItem={({ item }) => (
-                        <UserListingsCard price={item.price} name={item.name}/>
-                    )}
-                    keyExtractor={(item) => item.id}
-                    />
-                </ListingsSection> */}
+            
         </ProfileViewContainer>
     )
 }
