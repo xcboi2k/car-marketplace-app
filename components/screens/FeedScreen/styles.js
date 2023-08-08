@@ -47,6 +47,14 @@ export const FilterButton = styled.TouchableOpacity`
     background-color: ${({ active }) => (active ? '#234791' : '#F4F6F8')};
 `;
 
+export const PostListContainer = styled.View`
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-items: center;
+    width: 90%;
+    height: 550px;
+`;
+
 export const PostList = styled.FlatList`
     flex: 1;
     padding: 5px;

@@ -9,13 +9,22 @@ export const UserListingContainer = styled(Container)`
 `;
 
 export const ListingsSection = styled.View`
-    height: 100%;
-    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-items: center;
+    width: 90%;
+    height: 610px;
 `;
 
 export const ListingsHeader = styled.Text`
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 16px;
     color: #333;
+    align-self: flex-start;
+`;
+
+export const ListingsHeaderContainer = styled.View`
+    margin-top: 5px;
+    margin-bottom: 3px;
+    width: 90%;
 `;

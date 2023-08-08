@@ -106,10 +106,11 @@ const ProfileViewScreen = ({isEdit = true}) => {
                 </AboutContainer>
 
                 <ButtonContainer>
-                    <ButtonText text='View Listings' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'/>
+                    <ButtonText text='Listings' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'/>
+                    <ButtonText text='Reviews' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'/>
                 </ButtonContainer>
                 <ButtonContainer>
-                    <ButtonText text='View Ratings' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'/>
+                    
                 </ButtonContainer>
             </HolderContainer>
             

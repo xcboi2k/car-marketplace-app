@@ -7,7 +7,8 @@ import {
     FilterContainer, 
     FilterButton, 
     FilterButtonText, 
-    PostList } from './styles'
+    PostList, 
+    PostListContainer} from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader.js'
 import FeedCard from '../../shared/FeedCard/FeedCard';
@@ -68,12 +69,14 @@ const FeedScreen = () => {
                 ))}
                 </FilterContainer>
             </Header>
-            <PostList
-                data={posts}
-                keyExtractor={(item) => item.id}
-                renderItem={renderItem}
-                // Add additional FlatList props as needed
-            />
+            <PostListContainer>
+                <PostList
+                    data={posts}
+                    keyExtractor={(item) => item.id}
+                    renderItem={renderItem}
+                    // Add additional FlatList props as needed
+                />
+            </PostListContainer>
             
         </FeedContainer>
     )

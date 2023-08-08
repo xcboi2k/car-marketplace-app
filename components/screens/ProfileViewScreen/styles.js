@@ -108,8 +108,8 @@ export const AboutText = styled.Text`
 `;
 
 export const ButtonContainer = styled.View`
-    flex: 1;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 10px;
 `;

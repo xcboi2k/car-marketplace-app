@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { ICON_NAMES } from '../../../constants/constant';
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import UserListingsCard from '../../shared/UserListingsCard/UserListingsCard';
-import { ListingsHeader, ListingsSection, SellerListingContainer } from './styles'
+import { ListingsHeader, ListingsHeaderContainer, ListingsSection, SellerListingContainer } from './styles'
 
 const carListings = [
     {
@@ -37,8 +37,10 @@ const SellerListingScreen = () => {
     return (
         <SellerListingContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK}/>
+            <ListingsHeaderContainer>
+                <ListingsHeader>Seller Listings</ListingsHeader>
+            </ListingsHeaderContainer>
             <ListingsSection>
-                <ListingsHeader>Seller Listings: </ListingsHeader>
                 <FlatList
                     data={carListings}
                     renderItem={({ item }) => (
