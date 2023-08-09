@@ -1,27 +1,23 @@
-import styled, { css } from "styled-components/native";
+import styled from "styled-components/native";
 
 export const InputContainer = styled.View`
     elevation: 5;
     width: 100%;
-    background-color: ${'#FFFFFF'};
+    background-color: white;
     border-radius: 5px;
     position: relative;
     flex-direction: row;
     align-items: center;
-    padding: 10px;
-    padding-left: 5px;
-    padding-right: ${({ iconName }) => (iconName ? "20px" : "5px")};
+    height: 100px;
     margin-bottom: 20px;
 `;
 
 export const Input = styled.TextInput`
     padding: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 8px;
-    font-size: 16px;
+    /* font-family: ${FONTS.REGULAR}; */
+    font-size: 18px;
     flex: 1;
-    margin-right: ${({ iconName }) => (iconName ? "20px" : "0px")};
+    height: 100%;
 `;
 
 export const CustomInputContainer = styled.View`
@@ -29,7 +25,8 @@ export const CustomInputContainer = styled.View`
 `;
 
 export const CustomText = styled.Text`
+    /* font-family: ${FONTS.BOLD}; */
     font-weight: bold;
-    font-size: ${({ labelTextSize }) => labelTextSize};
+    font-size: ${({ textSize }) => textSize};
     margin-bottom: 5px;
-`;
+`

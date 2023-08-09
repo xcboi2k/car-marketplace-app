@@ -8,12 +8,12 @@ const TextInput = ({
     iconName,
     inputProps,
     width = "100%",
-    isBottomBorder = false
+    labelTextSize = '20px',
 }) => {
     return (
         <CustomInputContainer width={width}>
-            {customLabel && <CustomText>{customLabel}</CustomText>}
-            <InputContainer iconName={iconName} isBottomBorder={isBottomBorder}>
+            {customLabel && <CustomText labelTextSize={labelTextSize}>{customLabel}</CustomText>}
+            <InputContainer iconName={iconName}>
                 <Input {...inputProps} />
                 {iconName && (
                     <Icon
