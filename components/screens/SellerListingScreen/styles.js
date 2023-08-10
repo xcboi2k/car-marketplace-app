@@ -9,6 +9,7 @@ export const SellerListingContainer = styled(Container)`
 `;
 
 export const ListingsSection = styled.View`
+    flex: 1;
     margin-top: 5px;
     margin-bottom: 5px;
     align-items: center;

@@ -48,6 +48,7 @@ export const FilterButton = styled.TouchableOpacity`
 `;
 
 export const PostListContainer = styled.View`
+    flex: 1;
     margin-top: 5px;
     margin-bottom: 5px;
     align-items: center;
