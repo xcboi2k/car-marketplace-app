@@ -14,7 +14,6 @@ export const InputContainer = styled.View`
 
 export const Input = styled.TextInput`
     padding: 10px;
-    /* font-family: ${FONTS.REGULAR}; */
     font-size: 18px;
     flex: 1;
     height: 100%;
@@ -25,7 +24,6 @@ export const CustomInputContainer = styled.View`
 `;
 
 export const CustomText = styled.Text`
-    /* font-family: ${FONTS.BOLD}; */
     font-weight: bold;
     font-size: ${({ textSize }) => textSize};
     margin-bottom: 5px;

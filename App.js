@@ -1,22 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-import CarPostDetailScreen from './components/screens/CarPostDetailScreen/CarPostDetailScreen';
 import FeedScreen from './components/screens/FeedScreen'
+import CarPostDetailScreen from './components/screens/CarPostDetailScreen/CarPostDetailScreen';
+
+import SignUpScreen from './components/screens/SignUpScreen/SignUpScreen';
+import OtherInfoScreen from './components/screens/OtherInfoScreen/OtherInfoScreen';
 import LoginScreen from './components/screens/LoginScreen/LoginScreen';
+
 import ProfileViewScreen from './components/screens/ProfileViewScreen/ProfileViewScreen';
 import UserListingScreen from './components/screens/UserListingScreen/UserListingScreen';
 import SellerListingScreen from './components/screens/SellerListingScreen/SellerListingScreen';
+import ReviewsScreen from './components/screens/ReviewsScreen/ReviewsScreen';
+import ReviewCreateScreen from './components/screens/ReviewCreateScreen/ReviewCreateScreen';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <CarPostDetailScreen />
-      {/* <ProfileViewScreen /> */}
+      {/* <SignUpScreen /> */}
+      {/* <OtherInfoScreen /> */}
       {/* <LoginScreen /> */}
+
+      {/* <FeedScreen /> */}
+      {/* <CarPostDetailScreen /> */}
+
+      {/* <ProfileViewScreen /> */}
       {/* <UserListingScreen /> */}
       {/* <SellerListingScreen /> */}
-      {/* <FeedScreen /> */}
+      <ReviewsScreen />
+      {/* <ReviewCreateScreen /> */}
+      
     </View>
   );
 }

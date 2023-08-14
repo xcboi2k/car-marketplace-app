@@ -1,11 +1,18 @@
 import React from 'react'
+
+import { ButtonContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, OtherInfoContainer } from './styles'
+
+import AppLogo from '../../../assets/images/logo.png'
 import CommentInput from '../../shared/CommentInput/CommentInput'
 import TextInput from '../../shared/TextInput/TextInput'
-import { HeaderHolder, HeaderText, HolderContainer, OtherInfoContainer } from './styles'
+import ButtonText from '../../shared/ButtonText/ButtonText'
 
 const OtherInfoScreen = () => {
     return (
         <OtherInfoContainer>
+            <LogoHolder>
+                <Logo source={AppLogo}/>
+            </LogoHolder>
             <HeaderHolder>
                 <HeaderText>We want to know more about you</HeaderText>
             </HeaderHolder>
@@ -55,6 +62,9 @@ const OtherInfoScreen = () => {
                     customLabel="About:"
                     textSize = '16px'
                 />
+                <ButtonContainer>
+                    <ButtonText text='Submit' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'/>
+                </ButtonContainer>
             </HolderContainer>
         </OtherInfoContainer>
     )

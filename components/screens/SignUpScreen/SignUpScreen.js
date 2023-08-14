@@ -1,11 +1,17 @@
 import React from 'react'
+
+import { ButtonContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
+
+import AppLogo from '../../../assets/images/logo.png'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 import TextInput from '../../shared/TextInput/TextInput'
-import { ButtonContainer, HeaderHolder, HeaderText, HolderContainer, SignInText, SignUpContainer, SubText } from './styles'
 
 const SignUpScreen = () => {
     return (
         <SignUpContainer>
+            <LogoHolder>
+                <Logo source={AppLogo}/>
+            </LogoHolder>
             <HeaderHolder>
                 <HeaderText>Get Started</HeaderText>
             </HeaderHolder>
@@ -26,6 +32,15 @@ const SignUpScreen = () => {
                         // value: formik.values.wishlistName,
                     }}
                     customLabel="Email Address:"
+                    labelTextSize = '16px'
+                />
+                <TextInput 
+                    inputProps={{
+                        placeholder: "Enter Password",
+                        // onChangeText: formik.handleChange("wishlistName"),
+                        // value: formik.values.wishlistName,
+                    }}
+                    customLabel="Password:"
                     labelTextSize = '16px'
                 />
                 <ButtonContainer>

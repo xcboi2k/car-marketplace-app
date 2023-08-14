@@ -9,6 +9,20 @@ export const SignUpContainer = styled(Container)`
     width: 100%;
 `;
 
+export const LogoHolder = styled.View`
+    width: 85%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+`;
+
+export const Logo = styled.Image`
+  /* Add your logo styles here */
+    width: 80px;
+    height: 80px;
+`;
+
 export const HeaderHolder = styled.View`
     width: 85%;
 `;
@@ -29,6 +43,7 @@ export const ButtonContainer = styled.View`
     flex: 1;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
 `;
 
 export const SubText = styled.Text`
