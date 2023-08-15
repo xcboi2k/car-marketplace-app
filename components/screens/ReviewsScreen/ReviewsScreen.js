@@ -49,7 +49,7 @@ const ReviewsScreen = () => {
     
     return (
         <ReviewsContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK}/>
+            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.ADD}/>
             <RatingContainer>
                 <RatingText>Overall Rating:</RatingText>
                 <OverallRating>{overallRating }</OverallRating>
