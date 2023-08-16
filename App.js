@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+import MainApp from './components/MainApp/MainApp';
+
 import FeedScreen from './components/screens/FeedScreen'
 import CarPostDetailScreen from './components/screens/CarPostDetailScreen/CarPostDetailScreen';
 import CarPostCreateScreen from './components/screens/CarPostCreateScreen/CarPostCreateScreen';
@@ -20,24 +22,25 @@ import ReviewCreateScreen from './components/screens/ReviewCreateScreen/ReviewCr
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <SignUpScreen /> */}
-      {/* <OtherInfoScreen /> */}
-      {/* <LoginScreen /> */}
+    <MainApp />
+    // <View style={styles.container}>
+    //   {/* <SignUpScreen /> */}
+    //   {/* <OtherInfoScreen /> */}
+    //   {/* <LoginScreen /> */}
 
-      {/* <FeedScreen /> */}
-      {/* <CarPostDetailScreen /> */}
-      {/* <CarPostCreateScreen /> */}
-      {/* <CarPostEditScreen /> */}
+    //   {/* <FeedScreen /> */}
+    //   {/* <CarPostDetailScreen /> */}
+    //   {/* <CarPostCreateScreen /> */}
+    //   {/* <CarPostEditScreen /> */}
 
-      {/* <ProfileViewScreen /> */}
-      {/* <ProfileEditScreen /> */}
-      {/* <UserListingScreen /> */}
-      {/* <SellerListingScreen /> */}
-      <ReviewsScreen />
-      {/* <ReviewCreateScreen /> */}
+    //   {/* <ProfileViewScreen /> */}
+    //   {/* <ProfileEditScreen /> */}
+    //   {/* <UserListingScreen /> */}
+    //   {/* <SellerListingScreen /> */}
+    //   {/* <ReviewsScreen /> */}
+    //   {/* <ReviewCreateScreen /> */}
       
-    </View>
+    // </View>
   );
 }
 

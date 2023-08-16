@@ -17,7 +17,7 @@ const reviewsData = [
     // Add more reviews as needed
 ];
 
-const ReviewsScreen = () => {
+const ReviewsScreen = ({isCurrentUser = true, navigation}) => {
     const overallRating = 4.7;
 
     const renderReviewItem = ({ item }) => (
@@ -49,7 +49,16 @@ const ReviewsScreen = () => {
     
     return (
         <ReviewsContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.ADD}/>
+            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={isCurrentUser === false ? ICON_NAMES.ADD : null}
+            onLeftPress={() => 
+                navigation.navigate("Profile", {
+                    screen: "ProfileMain"
+                })}
+            onRightPress={() => 
+                navigation.navigate("Profile", {
+                    screen: "ReviewsCreate"
+                })}
+            />
             <RatingContainer>
                 <RatingText>Overall Rating:</RatingText>
                 <OverallRating>{overallRating }</OverallRating>

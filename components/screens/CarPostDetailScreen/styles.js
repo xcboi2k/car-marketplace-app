@@ -5,7 +5,7 @@ export const CarPostDetailContainer = styled(Container)`
     position: relative;
     flex: 1;
     justify-content: flex-start;
-    padding-bottom: 20px;
+    padding-bottom: 16px;
 `;
 
 export const HolderContainer = styled.View`
@@ -15,14 +15,16 @@ export const HolderContainer = styled.View`
 `;
 
 export const CarImageContainer = styled.View`
-    width: 100%;
-    height: 235px;
-    margin-top: 16px;
+    width: 90%;
+    height: 215px;
+    margin-top: 8px;
     overflow: hidden; /* Clip the content to the rounded border */
 `;
 
 export const CarImage = styled.Image`
-    flex: 1;
+    width: 100%;
+    height: 215px;
+    border-radius: 8px;
     object-fit: contain;
 `;
 
@@ -34,7 +36,7 @@ export const CarDateLocationContainer = styled.View`
     flex-direction: row; 
     align-self: flex-start;
     justify-content: space-between; 
-    margin-top: 16px;
+    margin-top: 8px;
 `;
 
 export const CarInfoColumn = styled.View`
@@ -112,7 +114,7 @@ export const SetTitleText = styled.Text`
 export const ContactContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
-    padding: 8px;
+    padding: 2px;
 `;
 
 export const ButtonIconContainer = styled.View`

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 import { 
     ProfileViewContainer, 
     HolderContainer,
@@ -30,7 +31,24 @@ import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.p
 import Icon from '../../../common/Icon';
 
 
-const ProfileViewScreen = ({isEdit = true}) => {
+const ProfileViewScreen = ({isCurrentUser = true}) => {
+    const navigation = useNavigation();
+
+    const goToUserListings = () => {
+        navigation.navigate("Profile", {
+            screen: "UserListing",}); // Navigate to the profile view screen
+    };
+
+    const goToSellerListings = () => {
+        navigation.navigate("Profile", {
+            screen: "SellerListing",}); // Navigate to the profile view screen
+    };
+
+    const goToReviews = () => {
+        navigation.navigate("Reviews", {
+            screen: "ReviewsMain",}); // Navigate to the car details screen
+    };
+
     const user = {
         name: 'John Doe',
         bio: 'Car Enthusiast | Automotive Lover',
@@ -46,8 +64,12 @@ const ProfileViewScreen = ({isEdit = true}) => {
     
     return (
         <ProfileViewContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}/>
-            
+            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}
+            onLeftPress={() => 
+                navigation.navigate("Home", {
+                    screen: "Feed"
+                })}
+            />
             <HolderContainer>
                 <ProfileSection>
                     <ProfilePicture source={PicturePlaceholder} />
@@ -67,7 +89,7 @@ const ProfileViewScreen = ({isEdit = true}) => {
                 <UserInfoContainer>
                     <UserNameWrapper>
                         <UserName>{user.name}</UserName>
-                        { isEdit &&
+                        { isCurrentUser &&
                             <EditIconWrapper>
                                 <Icon name={ICON_NAMES.EDIT} color="#153A56" size={25}/>
                             </EditIconWrapper>
@@ -106,8 +128,10 @@ const ProfileViewScreen = ({isEdit = true}) => {
                 </AboutContainer>
 
                 <ButtonContainer>
-                    <ButtonText text='Listings' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'/>
-                    <ButtonText text='Reviews' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'/>
+                    <ButtonText text='Listings' buttonColor='#234791' textColor='#F4F6F8' 
+                    width='45%' textSize='16' onPress={isCurrentUser === true ? goToUserListings : goToSellerListings}/>
+                    <ButtonText text='Reviews' buttonColor='#234791' textColor='#F4F6F8' 
+                    width='45%' textSize='16'onPress={isCurrentUser && goToReviews}/>
                 </ButtonContainer>
                 <ButtonContainer>
                     
