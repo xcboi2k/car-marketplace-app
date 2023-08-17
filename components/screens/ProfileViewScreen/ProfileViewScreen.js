@@ -90,7 +90,12 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                     <UserNameWrapper>
                         <UserName>{user.name}</UserName>
                         { isCurrentUser &&
-                            <EditIconWrapper>
+                            <EditIconWrapper 
+                                onPress={() => 
+                                    navigation.navigate("Profile", {
+                                        screen: "ProfileEdit"
+                                })}
+                            >
                                 <Icon name={ICON_NAMES.EDIT} color="#153A56" size={25}/>
                             </EditIconWrapper>
                         }

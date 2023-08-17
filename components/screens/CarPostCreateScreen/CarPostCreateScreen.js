@@ -10,7 +10,7 @@ import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import TextInput from '../../shared/TextInput/TextInput'
 import { ICON_NAMES } from '../../../constants/constant'
 
-const CarPostCreateScreen = () => {
+const CarPostCreateScreen = ({ navigation }) => {
     const [selectedTransmission, setSelectedTransmission] = useState("");
     const [transmissionItems, setTransmissionItems] = useState([
         {label: 'Manual', value: 'manual'},
@@ -21,7 +21,12 @@ const CarPostCreateScreen = () => {
 
     return (
         <CarPostCreateContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK}/>
+            <ScreenHeader leftIconName={ICON_NAMES.BACK}
+            onLeftPress={() => 
+                navigation.navigate("Home", {
+                    screen: "Feed"
+                })}
+            />
             <HeaderHolder>
                 <HeaderText>Create Listing</HeaderText>
             </HeaderHolder>

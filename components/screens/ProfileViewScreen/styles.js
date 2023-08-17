@@ -54,7 +54,7 @@ export const UserNameWrapper = styled.View`
   align-items: center;
 `;
 
-export const EditIconWrapper = styled.View`
+export const EditIconWrapper = styled.TouchableOpacity`
   margin-left: 10px;
 `;
 

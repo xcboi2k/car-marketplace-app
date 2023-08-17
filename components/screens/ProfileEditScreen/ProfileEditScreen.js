@@ -9,7 +9,7 @@ import CommentInput from '../../shared/CommentInput/CommentInput'
 import TextInput from '../../shared/TextInput/TextInput'
 
 
-const ProfileEditScreen = () => {
+const ProfileEditScreen = ({ navigation }) => {
     const [mode, setMode] = useState("details");
 
     const EditButtonGroup = () => (
@@ -25,7 +25,12 @@ const ProfileEditScreen = () => {
 
     return (
         <ProfileEditContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK}/>
+            <ScreenHeader leftIconName={ICON_NAMES.BACK}
+            onLeftPress={() => 
+                navigation.navigate("Profile", {
+                    screen: "ProfileMain"
+                })}
+            />
             <HeaderHolder>
                 <HeaderText>Edit Profile</HeaderText>
             </HeaderHolder>

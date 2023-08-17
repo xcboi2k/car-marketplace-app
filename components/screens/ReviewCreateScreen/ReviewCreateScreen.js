@@ -8,7 +8,7 @@ import RatingsButton from '../../shared/RatingsButton/RatingsButton';
 import CommentInput from '../../shared/CommentInput/CommentInput';
 import ButtonText from '../../shared/ButtonText/ButtonText';
 
-const ReviewCreateScreen = () => {
+const ReviewCreateScreen = ({ navigation }) => {
     const [selectedRating, setSelectedRating] = useState(0);
 
     const handleSelectRating = rating => {
@@ -17,7 +17,12 @@ const ReviewCreateScreen = () => {
 
     return (
         <ReviewsCreateContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK}/>
+            <ScreenHeader leftIconName={ICON_NAMES.BACK}
+            onLeftPress={() => 
+                navigation.navigate("Profile", {
+                    screen: "Reviews"
+                })}
+            />
             <HeaderHolder>
                 <HeaderText>Add Rating</HeaderText>
             </HeaderHolder>

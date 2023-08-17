@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FeedScreen from '../../screens/FeedScreen/FeedScreen';
 import ProfileViewScreen from '../../screens/ProfileViewScreen/ProfileViewScreen';
 import CarPostDetailScreen from '../../screens/CarPostDetailScreen/CarPostDetailScreen';
+import CarPostEditScreen from '../../screens/CarPostEditScreen/CarPostEditScreen';
 
 const HomeStack = createNativeStackNavigator();
 
@@ -26,6 +27,10 @@ const HomeNavigator = () => {
             <HomeStack.Screen
                 name="CarPostDetail"
                 component={CarPostDetailScreen}
+            />
+            <HomeStack.Screen
+                name="CarPostEdit"
+                component={CarPostEditScreen}
             />
         </HomeStack.Navigator>
     )

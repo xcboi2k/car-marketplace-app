@@ -29,7 +29,7 @@ import ButtonText from '../../shared/ButtonText/ButtonText'
 import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
 
 
-const CarPostDetailScreen = () => {
+const CarPostDetailScreen = ({ navigation }) => {
     const sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     const tabs = [
         { id: 1, title: 'Description', content: sampleText },
@@ -40,7 +40,12 @@ const CarPostDetailScreen = () => {
 
     return (
         <CarPostDetailContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}/>
+            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}
+            onLeftPress={() => 
+                navigation.navigate("Home", {
+                    screen: "Feed"
+                })}
+            />
             <CarImageContainer>
                 <CarImage source={Sample} />
             </CarImageContainer>

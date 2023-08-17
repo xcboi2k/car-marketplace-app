@@ -33,10 +33,15 @@ const carListings = [
     },
 ]
 
-const SellerListingScreen = () => {
+const SellerListingScreen = ({ navigation }) => {
     return (
         <SellerListingContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK}/>
+            <ScreenHeader leftIconName={ICON_NAMES.BACK}
+            onLeftPress={() => 
+                navigation.navigate("Profile", {
+                    screen: "SellerListing"
+                })}
+            />
             <ListingsHeaderContainer>
                 <ListingsHeader>Seller Listings</ListingsHeader>
             </ListingsHeaderContainer>
@@ -44,7 +49,12 @@ const SellerListingScreen = () => {
                 <FlatList
                     data={carListings}
                     renderItem={({ item }) => (
-                        <UserListingsCard price={item.price} name={item.name} isEdit={false}/>
+                        <UserListingsCard price={item.price} name={item.name} isEdit={false}
+                        onPress={() => 
+                            navigation.navigate("Home", {
+                                screen: "CarPostDetail"
+                            })}
+                        />
                     )}
                     keyExtractor={(item) => item.id}
                 />
