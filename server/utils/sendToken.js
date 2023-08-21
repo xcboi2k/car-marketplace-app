@@ -8,7 +8,7 @@ export const sendToken = (res, user, statusCode, message) => {
         id: user._id,
         username: user.userName,
         email: user.email,
-        password: user.pasword,
+        password: user.password,
         profile_photo: user.profile_photo,
         listings: user.listings,
     }
