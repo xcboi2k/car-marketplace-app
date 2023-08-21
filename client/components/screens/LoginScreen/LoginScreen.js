@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dimensions } from 'react-native'
+import { useFormik } from "formik";
 import { 
-    
     LoginContainer,
     PageContainer,
     BackgroundImage, 
@@ -21,7 +21,25 @@ import SampleImage from '../../../assets/images/sample-background.jpg'
 import TextInput from '../../shared/TextInput/TextInput'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
+    const initialValues = { email: "", password: "" };
+
+    const handleFormikSubmit = (values) => {
+        if (values.email === "" || values.password === "") {
+            Alert.alert("Incomplete Input", "Please fill up the email and password.");
+        } else {
+            // verifyUser({
+            //     email: values.email,
+            //     password: values.password
+            // });
+        };
+    };
+
+    const formik = useFormik({
+        initialValues: initialValues,
+        onSubmit: handleFormikSubmit,
+    });
+
     return (
         <LoginContainer>
             <PageContainer>
@@ -41,8 +59,8 @@ const LoginScreen = () => {
                             <TextInput 
                             inputProps={{
                                 placeholder: "Enter Email",
-                                // onChangeText: formik.handleChange("wishlistName"),
-                                // value: formik.values.wishlistName,
+                                onChangeText: formik.handleChange("email"),
+                                value: formik.values.email,
                             }}
                             customLabel="Email:"
                             isBottomBorder={true}
@@ -50,8 +68,8 @@ const LoginScreen = () => {
                             <TextInput 
                             inputProps={{
                                 placeholder: "Enter Password",
-                                // onChangeText: formik.handleChange("wishlistName"),
-                                // value: formik.values.wishlistName,
+                                onChangeText: formik.handleChange("password"),
+                                value: formik.values.password,
                             }}
                             customLabel="Password:"
                             isBottomBorder={true}
