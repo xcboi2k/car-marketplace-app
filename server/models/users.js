@@ -4,16 +4,16 @@ import jwt from 'jsonwebtoken';
 const userSchema = new mongoose.Schema({
     userName:{
         type: String,
-        required: true
+        // required: true
     },
     email:{
         type: String,
-        required: true,
+        // required: true,
         unique: true,
     },
     password:{
         type: String,
-        required: true,
+        // required: true,
         minLength: [6, 'Password must be 6 characters long.'],
         select: false,
     },
@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
     createdAt:{
         type: Date,
         default: Date.now
+    },
+    verified: {
+        type: Boolean,
+        default: false,
     },
     otp: Number,
     otp_expiry: Date,
@@ -41,14 +45,15 @@ const userSchema = new mongoose.Schema({
         description: "String",
         features: "String",
         vehicle_information: "String",
-        createdAt: Date,
         location: "String",
+        createdAt: Date,
     }
 })
 
-userSchema.methods.getJWTToken = function () {
-    const token = jwt.sign({_id: this.id}, process.env.JWT_SECRET, {
-
-    })}
+// userSchema.methods.getJWTToken = function () {
+//     return jwt.sign({_id: this._id}, process.env.JWT_SECRET, {
+//         expiresIn: process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
+//     });
+// };
 
 export const User = mongoose.model("User", userSchema);
