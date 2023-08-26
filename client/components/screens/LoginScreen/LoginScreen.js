@@ -53,7 +53,9 @@ const LoginScreen = ({ navigation }) => {
                         <WelcomeText>Welcome!</WelcomeText>
                         <SubText>
                             Don't have an account?
-                            <RegisterNowText>{' '}Register Now</RegisterNowText>
+                            <TouchableOpacity onPress={() => navigation.push("Register")}>
+                                <RegisterNowText>{' '}Register Now</RegisterNowText>
+                            </TouchableOpacity>
                         </SubText>
                         <FormViewContainer>
                             <TextInput 

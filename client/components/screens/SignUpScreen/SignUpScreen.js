@@ -8,9 +8,15 @@ import AppLogo from '../../../assets/images/logo.png'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 import TextInput from '../../shared/TextInput/TextInput'
 
+import { useDispatch } from 'react-redux';
+import { signupAction } from '../../../redux/actions/userActions';
+
 const SignUpScreen = () => {
+
     const initialValues = {
-        userName: "",
+        firstName: "",
+        lastName: "",
+        name: firstName + " " + lastName,
         email: "",
         password: "",
     };
@@ -24,14 +30,7 @@ const SignUpScreen = () => {
             // if (image) {
             //     imgFile = await uploadImage();
             // }
-            // addUser({
-            //     firstName: values.firstName,
-            //     lastName: values.lastName,
-            //     email: values.email,
-            //     password: values.password,
-            //     profile_img_ref: imgFile ? imgFile.imgRef : "",
-            //     profile_img: imgFile ? imgFile.imgUri : "",
-            // });
+            dispatch(signupAction(values))
             resetForm();
         }
     };
@@ -52,11 +51,20 @@ const SignUpScreen = () => {
             <HolderContainer>
                 <TextInput 
                     inputProps={{
-                        placeholder: "Enter Username",
-                        onChangeText: formik.handleChange("userName"),
-                        value: formik.values.userName,
+                        placeholder: "Enter First Name",
+                        onChangeText: formik.handleChange("firstName"),
+                        value: formik.values.firstName,
                     }}
-                    customLabel="Username:"
+                    customLabel="First Name:"
+                    labelTextSize = '16px'
+                />
+                <TextInput 
+                    inputProps={{
+                        placeholder: "Enter Last Name",
+                        onChangeText: formik.handleChange("lastName"),
+                        value: formik.values.lastName,
+                    }}
+                    customLabel="Last Name:"
                     labelTextSize = '16px'
                 />
                 <TextInput 
@@ -82,7 +90,9 @@ const SignUpScreen = () => {
                 </ButtonContainer>
                 <SubText>
                     Already have an account?
-                    <SignInText>{' '}Sign In</SignInText>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <SignInText>{' '}Sign In</SignInText>
+                    </TouchableOpacity>
                 </SubText>
             </HolderContainer>
         </SignUpContainer>

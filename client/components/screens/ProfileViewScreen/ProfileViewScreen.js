@@ -29,6 +29,7 @@ import ButtonText from '../../shared/ButtonText/ButtonText'
 
 import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
 import Icon from '../../../common/Icon';
+import { useSelector } from 'react-redux';
 
 
 const ProfileViewScreen = ({isCurrentUser = true}) => {
@@ -48,6 +49,8 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
         navigation.navigate("Reviews", {
             screen: "ReviewsMain",}); // Navigate to the car details screen
     };
+
+    const userInfo = useSelector(state => state.user);
 
     const user = {
         name: 'John Doe',
@@ -88,7 +91,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                 </ProfileSection>
                 <UserInfoContainer>
                     <UserNameWrapper>
-                        <UserName>{user.name}</UserName>
+                        <UserName>{userInfo.name}</UserName>
                         { isCurrentUser &&
                             <EditIconWrapper 
                                 onPress={() => 
@@ -118,7 +121,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                     <UserInformationColumn>
                     <InformationItemContainer>
                     <Icon name={ICON_NAMES.MAIL} color="#153A56" size={15} />
-                        <InformationText>{user.email}</InformationText>
+                        <InformationText>{userInfo.email}</InformationText>
                     </InformationItemContainer>
                     <InformationItemContainer>
                     <Icon name={ICON_NAMES.PHONE} color="#153A56" size={15} />

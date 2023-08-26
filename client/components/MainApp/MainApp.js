@@ -1,29 +1,45 @@
 import React from 'react'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Provider } from 'react-redux'
+import stores from '../../redux/stores';
 
 import TabNavigator from '../navigators/TabNavigator/TabNavigator';
-
-import CarPostDetailScreen from '../screens/CarPostDetailScreen/CarPostDetailScreen';
-import CarPostEditScreen from '../screens/CarPostEditScreen/CarPostEditScreen';
-import ReviewCreateScreen from '../screens/ReviewCreateScreen/ReviewCreateScreen';
+import LoginScreen from '../screens/LoginScreen/LoginScreen';
+import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 
 const Stack = createNativeStackNavigator();
 
 const MainApp = () => {
+    let isLoggedIn = false;
     return (
-        <NavigationContainer>
-            <Stack.Navigator
-                screenOptions={{
-                    headerShown: false,
-                }}
-            >
-                <Stack.Screen
-                    name="MenuTab"
-                    component={TabNavigator}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <Provider store={stores}>
+            <NavigationContainer>
+                <Stack.Navigator
+                    screenOptions={{
+                        headerShown: false,
+                    }}
+                >
+                    {isLoggedIn ? (
+                        <>
+                            <Stack.Screen
+                                name="MenuTab"
+                                component={TabNavigator}
+                            />
+                        </>
+                    ) :
+                        <>
+                            <Stack.Screen name="Login" component={LoginScreen} />
+                            <Stack.Screen
+                                name="Register"
+                                component={SignUpScreen}
+                            />
+                        </>
+                    }
+                    
+                </Stack.Navigator>
+            </NavigationContainer>
+        </Provider>
     )
 }
 
