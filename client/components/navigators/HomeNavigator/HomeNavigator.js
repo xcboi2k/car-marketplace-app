@@ -14,7 +14,7 @@ const HomeNavigator = () => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="Home"
+            initialRouteName="HomeMain"
         >
             <HomeStack.Screen
                 name="Feed"

@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { Provider, useSelector } from 'react-redux'
 
 import MainApp from './components/MainApp/MainApp';
 
@@ -18,11 +19,15 @@ import UserListingScreen from './components/screens/UserListingScreen/UserListin
 import SellerListingScreen from './components/screens/SellerListingScreen/SellerListingScreen';
 import ReviewsScreen from './components/screens/ReviewsScreen/ReviewsScreen';
 import ReviewCreateScreen from './components/screens/ReviewCreateScreen/ReviewCreateScreen';
+import stores from './redux/stores';
 
 
 export default function App() {
   return (
-    <MainApp />
+    <Provider store={stores}>
+      <MainApp />
+    </Provider>
+    
     // <View style={styles.container}>
     //   {/* <SignUpScreen /> */}
     //   {/* <OtherInfoScreen /> */}

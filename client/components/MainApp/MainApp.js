@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import stores from '../../redux/stores';
 
 import TabNavigator from '../navigators/TabNavigator/TabNavigator';
@@ -11,10 +11,10 @@ import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 const Stack = createNativeStackNavigator();
 
 const MainApp = () => {
-    let isLoggedIn = false;
+    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+    console.log(isLoggedIn)
     return (
-        <Provider store={stores}>
-            <NavigationContainer>
+        <NavigationContainer>
                 <Stack.Navigator
                     screenOptions={{
                         headerShown: false,
@@ -23,7 +23,7 @@ const MainApp = () => {
                     {isLoggedIn ? (
                         <>
                             <Stack.Screen
-                                name="MenuTab"
+                                name="Home"
                                 component={TabNavigator}
                             />
                         </>
@@ -39,7 +39,6 @@ const MainApp = () => {
                     
                 </Stack.Navigator>
             </NavigationContainer>
-        </Provider>
     )
 }
 

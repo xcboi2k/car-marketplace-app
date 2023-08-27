@@ -2,7 +2,7 @@ import { SIGNUP_SUCCESS } from "../actions/userActions";
 
 const initialState = {
     isLoggedIn: false,
-    username: '',
+    name: '',
     email: '',
     password: '',
 };
@@ -13,8 +13,9 @@ const userReducer = (state = initialState, action) => {
             return {
             ...state,
             isLoggedIn: true,
-            username: action.payload.username,
-            email: action.payload.password,
+            name: action.payload.name,
+            email: action.payload.email,
+            password: action.payload.password,
             };
         default:
             return state;

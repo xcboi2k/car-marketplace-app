@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Alert, TouchableOpacity } from 'react-native';
 import { useFormik } from "formik";
 import uuid from "react-native-uuid";
 
@@ -11,26 +12,30 @@ import TextInput from '../../shared/TextInput/TextInput'
 import { useDispatch } from 'react-redux';
 import { signupAction } from '../../../redux/actions/userActions';
 
-const SignUpScreen = () => {
 
+const SignUpScreen = ({ navigation }) => {
+    // const [firstName, setFirstName] = useState('');
+    // const [lastName, setLastName] = useState('');
+    const dispatch = useDispatch();
+    
     const initialValues = {
-        firstName: "",
-        lastName: "",
-        name: firstName + " " + lastName,
+        // name: firstName + " " + lastName,
+        userName: "",
         email: "",
         password: "",
     };
 
-    const handleFormikSubmit = async (values, { resetForm }) => {
-        console.log(values);
-        if (values.firstName === "" || values.lastName === "" || values.email === "" || values.password === "") {
+    const handleFormikSubmit = (values, { resetForm }) => {
+        console.log('Checking values: ', values);
+        if (values.userName === "" || values.email === "" || values.password === "") {
             Alert.alert("Incomplete Input", "Please fill up your first name, last name, email and password");
         } else {
             // let imgFile;
             // if (image) {
             //     imgFile = await uploadImage();
             // }
-            dispatch(signupAction(values))
+            dispatch(signupAction(values));
+            Alert.alert("Successfully created an account.");
             resetForm();
         }
     };
@@ -51,9 +56,18 @@ const SignUpScreen = () => {
             <HolderContainer>
                 <TextInput 
                     inputProps={{
+                        placeholder: "Enter Username",
+                        onChangeText: formik.handleChange("userName"),
+                        value: formik.values.userName,
+                    }}
+                    customLabel="Username:"
+                    labelTextSize = '16px'
+                />
+                {/* <TextInput 
+                    inputProps={{
                         placeholder: "Enter First Name",
-                        onChangeText: formik.handleChange("firstName"),
-                        value: formik.values.firstName,
+                        onChangeText: formik.handleChange(setFirstName()),
+                        value: firstName,
                     }}
                     customLabel="First Name:"
                     labelTextSize = '16px'
@@ -61,12 +75,12 @@ const SignUpScreen = () => {
                 <TextInput 
                     inputProps={{
                         placeholder: "Enter Last Name",
-                        onChangeText: formik.handleChange("lastName"),
-                        value: formik.values.lastName,
+                        onChangeText: formik.handleChange(setLastName()),
+                        value: lastName,
                     }}
                     customLabel="Last Name:"
                     labelTextSize = '16px'
-                />
+                /> */}
                 <TextInput 
                     inputProps={{
                         placeholder: "Enter Email Address",
@@ -86,7 +100,8 @@ const SignUpScreen = () => {
                     labelTextSize = '16px'
                 />
                 <ButtonContainer>
-                    <ButtonText text='Sign Up' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'/>
+                    <ButtonText text='Sign Up' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'
+                    onPress={formik.handleSubmit}/>
                 </ButtonContainer>
                 <SubText>
                     Already have an account?

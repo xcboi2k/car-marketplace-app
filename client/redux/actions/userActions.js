@@ -10,11 +10,11 @@ export const signupAction = userData => dispatch => {
   // Simulating async operation for demonstration
     setTimeout(() => {
         const newUser = {
-            name: userData.name,
+            name: userData.userName,
             email: userData.email,
             password: userData.password,
         };
-
+        console.log('Account created: ',newUser)
         dispatch(signupSuccess(newUser));
     }, 1000);
 };

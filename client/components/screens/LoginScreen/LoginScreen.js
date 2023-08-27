@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions, TouchableOpacity } from 'react-native'
 import { useFormik } from "formik";
 import { 
     LoginContainer,
