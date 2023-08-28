@@ -35,7 +35,6 @@ const SignUpScreen = ({ navigation }) => {
             //     imgFile = await uploadImage();
             // }
             dispatch(signupAction(values));
-            Alert.alert("Successfully created an account.");
             resetForm();
         }
     };

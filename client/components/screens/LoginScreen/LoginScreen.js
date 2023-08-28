@@ -1,6 +1,8 @@
 import React from 'react'
 import { Dimensions, TouchableOpacity } from 'react-native'
 import { useFormik } from "formik";
+import { useDispatch } from 'react-redux';
+
 import { 
     LoginContainer,
     PageContainer,
@@ -21,10 +23,14 @@ import SampleImage from '../../../assets/images/sample-background.jpg'
 import TextInput from '../../shared/TextInput/TextInput'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 
+import { loginAction } from '../../../redux/actions/userActions';
+
 const LoginScreen = ({ navigation }) => {
+    const dispatch = useDispatch();
+
     const initialValues = { email: "", password: "" };
 
-    const handleFormikSubmit = (values) => {
+    const handleFormikSubmit = (values, { resetForm }) => {
         if (values.email === "" || values.password === "") {
             Alert.alert("Incomplete Input", "Please fill up the email and password.");
         } else {
@@ -32,6 +38,9 @@ const LoginScreen = ({ navigation }) => {
             //     email: values.email,
             //     password: values.password
             // });
+
+            dispatch(loginAction(values));
+            resetForm();
         };
     };
 
@@ -79,7 +88,8 @@ const LoginScreen = ({ navigation }) => {
                             <RegisterNowText>{' '}Forgot Password?</RegisterNowText>
                         </FormViewContainer>
                         <ButtonContainer>
-                            <ButtonText text='Sign In' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'/>
+                            <ButtonText text='Sign In' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'
+                            onPress={formik.handleSubmit}/>
                         </ButtonContainer>
                     </FormContainer>
                 </RoundedTop>

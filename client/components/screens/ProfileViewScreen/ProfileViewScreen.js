@@ -51,6 +51,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
     };
 
     const userInfo = useSelector(state => state.user);
+    console.log(userInfo);
 
     const user = {
         name: 'John Doe',
