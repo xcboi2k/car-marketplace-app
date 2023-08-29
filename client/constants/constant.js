@@ -11,6 +11,7 @@ export const ICON_NAMES = {
     MOTORCYCLE: "MotorcycleIcon",
     PHONE: "PhoneIcon",
     SEARCH: "SearchIcon",
+    SETTINGS: "SettingsIcon",
     SHARE: "ShareIcon",
     SHOP: "ShopIcon",
     TIME: "TimeIcon",

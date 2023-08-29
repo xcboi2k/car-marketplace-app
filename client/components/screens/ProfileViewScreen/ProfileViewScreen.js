@@ -68,7 +68,9 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
     
     return (
         <ProfileViewContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}
+            <ScreenHeader 
+            leftIconName={ICON_NAMES.BACK} 
+            rightIconName={ICON_NAMES.SHARE}
             onLeftPress={() => 
                 navigation.navigate("Home", {
                     screen: "Feed"
@@ -93,7 +95,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                 <UserInfoContainer>
                     <UserNameWrapper>
                         <UserName>{userInfo.name}</UserName>
-                        { isCurrentUser &&
+                        {/* { isCurrentUser &&
                             <EditIconWrapper 
                                 onPress={() => 
                                     navigation.navigate("Profile", {
@@ -102,7 +104,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                             >
                                 <Icon name={ICON_NAMES.EDIT} color="#153A56" size={25}/>
                             </EditIconWrapper>
-                        }
+                        } */}
                     </UserNameWrapper>
                     
                     <UserBio>{user.bio}</UserBio>
