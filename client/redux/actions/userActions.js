@@ -30,6 +30,7 @@ export const signupAction = (userData) => async (dispatch) => {
                 userName: userData.userName,
                 email: userData.email,
                 password: userData.password,
+                profilePhoto: userData.profilePhoto,
             }),
         })
         console.log(response)

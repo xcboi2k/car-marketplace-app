@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Alert, TouchableOpacity } from 'react-native';
 import { useFormik } from "formik";
+import * as ImagePicker from 'expo-image-picker';
 import uuid from "react-native-uuid";
 
 import { ButtonContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
@@ -8,14 +9,16 @@ import { ButtonContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoH
 import AppLogo from '../../../assets/images/logo.png'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 import TextInput from '../../shared/TextInput/TextInput'
+import ButtonUploadImage from '../../shared/ButtonUploadImage/ButtonUploadImage';
+import DefaultProfilePic from '../../../assets/images/profile-pic-placeholder.png'
 
 import { useDispatch } from 'react-redux';
 import { signupAction } from '../../../redux/actions/userActions';
 
-
 const SignUpScreen = ({ navigation }) => {
     // const [firstName, setFirstName] = useState('');
     // const [lastName, setLastName] = useState('');
+    const [profilePhoto, setProfilePhoto] = useState(DefaultProfilePic);
     const dispatch = useDispatch();
     
     const initialValues = {
@@ -23,6 +26,21 @@ const SignUpScreen = ({ navigation }) => {
         userName: "",
         email: "",
         password: "",
+        profilePhoto: profilePhoto,
+    };
+
+    const handleImageUpload = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+    
+        if (!result.cancelled) {
+            setProfilePhoto(result.uri);
+        //   formik.setFieldValue('profilePhoto', result.uri);
+        }
     };
 
     const handleFormikSubmit = (values, { resetForm }) => {
@@ -30,10 +48,6 @@ const SignUpScreen = ({ navigation }) => {
         if (values.userName === "" || values.email === "" || values.password === "") {
             Alert.alert("Incomplete Input", "Please fill up your first name, last name, email and password");
         } else {
-            // let imgFile;
-            // if (image) {
-            //     imgFile = await uploadImage();
-            // }
             dispatch(signupAction(values));
             resetForm();
         }
@@ -53,6 +67,7 @@ const SignUpScreen = ({ navigation }) => {
                 <HeaderText>Get Started</HeaderText>
             </HeaderHolder>
             <HolderContainer>
+                <ButtonUploadImage onPress={handleImageUpload} imageUri={profilePhoto}/>
                 <TextInput 
                     inputProps={{
                         placeholder: "Enter Username",

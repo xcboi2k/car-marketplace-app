@@ -1,5 +1,12 @@
 const User = require('../models/UserModel')
 const jwt = require('jsonwebtoken')
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,});
@@ -26,10 +33,17 @@ const loginUser = async(req, res) => {
 }
 
 const signUpUser = async(req,res) => {
-    const {userName, email, password} = req.body;
     try {
-        // const {profile_photo} = req.files;
-        const user = await User.signup(userName, email, password)
+        const {userName, email, password, profilePhoto} = req.body;
+
+        const profile_photo = await cloudinary.uploader.upload(profilePhoto);
+
+        const user = await User.signup(
+            userName, 
+            email, 
+            password,
+            profile_photo,
+        )
         const token = createToken(user._id);
         res.status(200).json({user, token, message: "Account created successfully."})
     } catch (error) {
