@@ -10,14 +10,13 @@ import AppLogo from '../../../assets/images/logo.png'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 import TextInput from '../../shared/TextInput/TextInput'
 import ButtonUploadImage from '../../shared/ButtonUploadImage/ButtonUploadImage';
-import DefaultProfilePic from '../../../assets/images/profile-pic-placeholder.png'
 
 import { useDispatch } from 'react-redux';
 import { signupAction } from '../../../redux/actions/userActions';
 
 const SignUpScreen = ({ navigation }) => {
-    // const [firstName, setFirstName] = useState('');
-    // const [lastName, setLastName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [profilePhoto, setProfilePhoto] = useState('');
     const dispatch = useDispatch();
     

@@ -20,7 +20,7 @@ const userSchema = new Schema(
             required: true,
             minLength: [6, 'Password must be 6 characters long.'],
         },
-        profilePhoto:{
+        profile_photo:{
             type: String,
         },
     }

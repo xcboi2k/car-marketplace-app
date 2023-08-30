@@ -37,8 +37,13 @@ const signUpUser = async(req,res) => {
     try {
         const {userName, email, password, profilePhoto} = req.body;
         console.log('backend:', profilePhoto);
-        const profile_photo = await cloudinary.uploader.upload(profilePhoto);
-        console.log(profile_photo);
+        const cloudinaryRes = await cloudinary.uploader.upload(profilePhoto, {
+            folder: 'nipponAutoUserPhotos', // Set your desired folder
+            resource_type: 'auto',
+            public_id: userName + '/' + profilePhoto, // Set the public_id to the image name
+            overwrite: true,
+        });
+        const profile_photo = cloudinaryRes.secure_url;
         const user = await User.signup(
             userName, 
             email, 
