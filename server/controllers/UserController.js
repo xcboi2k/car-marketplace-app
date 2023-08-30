@@ -26,10 +26,10 @@ const loginUser = async(req, res) => {
 }
 
 const signUpUser = async(req,res) => {
-    const {userName, email, password} = req.body;
+    const {userName, email, password, profile_photo} = req.body;
     try {
         // const {profile_photo} = req.files;
-        const user = await User.signup(userName, email, password)
+        const user = await User.signup(userName, email, password, profile_photo)
         const token = createToken(user._id);
         res.status(200).json({user, token, message: "Account created successfully."})
     } catch (error) {
