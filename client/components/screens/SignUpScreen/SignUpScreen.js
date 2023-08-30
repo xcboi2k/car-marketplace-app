@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as ImagePicker from 'expo-image-picker';
 import uuid from "react-native-uuid";
 
-import { ButtonContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
+import { ButtonContainer, FormContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
 
 import AppLogo from '../../../assets/images/logo.png'
 import ButtonText from '../../shared/ButtonText/ButtonText'
@@ -18,7 +18,7 @@ import { signupAction } from '../../../redux/actions/userActions';
 const SignUpScreen = ({ navigation }) => {
     // const [firstName, setFirstName] = useState('');
     // const [lastName, setLastName] = useState('');
-    const [profilePhoto, setProfilePhoto] = useState(DefaultProfilePic);
+    const [profilePhoto, setProfilePhoto] = useState('');
     const dispatch = useDispatch();
     
     const initialValues = {
@@ -37,9 +37,9 @@ const SignUpScreen = ({ navigation }) => {
             quality: 1,
         });
     
-        if (!result.cancelled) {
-            setProfilePhoto(result.uri);
-        //   formik.setFieldValue('profilePhoto', result.uri);
+        if (!result.canceled) {
+            setProfilePhoto(result.assets[0].uri);
+            formik.setFieldValue('profilePhoto', result.assets[0].uri);
         }
     };
 
@@ -50,6 +50,7 @@ const SignUpScreen = ({ navigation }) => {
         } else {
             dispatch(signupAction(values));
             resetForm();
+            setProfilePhoto('')
         }
     };
 
@@ -66,8 +67,10 @@ const SignUpScreen = ({ navigation }) => {
             <HeaderHolder>
                 <HeaderText>Get Started</HeaderText>
             </HeaderHolder>
+            <FormContainer>
+            <ButtonUploadImage onPress={handleImageUpload} imageUri={profilePhoto}/>
+            <SubText>Upload Image</SubText>
             <HolderContainer>
-                <ButtonUploadImage onPress={handleImageUpload} imageUri={profilePhoto}/>
                 <TextInput 
                     inputProps={{
                         placeholder: "Enter Username",
@@ -124,6 +127,7 @@ const SignUpScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </SubText>
             </HolderContainer>
+            </FormContainer>
         </SignUpContainer>
     )
 }

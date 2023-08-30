@@ -6,6 +6,7 @@ const initialState = {
     name: '',
     email: '',
     password: '',
+    profile_photo: '',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -18,6 +19,7 @@ const userReducer = (state = initialState, action) => {
                 name: action.payload.userName,
                 email: action.payload.email,
                 password: action.payload.password,
+                profile_photo: action.payload.profile_photo,
             };
         case LOGIN_SUCCESS:
             return {
@@ -27,6 +29,7 @@ const userReducer = (state = initialState, action) => {
                 name: action.payload.userName,
                 email: action.payload.email,
                 password: action.payload.password,
+                profile_photo: action.payload.profile_photo,
                 error: null,
             };
         case LOGIN_FAILURE:

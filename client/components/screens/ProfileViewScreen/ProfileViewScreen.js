@@ -78,7 +78,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
             />
             <HolderContainer>
                 <ProfileSection>
-                    <ProfilePicture source={PicturePlaceholder} />
+                    <ProfilePicture source={!userInfo.profile_photo ? PicturePlaceholder : userInfo.profile_photo} />
                     <InformationSection>
                     <InformationValue>{user.currentListings}</InformationValue>
                     <InformationLabel>For Sale</InformationLabel>

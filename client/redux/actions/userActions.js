@@ -20,6 +20,7 @@ export const loginFailure = (error) => ({
 });
 
 export const signupAction = (userData) => async (dispatch) => {
+    console.log('frontend',userData.profilePhoto)
     try{
         const response = await fetch("http://192.168.100.24:4000/api/user/signup", {
             method: 'POST',
@@ -33,22 +34,24 @@ export const signupAction = (userData) => async (dispatch) => {
                 profilePhoto: userData.profilePhoto,
             }),
         })
-        console.log(response)
         const data = await response.json();
-        console.log(data)
-        dispatch({
-            type: SIGNUP_SUCCESS,
-            payload: data.user,
-        });
-        Alert.alert("Successfully created an account.");
+        if (data.user && data.user._id) {
+            dispatch({
+                type: SIGNUP_SUCCESS,
+                payload: data.user,
+            });
+            Alert.alert("Successfully created an account.");
+        } else {
+            // Handle the case where user or _id is not present in the response
+            console.log('Invalid response from server:', data);
+        }
     }
     catch (error){
-        console.log(error.message);
+        console.log('userActions Error:', error.message);
     }
 };
 
 export const loginAction = (userData) => async (dispatch) => {
-    console.log(userData);
     try {
       // Perform API call to authenticate user
         const response = await fetch("http://192.168.100.24:4000/api/user/login", {

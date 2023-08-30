@@ -17,7 +17,7 @@ const loginUser = async(req, res) => {
     try {
         const user = await User.login(loginEmail, loginPassword)
 
-        const { _id, userName, email, password} = user;
+        const { _id, userName, email, password, profile_photo} = user;
 
         const token = createToken(user._id);
         res.status(200).json({user: {
@@ -25,6 +25,7 @@ const loginUser = async(req, res) => {
             userName,
             email, 
             password,
+            profile_photo
         }, token, message: "Login successfully."})
     } catch (error) {
         console.log(error.message);
@@ -35,15 +36,16 @@ const loginUser = async(req, res) => {
 const signUpUser = async(req,res) => {
     try {
         const {userName, email, password, profilePhoto} = req.body;
-
+        console.log('backend:', profilePhoto);
         const profile_photo = await cloudinary.uploader.upload(profilePhoto);
-
+        console.log(profile_photo);
         const user = await User.signup(
             userName, 
             email, 
             password,
             profile_photo,
         )
+        console.log('backend:', user._id);
         const token = createToken(user._id);
         res.status(200).json({user, token, message: "Account created successfully."})
     } catch (error) {

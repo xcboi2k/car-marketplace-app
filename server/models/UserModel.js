@@ -20,14 +20,14 @@ const userSchema = new Schema(
             required: true,
             minLength: [6, 'Password must be 6 characters long.'],
         },
-        profile_photo:{
-            public_id: String,
-            url: String,
+        profilePhoto:{
+            type: String,
         },
     }
 )
 
 userSchema.statics.signup = async function(userName, email, password, profile_photo) {
+    console.log('UserModel:', profile_photo)
     try{
         // validation
         if (!email || !password) {
@@ -65,7 +65,6 @@ userSchema.statics.login = async function(loginEmail, loginPassword) {
     if (!email || !password) {
         throw Error('All fields must be filled')
     }
-    console.log(email);
     const user = await this.findOne({email})
     if (!user) {
         throw Error('Incorrect Email')
