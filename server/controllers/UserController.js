@@ -8,6 +8,15 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const uploadToCloudinary = (path, folder) => {
+    return cloudinary.uploader.upload(path, { folder })
+    .then((data) => {
+        return { url: data.url, public_id: data.public_id };
+    }).catch((error) => {
+        console.log(error);
+    })
+}
+
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,});
 }
@@ -34,21 +43,12 @@ const loginUser = async(req, res) => {
 }
 
 const signUpUser = async(req,res) => {
+    const {userName, email, password} = req.body;
     try {
-        const {userName, email, password, profilePhoto} = req.body;
-        console.log('backend:', profilePhoto);
-        const cloudinaryRes = await cloudinary.uploader.upload(profilePhoto, {
-            folder: 'nipponAutoUserPhotos', // Set your desired folder
-            resource_type: 'auto',
-            public_id: userName + '/' + profilePhoto, // Set the public_id to the image name
-            overwrite: true,
-        });
-        const profile_photo = cloudinaryRes.secure_url;
         const user = await User.signup(
             userName, 
             email, 
             password,
-            profile_photo,
         )
         console.log('backend:', user._id);
         const token = createToken(user._id);
@@ -59,5 +59,25 @@ const signUpUser = async(req,res) => {
     }
 }
 
+const uploadUserImage = async(req, res) => {
+    try{
+        const cloudinaryRes = await uploadToCloudinary(req.file.path, "nipponAuto-user-images");
+        console.log(cloudinaryRes);
+        const savedImage = await User.updateOne({_id: req.params.id},
+            {
+                $set: {
+                    profile_photo_url: cloudinaryRes.url,
+                    profile_photo_publicId: cloudinaryRes.public_id,
+                },
+            }
+        );
+        
+        res.status(200).send("user image uploaded with success!");
+    }
+    catch(error){       
+        res.status(400).send(error);
+    }
+    
+}
 
-module.exports = { signUpUser, loginUser }
+module.exports = { signUpUser, loginUser, uploadUserImage }

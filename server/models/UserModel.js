@@ -20,14 +20,16 @@ const userSchema = new Schema(
             required: true,
             minLength: [6, 'Password must be 6 characters long.'],
         },
-        profile_photo:{
+        profile_photo_url:{
+            type: String,
+        },
+        profile_photo_publicId:{
             type: String,
         },
     }
 )
 
 userSchema.statics.signup = async function(userName, email, password, profile_photo) {
-    console.log('UserModel:', profile_photo)
     try{
         // validation
         if (!email || !password) {
@@ -49,7 +51,7 @@ userSchema.statics.signup = async function(userName, email, password, profile_ph
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
 
-        const user = await this.create({ userName, email, password: hash, profile_photo})
+        const user = await this.create({ userName, email, password: hash })
 
         return user
     }
