@@ -8,5 +8,5 @@ router.post('/login', loginUser)
 
 // signup route
 router.post('/signup', signUpUser)
-router.post('/uploadPhoto/', uploadUserImage )
+// router.post('/uploadPhoto/', uploadUserImage )
 module.exports = router

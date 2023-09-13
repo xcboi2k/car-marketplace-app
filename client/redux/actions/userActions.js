@@ -46,29 +46,29 @@ export const signupAction = (userData) => async (dispatch) => {
         const data = await response.json();
 
         // checks if data is present
-        if (data.user._id) {
-            // for upload image
+        // if (data.user._id) {
+        //     // for upload image
 
-            const id = data.user._id
-            console.log('frontend:', id)
-            try{
-                const response = await fetch(`http://192.168.100.24:4000/api/user/uploadPhoto/${id}`, {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'multipart/form-data',
-                },
-                body: photoData,
-                })
+        //     const id = data.user._id
+        //     console.log('frontend:', id)
+        //     try{
+        //         const response = await fetch(`http://192.168.100.24:4000/api/user/uploadPhoto/${id}`, {
+        //         method: 'POST',
+        //         headers: {
+        //             Accept: 'application/json',
+        //             'Content-Type': 'multipart/form-data',
+        //         },
+        //         body: photoData,
+        //         })
 
-                const imgUploadResult = await response.json();  
-                console.log("Success:", imgUploadResult);
-                Alert.alert("Successfully created an account.", "Information had been saved. Profile Image uploaded.");
-            }
-            catch(error){
-                console.log("Failed:", error);
-                Alert.alert("Image upload failed.", "Profile Image not uploaded.");
-            }
+        //         const imgUploadResult = await response.json();  
+        //         console.log("Success:", imgUploadResult);
+        //         Alert.alert("Successfully created an account.", "Information had been saved. Profile Image uploaded.");
+        //     }
+        //     catch(error){
+        //         console.log("Failed:", error);
+        //         Alert.alert("Image upload failed.", "Profile Image not uploaded.");
+        //     }
             
 
             // dispatch({
@@ -77,10 +77,10 @@ export const signupAction = (userData) => async (dispatch) => {
             // });
 
             
-        } else {
-            // Handle the case where user or _id is not present in the response
-            console.log('Invalid response from server:', data);
-        }
+        // } else {
+        //     // Handle the case where user or _id is not present in the response
+        //     console.log('Invalid response from server:', data);
+        // }
     }
     catch (error){
         console.log('userActions Error:', error.message);

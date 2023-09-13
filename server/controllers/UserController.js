@@ -59,25 +59,25 @@ const signUpUser = async(req,res) => {
     }
 }
 
-const uploadUserImage = async(req, res) => {
-    try{
-        const cloudinaryRes = await uploadToCloudinary(req.file.path, "nipponAuto-user-images");
-        console.log(cloudinaryRes);
-        const savedImage = await User.updateOne({_id: req.params.id},
-            {
-                $set: {
-                    profile_photo_url: cloudinaryRes.url,
-                    profile_photo_publicId: cloudinaryRes.public_id,
-                },
-            }
-        );
+// const uploadUserImage = async(req, res) => {
+//     try{
+//         const cloudinaryRes = await uploadToCloudinary(req.file.path, "nipponAuto-user-images");
+//         console.log(cloudinaryRes);
+//         const savedImage = await User.updateOne({_id: req.params.id},
+//             {
+//                 $set: {
+//                     profile_photo_url: cloudinaryRes.url,
+//                     profile_photo_publicId: cloudinaryRes.public_id,
+//                 },
+//             }
+//         );
         
-        res.status(200).send("user image uploaded with success!");
-    }
-    catch(error){       
-        res.status(400).send(error);
-    }
+//         res.status(200).send("user image uploaded with success!");
+//     }
+//     catch(error){       
+//         res.status(400).send(error);
+//     }
     
-}
+// }
 
 module.exports = { signUpUser, loginUser, uploadUserImage }

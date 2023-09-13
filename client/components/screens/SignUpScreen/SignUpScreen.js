@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Alert, TouchableOpacity } from 'react-native';
 import { useFormik } from "formik";
 import * as ImagePicker from 'expo-image-picker';
-import uuid from "react-native-uuid";
+import { useDispatch } from 'react-redux';
 
 import { ButtonContainer, FormContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
 
@@ -11,14 +11,16 @@ import ButtonText from '../../shared/ButtonText/ButtonText'
 import TextInput from '../../shared/TextInput/TextInput'
 import ButtonUploadImage from '../../shared/ButtonUploadImage/ButtonUploadImage';
 
-import { useDispatch } from 'react-redux';
 import { signupAction } from '../../../redux/actions/userActions';
 
+import useUploadImage from '../../../hooks/useUploadImage';
+
 const SignUpScreen = ({ navigation }) => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [profilePhoto, setProfilePhoto] = useState('');
     const dispatch = useDispatch();
+    // const [firstName, setFirstName] = useState('');
+    // const [lastName, setLastName] = useState('');
+    const [profilePhoto, setProfilePhoto] = useState('');
+    const [image, chooseImage, uploadImage, isUploading, filename] = useUploadImage();
     
     const initialValues = {
         // name: firstName + " " + lastName,
@@ -28,22 +30,17 @@ const SignUpScreen = ({ navigation }) => {
         profilePhoto: profilePhoto,
     };
 
-    const handleImageUpload = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1,
-        });
-    
-        if (!result.canceled) {
-            setProfilePhoto(result.assets[0].uri);
-            formik.setFieldValue('profilePhoto', result.assets[0].uri);
-        }
-    };
-
     const handleFormikSubmit = (values, { resetForm }) => {
         console.log('Checking values: ', values);
+        let imgFile;
+
+        if (image) {
+            imgFile = await uploadImage();
+            if(isUploading === false){
+                setProfilePhoto(imgFile ? imgFile.imgUri : "")
+            }
+        }
+
         if (values.userName === "" || values.email === "" || values.password === "") {
             Alert.alert("Incomplete Input", "Please fill up your first name, last name, email and password");
         } else {
@@ -67,7 +64,7 @@ const SignUpScreen = ({ navigation }) => {
                 <HeaderText>Get Started</HeaderText>
             </HeaderHolder>
             <FormContainer>
-            <ButtonUploadImage onPress={handleImageUpload} imageUri={profilePhoto}/>
+            <ButtonUploadImage onPress={chooseImage} imageUri={image}/>
             <SubText>Upload Image</SubText>
             <HolderContainer>
                 <TextInput 
