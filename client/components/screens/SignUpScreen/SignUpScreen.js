@@ -19,7 +19,7 @@ const SignUpScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     // const [firstName, setFirstName] = useState('');
     // const [lastName, setLastName] = useState('');
-    const [profilePhoto, setProfilePhoto] = useState('');
+    // const [profilePhoto, setProfilePhoto] = useState('');
     const [image, chooseImage, uploadImage, isUploading, filename] = useUploadImage();
     
     const initialValues = {
@@ -27,7 +27,6 @@ const SignUpScreen = ({ navigation }) => {
         userName: "",
         email: "",
         password: "",
-        profilePhoto: profilePhoto,
     };
 
     const handleFormikSubmit = (values, { resetForm }) => {
@@ -36,17 +35,20 @@ const SignUpScreen = ({ navigation }) => {
 
         if (image) {
             imgFile = await uploadImage();
-            if(isUploading === false){
-                setProfilePhoto(imgFile ? imgFile.imgUri : "")
-            }
         }
 
         if (values.userName === "" || values.email === "" || values.password === "") {
             Alert.alert("Incomplete Input", "Please fill up your first name, last name, email and password");
         } else {
-            dispatch(signupAction(values));
+            console.log('Checking image: ', imgFile);
+            // dispatch(signupAction({
+            //     userName: values.userName,
+            //     email: values.email,
+            //     password: values.password,
+            //     profilePhoto: imgFile ? imgFile.imgUri : ""
+            // }));
             resetForm();
-            setProfilePhoto('')
+            // setProfilePhoto('')
         }
     };
 

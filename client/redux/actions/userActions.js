@@ -23,12 +23,12 @@ export const signupAction = (userData) => async (dispatch) => {
     console.log('frontend',userData.profilePhoto)
 
     //initialize data for image to upload
-    const photoData = new FormData();
-    photoData.append('profileImage', {
-        name: userData.userName + '/' + userData.profilePhoto,
-        uri: userData.profilePhoto,
-        type: 'image.jpg'
-    })
+    // const photoData = new FormData();
+    // photoData.append('profileImage', {
+    //     name: userData.userName + '/' + userData.profilePhoto,
+    //     uri: userData.profilePhoto,
+    //     type: 'image.jpg'
+    // })
 
     try{
         // for signup
