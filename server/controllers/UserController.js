@@ -19,7 +19,8 @@ const loginUser = async(req, res) => {
             userName,
             email, 
             password,
-            profile_photo
+            profile_photo, 
+            profile_photo_ref,
         }, token, message: "Login successfully."})
     } catch (error) {
         console.log(error.message);
@@ -28,12 +29,14 @@ const loginUser = async(req, res) => {
 }
 
 const signUpUser = async(req,res) => {
-    const {userName, email, password} = req.body;
+    const {userName, email, password, profile_photo, profile_photo_ref} = req.body;
     try {
         const user = await User.signup(
             userName, 
             email, 
             password,
+            profile_photo, 
+            profile_photo_ref,
         )
         console.log('backend:', user._id);
         const token = createToken(user._id);

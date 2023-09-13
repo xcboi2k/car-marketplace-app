@@ -84,18 +84,20 @@ export const loginAction = (userData) => async (dispatch) => {
         }
 
         const data = await response.json();
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: {
-                _id: data.user._id,
-                userName: data.user.userName,
-                email: data.user.email,
-                password: data.user.password,
-                profilePhoto: data.user.profile_photo,
-                profilePhotoRef: data.user.profile_photo_ref,
-            },
-        });
-        Alert.alert("Login Successful.");
+        if (data.user._id) {
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: {
+                    _id: data.user._id,
+                    userName: data.user.userName,
+                    email: data.user.email,
+                    password: data.user.password,
+                    profilePhoto: data.user.profile_photo,
+                    profilePhotoRef: data.user.profile_photo_ref,
+                },
+            });
+            Alert.alert("Login Successful.");
+        }
     } catch (error) {
         dispatch({
             type: LOGIN_FAILURE,

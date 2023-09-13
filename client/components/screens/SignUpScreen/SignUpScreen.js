@@ -47,7 +47,8 @@ const SignUpScreen = ({ navigation }) => {
             //     userName: values.userName,
             //     email: values.email,
             //     password: values.password,
-            //     profilePhoto: imgFile ? imgFile.imgUri : ""
+            //     profilePhoto: imgFile ? imgFile.imgUri : "",
+            //     profilePhotoRef: imgFile ? imgFile.imgRef : "",
             // }));
             resetForm();
             // setProfilePhoto('')
