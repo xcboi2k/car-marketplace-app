@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Alert, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { useFormik } from "formik";
 import * as ImagePicker from 'expo-image-picker';
-import { useDispatch } from 'react-redux';
+import uuid from 'react-native-uuid';
 
 import { ButtonContainer, FormContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
 
@@ -16,11 +17,12 @@ import { signupAction } from '../../../redux/actions/userActions';
 import useUploadImage from '../../../hooks/useUploadImage';
 
 const SignUpScreen = ({ navigation }) => {
+    let photoId = uuid.v4();
     const dispatch = useDispatch();
     // const [firstName, setFirstName] = useState('');
     // const [lastName, setLastName] = useState('');
     // const [profilePhoto, setProfilePhoto] = useState('');
-    const [image, chooseImage, uploadImage, isUploading, filename] = useUploadImage();
+    const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "users/");
     
     const initialValues = {
         // name: firstName + " " + lastName,
@@ -29,7 +31,7 @@ const SignUpScreen = ({ navigation }) => {
         password: "",
     };
 
-    const handleFormikSubmit = (values, { resetForm }) => {
+    const handleFormikSubmit = async(values, { resetForm }) => {
         console.log('Checking values: ', values);
         let imgFile;
 

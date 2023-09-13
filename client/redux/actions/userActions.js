@@ -41,36 +41,14 @@ export const signupAction = (userData) => async (dispatch) => {
                 userName: userData.userName,
                 email: userData.email,
                 password: userData.password,
+                profile_photo: userData.profilePhoto,
+                profile_photo_ref: userData.profilePhotoRef,
             }),
         })
         const data = await response.json();
 
         // checks if data is present
         // if (data.user._id) {
-        //     // for upload image
-
-        //     const id = data.user._id
-        //     console.log('frontend:', id)
-        //     try{
-        //         const response = await fetch(`http://192.168.100.24:4000/api/user/uploadPhoto/${id}`, {
-        //         method: 'POST',
-        //         headers: {
-        //             Accept: 'application/json',
-        //             'Content-Type': 'multipart/form-data',
-        //         },
-        //         body: photoData,
-        //         })
-
-        //         const imgUploadResult = await response.json();  
-        //         console.log("Success:", imgUploadResult);
-        //         Alert.alert("Successfully created an account.", "Information had been saved. Profile Image uploaded.");
-        //     }
-        //     catch(error){
-        //         console.log("Failed:", error);
-        //         Alert.alert("Image upload failed.", "Profile Image not uploaded.");
-        //     }
-            
-
             // dispatch({
             //     type: SIGNUP_SUCCESS,
             //     payload: data.user,
@@ -113,6 +91,8 @@ export const loginAction = (userData) => async (dispatch) => {
                 userName: data.user.userName,
                 email: data.user.email,
                 password: data.user.password,
+                profilePhoto: data.user.profile_photo,
+                profilePhotoRef: data.user.profile_photo_ref,
             },
         });
         Alert.alert("Login Successful.");

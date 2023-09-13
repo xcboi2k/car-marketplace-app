@@ -2,18 +2,14 @@ import React from 'react'
 import { Alert } from 'react-native';
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import { Cloudinary } from "@cloudinary/url-gen";
 
-export default function useUploadImage() {
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../firebase'
+
+export default function useUploadImage(id, filepath, metadata = {}) {
     const [image, setImage] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
     const [filename, setFilename] = useState("");
-
-    const cld = new Cloudinary({
-        cloud: {
-            cloudName: 'demo'
-        }
-    });
     
     const chooseImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -52,18 +48,20 @@ export default function useUploadImage() {
         const response = await fetch(image.uri);
         const fileBlob = await response.blob();
 
-        // let fileExtension = image.uri.substring(image.uri.lastIndexOf('.') + 1);
+        const fileId = id;
+
+        const storageRef = ref(storage, filepath + fileId);
+
+        let fileExtension = image.uri.substring(image.uri.lastIndexOf('.') + 1);
 
         try {
-            // const snapshot = await uploadBytes(storageRef, fileBlob, { ...metadata, fileExtension });
-            // const imgUrl = await getDownloadURL(snapshot.ref);
-
-            const myImage = await cld.image(response);
+            const snapshot = await uploadBytes(storageRef, fileBlob, { ...metadata, fileExtension });
+            const imgUrl = await getDownloadURL(snapshot.ref);
 
             resetState();
             Alert.alert("Upload Completed", "The image upload was successful.");
 
-            // return { imgUri: imgUrl, imgRef: `${filepath}${fileId}`, mediaType: fileExtension };
+            return { imgUri: imgUrl, imgRef: `${filepath}${fileId}`, mediaType: fileExtension };
         } catch (err) {
             console.log(err);
             
@@ -76,5 +74,5 @@ export default function useUploadImage() {
         
     };
 
-    return [image, chooseImage, uploadImage, isUploading, filename];
+    return [image, chooseImage, uploadImage, filename];
 }
