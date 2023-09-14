@@ -12,15 +12,15 @@ export default function useUploadImage(id, filepath, metadata = {}) {
     const [filename, setFilename] = useState("");
     
     const chooseImage = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
+        let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [1, 1],
             quality: 1,
         });
 
-        const source = { uri: result.assets[0].uri };
-        // console.log(result);
+        let source = { uri: result.assets[0].uri };
+
         if (!result.canceled) {
             const filename = source.uri.substring(source.uri.lastIndexOf('/') + 1);
             setImage(source);
@@ -42,11 +42,25 @@ export default function useUploadImage(id, filepath, metadata = {}) {
         setFilename("");
     };
 
+    const uriToBlob = (uri) => {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest()
+            xhr.onload = function () {
+                // return the blob
+                resolve(xhr.response)
+            }
+            xhr.onerror = function () {
+                reject(new Error('uriToBlob failed'))
+            }
+            xhr.responseType = 'blob'
+            xhr.open('GET', uri, true)
+        
+            xhr.send(null)})}
+
     const uploadImage = async () => {
         setIsUploading(true);
-        
-        const response = await fetch(image.uri);
-        const fileBlob = await response.blob();
+        // const response = await fetch(image.uri.replace("file:///","file:/"));
+        const fileBlob = await uriToBlob(image.uri);
 
         const fileId = id;
 

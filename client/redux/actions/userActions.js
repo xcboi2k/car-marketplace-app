@@ -20,15 +20,7 @@ export const loginFailure = (error) => ({
 });
 
 export const signupAction = (userData) => async (dispatch) => {
-    console.log('frontend',userData.profilePhoto)
-
-    //initialize data for image to upload
-    // const photoData = new FormData();
-    // photoData.append('profileImage', {
-    //     name: userData.userName + '/' + userData.profilePhoto,
-    //     uri: userData.profilePhoto,
-    //     type: 'image.jpg'
-    // })
+    console.log('frontend', userData)
 
     try{
         // for signup
@@ -38,6 +30,8 @@ export const signupAction = (userData) => async (dispatch) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                firstName: userData.firstName,
+                lastName: userData.lastName,
                 userName: userData.userName,
                 email: userData.email,
                 password: userData.password,
@@ -48,17 +42,17 @@ export const signupAction = (userData) => async (dispatch) => {
         const data = await response.json();
 
         // checks if data is present
-        // if (data.user._id) {
-            // dispatch({
-            //     type: SIGNUP_SUCCESS,
-            //     payload: data.user,
-            // });
+        if (data.user._id) {
+            dispatch({
+                type: SIGNUP_SUCCESS,
+                payload: data.user,
+            });
 
             
-        // } else {
-        //     // Handle the case where user or _id is not present in the response
-        //     console.log('Invalid response from server:', data);
-        // }
+        } else {
+            // Handle the case where user or _id is not present in the response
+            console.log('Invalid response from server:', data);
+        }
     }
     catch (error){
         console.log('userActions Error:', error.message);
@@ -89,6 +83,8 @@ export const loginAction = (userData) => async (dispatch) => {
                 type: LOGIN_SUCCESS,
                 payload: {
                     _id: data.user._id,
+                    firstName: data.user.firstName,
+                    lastName: data.user.lastName,
                     userName: data.user.userName,
                     email: data.user.email,
                     password: data.user.password,

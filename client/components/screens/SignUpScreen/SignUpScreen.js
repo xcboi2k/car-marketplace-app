@@ -19,13 +19,11 @@ import useUploadImage from '../../../hooks/useUploadImage';
 const SignUpScreen = ({ navigation }) => {
     let photoId = uuid.v4();
     const dispatch = useDispatch();
-    // const [firstName, setFirstName] = useState('');
-    // const [lastName, setLastName] = useState('');
-    // const [profilePhoto, setProfilePhoto] = useState('');
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "users/");
     
     const initialValues = {
-        // name: firstName + " " + lastName,
+        firstName: "",
+        lastName: "",
         userName: "",
         email: "",
         password: "",
@@ -34,24 +32,27 @@ const SignUpScreen = ({ navigation }) => {
     const handleFormikSubmit = async(values, { resetForm }) => {
         console.log('Checking values: ', values);
         let imgFile;
-
+        console.log(image);
         if (image) {
             imgFile = await uploadImage();
+            console.log('Checking image: ', imgFile);
         }
 
         if (values.userName === "" || values.email === "" || values.password === "") {
             Alert.alert("Incomplete Input", "Please fill up your first name, last name, email and password");
         } else {
-            console.log('Checking image: ', imgFile);
-            // dispatch(signupAction({
-            //     userName: values.userName,
-            //     email: values.email,
-            //     password: values.password,
-            //     profilePhoto: imgFile ? imgFile.imgUri : "",
-            //     profilePhotoRef: imgFile ? imgFile.imgRef : "",
-            // }));
+            const enteredValues = {
+                firstName: values.firstName, 
+                lastName: values.lastName,
+                userName: values.userName,
+                email: values.email,
+                password: values.password,
+                profilePhoto: imgFile ? imgFile.imgUri : "",
+                profilePhotoRef: imgFile ? imgFile.imgRef : "",
+            };
+            console.log(enteredValues);
+            dispatch(signupAction(enteredValues));
             resetForm();
-            // setProfilePhoto('')
         }
     };
 
@@ -74,18 +75,9 @@ const SignUpScreen = ({ navigation }) => {
             <HolderContainer>
                 <TextInput 
                     inputProps={{
-                        placeholder: "Enter Username",
-                        onChangeText: formik.handleChange("userName"),
-                        value: formik.values.userName,
-                    }}
-                    customLabel="Username:"
-                    labelTextSize = '16px'
-                />
-                {/* <TextInput 
-                    inputProps={{
                         placeholder: "Enter First Name",
-                        onChangeText: formik.handleChange(setFirstName()),
-                        value: firstName,
+                        onChangeText: formik.handleChange("firstName"),
+                        value: formik.values.firstName,
                     }}
                     customLabel="First Name:"
                     labelTextSize = '16px'
@@ -93,12 +85,21 @@ const SignUpScreen = ({ navigation }) => {
                 <TextInput 
                     inputProps={{
                         placeholder: "Enter Last Name",
-                        onChangeText: formik.handleChange(setLastName()),
-                        value: lastName,
+                        onChangeText: formik.handleChange("lastName"),
+                        value: formik.values.lastName,
                     }}
                     customLabel="Last Name:"
                     labelTextSize = '16px'
-                /> */}
+                />
+                <TextInput 
+                    inputProps={{
+                        placeholder: "Enter Username",
+                        onChangeText: formik.handleChange("userName"),
+                        value: formik.values.userName,
+                    }}
+                    customLabel="Username:"
+                    labelTextSize = '16px'
+                />
                 <TextInput 
                     inputProps={{
                         placeholder: "Enter Email Address",

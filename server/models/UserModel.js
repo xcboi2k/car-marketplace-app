@@ -6,6 +6,14 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema(
     {
+        firstName:{
+            type: String,
+            required: true
+        },
+        lastName:{
+            type: String,
+            required: true
+        },
         userName:{
             type: String,
             required: true
@@ -29,7 +37,7 @@ const userSchema = new Schema(
     }
 )
 
-userSchema.statics.signup = async function(userName, email, password, profile_photo, profile_photo_ref) {
+userSchema.statics.signup = async function(firstName, lastName, userName, email, password, profile_photo, profile_photo_ref) {
     try{
         // validation
         if (!email || !password) {
@@ -51,7 +59,7 @@ userSchema.statics.signup = async function(userName, email, password, profile_ph
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
 
-        const user = await this.create({ userName, email, password: hash, profile_photo, profile_photo_ref})
+        const user = await this.create({ firstName, lastName, userName, email, password: hash, profile_photo, profile_photo_ref})
 
         return user
     }
