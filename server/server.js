@@ -1,13 +1,33 @@
-import { app } from "./app.js";
-import { config } from 'dotenv';
-import { connectDB } from './config/database.js'
+require('dotenv').config()
 
-config({
-    path: "./config/config.env"
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const UserRouter = require('./routers/UserRouter')
+
+// express app
+const app = express()
+app.use(cors())
+
+// middleware
+app.use(express.json())
+
+app.use((req, res, next) => {
+    console.log(req.path, req.method)
+    next()
 })
 
-connectDB();
+// routes
+app.use('/api/user', UserRouter)
 
-app.listen(process.env.PORT, () => {
-    console.log('Server is running on port ' + process.env.PORT)
+// connect to db
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+    // listen for requests
+    app.listen(process.env.PORT, () => {
+        console.log('connected to db & listening on port', process.env.PORT)
+    })
 })
+    .catch((error) => {
+    console.log(error)
+    })

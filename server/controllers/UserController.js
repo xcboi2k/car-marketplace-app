@@ -1,56 +1,54 @@
-import jwt from 'jsonwebtoken';
-import { sendMail } from "../utils/sendMail.js";
-import { User } from "../models/users.js";
+const User = require('../models/UserModel')
+const jwt = require('jsonwebtoken')
+const cloudinary = require('cloudinary').v2;
 
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,});
 }
 
-export const signup = async(req,res) => {
+const loginUser = async(req, res) => {
+    const {loginEmail, loginPassword} = req.body;
     try {
-        const {userName, email, password} = req.body;
-        // const {profile_photo} = req.files;
+        const user = await User.login(loginEmail, loginPassword)
 
-        let user = await User.findOne({email});
-
-        if(user){
-            return res.status(200).json({success: false, message: "User already exists."});
-        }
-
-        const otp = Math.floor(Math.random() * 1000000);
-
-        user = User.create(
-            {
-                userName, 
-                email, 
-                password, 
-                profile_photo: {
-                    public_id: "",
-                    url: "",
-                }, 
-                otp, 
-                otp_expiry: new Date(Date.now() + process.env.OTP_EXPIRE * 60 * 1000)
-            });
-        console.log(email);
-        await sendMail(email, "Verify your account.", `Your OTP is ${otp}`);
+        const { _id, userName, email, password, profile_photo} = user;
 
         const token = createToken(user._id);
-        console.log(token);
-        const options = {
-            httpOnly: true,
-            expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 60 * 1000)
-        }
-        const userData = {
-            _id: user._id,
-            username: user.userName,
-            email: user.email,
-            password: user.password,
-            profile_photo: user.profile_photo,
-            listings: user.listings,
-        }
-        res.status(201).cookie("token", token, options).json({success: true, message: "OTP sent to your email, please verify your account.", user: userData})
+        res.status(200).json({user: {
+            _id,
+            firstName,
+            lastName,
+            userName,
+            email, 
+            password,
+            profile_photo, 
+            profile_photo_ref,
+        }, token, message: "Login successfully."})
     } catch (error) {
         console.log(error.message);
         res.status(500).json({success: false, message: error.message});
     }
 }
+
+const signUpUser = async(req,res) => {
+    const {userName, email, password, profile_photo, profile_photo_ref} = req.body;
+    try {
+        const user = await User.signup(
+            firstName,
+            lastName,
+            userName, 
+            email, 
+            password,
+            profile_photo, 
+            profile_photo_ref,
+        )
+        console.log('backend:', user._id);
+        const token = createToken(user._id);
+        res.status(200).json({user, token, message: "Account created successfully."})
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({success: false, message: error.message});
+    }
+}
+
+module.exports = { signUpUser, loginUser }

@@ -29,6 +29,7 @@ import ButtonText from '../../shared/ButtonText/ButtonText'
 
 import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
 import Icon from '../../../common/Icon';
+import { useSelector } from 'react-redux';
 
 
 const ProfileViewScreen = ({isCurrentUser = true}) => {
@@ -49,6 +50,9 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
             screen: "ReviewsMain",}); // Navigate to the car details screen
     };
 
+    const userInfo = useSelector(state => state.user);
+    console.log(userInfo);
+
     const user = {
         name: 'John Doe',
         bio: 'Car Enthusiast | Automotive Lover',
@@ -64,7 +68,9 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
     
     return (
         <ProfileViewContainer>
-            <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}
+            <ScreenHeader 
+            leftIconName={ICON_NAMES.BACK} 
+            rightIconName={ICON_NAMES.SHARE}
             onLeftPress={() => 
                 navigation.navigate("Home", {
                     screen: "Feed"
@@ -72,7 +78,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
             />
             <HolderContainer>
                 <ProfileSection>
-                    <ProfilePicture source={PicturePlaceholder} />
+                    <ProfilePicture source={userInfo.profile_photo ? { uri: userInfo.profile_photo } : PicturePlaceholder} />
                     <InformationSection>
                     <InformationValue>{user.currentListings}</InformationValue>
                     <InformationLabel>For Sale</InformationLabel>
@@ -88,8 +94,8 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                 </ProfileSection>
                 <UserInfoContainer>
                     <UserNameWrapper>
-                        <UserName>{user.name}</UserName>
-                        { isCurrentUser &&
+                        <UserName>{userInfo.name}</UserName>
+                        {/* { isCurrentUser &&
                             <EditIconWrapper 
                                 onPress={() => 
                                     navigation.navigate("Profile", {
@@ -98,7 +104,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                             >
                                 <Icon name={ICON_NAMES.EDIT} color="#153A56" size={25}/>
                             </EditIconWrapper>
-                        }
+                        } */}
                     </UserNameWrapper>
                     
                     <UserBio>{user.bio}</UserBio>
@@ -118,7 +124,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                     <UserInformationColumn>
                     <InformationItemContainer>
                     <Icon name={ICON_NAMES.MAIL} color="#153A56" size={15} />
-                        <InformationText>{user.email}</InformationText>
+                        <InformationText>{userInfo.email}</InformationText>
                     </InformationItemContainer>
                     <InformationItemContainer>
                     <Icon name={ICON_NAMES.PHONE} color="#153A56" size={15} />

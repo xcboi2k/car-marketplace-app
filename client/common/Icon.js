@@ -13,6 +13,7 @@ import MailIcon from '../assets/icons/MailIcon'
 import MotorcycleIcon from '../assets/icons/MotorcycleIcon'
 import PhoneIcon from '../assets/icons/PhoneIcon'
 import SearchIcon from '../assets/icons/SearchIcon'
+import SettingsIcon from '../assets/icons/SettingsIcon'
 import ShareIcon from '../assets/icons/ShareIcon'
 import ShopIcon from '../assets/icons/ShopIcon'
 import TimeIcon from '../assets/icons/TimeIcon'
@@ -33,6 +34,7 @@ const Icon = ({ name, size = 40, color }) => {
     if (name === ICON_NAMES.MOTORCYCLE) return <MotorcycleIcon color={color} size={size} />;
     if (name === ICON_NAMES.PHONE) return <PhoneIcon color={color} size={size} />;
     if (name === ICON_NAMES.SEARCH) return <SearchIcon color={color} size={size} />;
+    if (name === ICON_NAMES.SETTINGS) return <SettingsIcon color={color} size={size} />;
     if (name === ICON_NAMES.SHARE) return <ShareIcon color={color} size={size} />;
     if (name === ICON_NAMES.SHOP) return <ShopIcon color={color} size={size} />;
     if (name === ICON_NAMES.TIME) return <TimeIcon color={color} size={size} />;

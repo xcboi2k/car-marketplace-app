@@ -33,6 +33,12 @@ export const HeaderText = styled.Text`
     margin-bottom: 8px;
 `;
 
+export const FormContainer = styled.View`
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`;
+
 export const HolderContainer = styled.ScrollView`
     flex-grow: 0;
     width: 85%;
@@ -52,6 +58,7 @@ export const SubText = styled.Text`
 `;
 
 export const SignInText = styled.Text`
+    margin-top: 2px;
     color: red;
     font-size: 13px;
     font-style: italic;

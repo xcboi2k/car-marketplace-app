@@ -1,37 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Alert, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { useFormik } from "formik";
-import uuid from "react-native-uuid";
+import * as ImagePicker from 'expo-image-picker';
+import uuid from 'react-native-uuid';
 
-import { ButtonContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
+import { ButtonContainer, FormContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
 
 import AppLogo from '../../../assets/images/logo.png'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 import TextInput from '../../shared/TextInput/TextInput'
+import ButtonUploadImage from '../../shared/ButtonUploadImage/ButtonUploadImage';
 
-const SignUpScreen = () => {
+import { signupAction } from '../../../redux/actions/userActions';
+
+import useUploadImage from '../../../hooks/useUploadImage';
+
+const SignUpScreen = ({ navigation }) => {
+    let photoId = uuid.v4();
+    const dispatch = useDispatch();
+    const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "users/");
+    
     const initialValues = {
+        firstName: "",
+        lastName: "",
         userName: "",
         email: "",
         password: "",
     };
 
-    const handleFormikSubmit = async (values, { resetForm }) => {
-        console.log(values);
-        if (values.firstName === "" || values.lastName === "" || values.email === "" || values.password === "") {
+    const handleFormikSubmit = async(values, { resetForm }) => {
+        console.log('Checking values: ', values);
+        let imgFile;
+        console.log(image);
+        if (image) {
+            imgFile = await uploadImage();
+            console.log('Checking image: ', imgFile);
+        }
+
+        if (values.userName === "" || values.email === "" || values.password === "") {
             Alert.alert("Incomplete Input", "Please fill up your first name, last name, email and password");
         } else {
-            // let imgFile;
-            // if (image) {
-            //     imgFile = await uploadImage();
-            // }
-            // addUser({
-            //     firstName: values.firstName,
-            //     lastName: values.lastName,
-            //     email: values.email,
-            //     password: values.password,
-            //     profile_img_ref: imgFile ? imgFile.imgRef : "",
-            //     profile_img: imgFile ? imgFile.imgUri : "",
-            // });
+            const enteredValues = {
+                firstName: values.firstName, 
+                lastName: values.lastName,
+                userName: values.userName,
+                email: values.email,
+                password: values.password,
+                profilePhoto: imgFile ? imgFile.imgUri : "",
+                profilePhotoRef: imgFile ? imgFile.imgRef : "",
+            };
+            console.log(enteredValues);
+            dispatch(signupAction(enteredValues));
             resetForm();
         }
     };
@@ -49,7 +69,28 @@ const SignUpScreen = () => {
             <HeaderHolder>
                 <HeaderText>Get Started</HeaderText>
             </HeaderHolder>
+            <FormContainer>
+            <ButtonUploadImage onPress={chooseImage} imageUri={image}/>
+            <SubText>Upload Image</SubText>
             <HolderContainer>
+                <TextInput 
+                    inputProps={{
+                        placeholder: "Enter First Name",
+                        onChangeText: formik.handleChange("firstName"),
+                        value: formik.values.firstName,
+                    }}
+                    customLabel="First Name:"
+                    labelTextSize = '16px'
+                />
+                <TextInput 
+                    inputProps={{
+                        placeholder: "Enter Last Name",
+                        onChangeText: formik.handleChange("lastName"),
+                        value: formik.values.lastName,
+                    }}
+                    customLabel="Last Name:"
+                    labelTextSize = '16px'
+                />
                 <TextInput 
                     inputProps={{
                         placeholder: "Enter Username",
@@ -78,13 +119,17 @@ const SignUpScreen = () => {
                     labelTextSize = '16px'
                 />
                 <ButtonContainer>
-                    <ButtonText text='Sign Up' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'/>
+                    <ButtonText text='Sign Up' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'
+                    onPress={formik.handleSubmit}/>
                 </ButtonContainer>
                 <SubText>
                     Already have an account?
-                    <SignInText>{' '}Sign In</SignInText>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <SignInText>{' '}Sign In</SignInText>
+                    </TouchableOpacity>
                 </SubText>
             </HolderContainer>
+            </FormContainer>
         </SignUpContainer>
     )
 }
