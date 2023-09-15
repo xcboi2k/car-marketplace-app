@@ -7,12 +7,15 @@ import stores from '../../redux/stores';
 import TabNavigator from '../navigators/TabNavigator/TabNavigator';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
+import OtherInfoScreen from '../screens/OtherInfoScreen/OtherInfoScreen';
 
 const Stack = createNativeStackNavigator();
 
 const MainApp = () => {
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
-    console.log(isLoggedIn)
+    const isSignedIn = useSelector(state => state.user.isSignedIn);
+    console.log("Login State",isLoggedIn)
+    console.log("Sign In State",isSignedIn)
     return (
         <NavigationContainer>
                 <Stack.Navigator
@@ -34,6 +37,11 @@ const MainApp = () => {
                                 name="Register"
                                 component={SignUpScreen}
                             />
+                            {isSignedIn ? (
+                                <Stack.Screen name="OtherInfo" component={OtherInfoScreen} />
+                            ) : 
+                                null
+                            }
                         </>
                     }
                     

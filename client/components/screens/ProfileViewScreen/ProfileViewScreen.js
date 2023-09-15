@@ -107,18 +107,18 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                         } */}
                     </UserNameWrapper>
                     
-                    <UserBio>{user.bio}</UserBio>
+                    <UserBio>{userInfo.bio}</UserBio>
                 </UserInfoContainer>
                 
                 <UserInformation>
                 <UserInformationColumn>
                     <InformationItemContainer>
                         <Icon name={ICON_NAMES.SHOP} color="#153A56" size={15} />
-                        <InformationText>{user.business}</InformationText>
+                        <InformationText>{userInfo.shop_name}</InformationText>
                     </InformationItemContainer>
                     <InformationItemContainer>
                     <Icon name={ICON_NAMES.LOCATION} color="#153A56" size={13} />
-                        <InformationText>{user.location}</InformationText>
+                        <InformationText>{userInfo.location}</InformationText>
                     </InformationItemContainer>
                     </UserInformationColumn>
                     <UserInformationColumn>
@@ -128,14 +128,14 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                     </InformationItemContainer>
                     <InformationItemContainer>
                     <Icon name={ICON_NAMES.PHONE} color="#153A56" size={15} />
-                        <InformationText>{user.phone}</InformationText>
+                        <InformationText>{userInfo.phone}</InformationText>
                     </InformationItemContainer>
                     </UserInformationColumn>
                 </UserInformation>
 
                 <AboutContainer>
                     <AboutTitle>About:</AboutTitle>
-                    <AboutText>{user.about}</AboutText>
+                    <AboutText>{userInfo.about}</AboutText>
                 </AboutContainer>
 
                 <ButtonContainer>

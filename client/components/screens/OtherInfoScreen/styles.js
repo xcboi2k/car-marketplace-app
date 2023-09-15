@@ -33,6 +33,11 @@ export const HeaderText = styled.Text`
     margin-bottom: 8px;
 `;
 
+export const SubText = styled.Text`
+    color: black;
+    font-size: 13px;
+`;
+
 export const HolderContainer = styled.ScrollView`
     flex-grow: 0;
     width: 85%;
