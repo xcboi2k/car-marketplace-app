@@ -12,13 +12,16 @@ import TextInput from '../../shared/TextInput/TextInput'
 import ButtonUploadImage from '../../shared/ButtonUploadImage/ButtonUploadImage';
 
 import { signupAction } from '../../../redux/actions/userActions';
+import { showLoader, hideLoader } from '../../../redux/actions/loaderActions';
 
 import useUploadImage from '../../../hooks/useUploadImage';
 
 const SignUpScreen = ({ navigation }) => {
     let photoId = uuid.v4();
-    const isLoading = useSelector((state) => state.loader.isLoading);
     const dispatch = useDispatch();
+    const isLoading = useSelector((state) => state.loader.isLoading);
+    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+    const isSignedIn = useSelector(state => state.user.isSignedIn);
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "users/");
     
     const initialValues = {
@@ -56,6 +59,10 @@ const SignUpScreen = ({ navigation }) => {
                 console.log(enteredValues);
                 dispatch(signupAction(enteredValues));
                 resetForm();
+
+                if(isLoggedIn === false && isSignedIn === true){
+                    navigation.navigate('OtherInfo')
+                }
             }
         }
         catch(error){

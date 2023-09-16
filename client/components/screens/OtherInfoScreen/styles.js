@@ -42,6 +42,7 @@ export const HolderContainer = styled.ScrollView`
     flex-grow: 0;
     width: 85%;
     margin-top: 10px;
+    height: 500px;
 `;
 
 export const ButtonContainer = styled.View`

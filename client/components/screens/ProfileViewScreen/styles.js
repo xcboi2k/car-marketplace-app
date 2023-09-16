@@ -52,6 +52,7 @@ export const UserInfoContainer = styled.View`
 export const UserNameWrapper = styled.View`
   flex-direction: row;
   align-items: center;
+  margin-bottom: 2px;
 `;
 
 export const EditIconWrapper = styled.TouchableOpacity`
@@ -61,7 +62,13 @@ export const EditIconWrapper = styled.TouchableOpacity`
 export const UserName = styled.Text`
   font-size: 28px;
   font-weight: bold;
-  margin-bottom: 8px;
+`;
+
+export const HandleName = styled.Text`
+  font-size: 18px;
+  font-style: italic;
+  color: #234791;
+  margin-bottom: 10px;
 `;
 
 export const UserBio = styled.Text`

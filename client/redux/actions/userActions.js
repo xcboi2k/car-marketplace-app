@@ -1,4 +1,7 @@
 import { Alert } from "react-native";
+import { useDispatch, useSelector } from 'react-redux';
+
+import { hideLoader } from "./loaderActions";
 
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -59,15 +62,17 @@ export const signupAction = (userData) => async (dispatch) => {
                 type: SIGNUP_SUCCESS,
                 payload: data.user,
             });
-
-            
+            dispatch(hideLoader());
+            Alert.alert("SUCCESS", "User created successfully.");
         } else {
             // Handle the case where user or _id is not present in the response
             console.log('Invalid response from server:', data);
+            dispatch(hideLoader());
         }
     }
     catch (error){
         console.log('userActions Error:', error.message);
+        dispatch(hideLoader());
     }
 };
 
@@ -92,40 +97,35 @@ export const otherInfoAction = (userData) => async (dispatch) => {
         })
         const data = await response.json();
 
-        // checks if data is present
-        if (data.user._id) {
-            dispatch({
-                type: OTHERINFO_SUCCESS,
-                payload: {
-                    _id: data.user._id,
-                    firstName: data.user.firstName,
-                    lastName: data.user.lastName,
-                    userName: data.user.userName,
-                    email: data.user.email,
-                    password: data.user.password,
-                    profilePhoto: data.user.profile_photo,
-                    profilePhotoRef: data.user.profile_photo_ref,
-                    shop_name: data.user.shop_name, 
-                    location: data.user.location, 
-                    phone_number: data.user.phone_number, 
-                    bio: data.user.bio, 
-                    about: data.user.about,
-                },
-            });
-
-            
-        } else {
-            // Handle the case where user or _id is not present in the response
-            console.log('Invalid response from server:', data);
-        }
+        dispatch({
+            type: OTHERINFO_SUCCESS,
+            payload: {
+                _id: data.user._id,
+                firstName: data.user.firstName,
+                lastName: data.user.lastName,
+                userName: data.user.userName,
+                email: data.user.email,
+                password: data.user.password,
+                profile_photo: data.user.profile_photo,
+                profile_photo_ref: data.user.profile_photo_ref,
+                shop_name: data.user.shop_name, 
+                location: data.user.location, 
+                phone_number: data.user.phone_number, 
+                bio: data.user.bio, 
+                about: data.user.about,
+            },
+        });
+        dispatch(hideLoader());
+        Alert.alert("SUCCESS", "Information added successfully.");
     }
     catch (error){
         dispatch({
             type: OTHERINFO_FAILURE,
             payload: error,
         });
+        dispatch(hideLoader());
         console.log('userActions Error:', error.message);
-        Alert.alert("Adding Information Unsuccessful.");
+        Alert.alert("FAILED", "Information added unsuccessful.");
     }
 };
 
@@ -148,6 +148,7 @@ export const loginAction = (userData) => async (dispatch) => {
         }
 
         const data = await response.json();
+        console.log(data)
         if (data.user._id) {
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -158,8 +159,8 @@ export const loginAction = (userData) => async (dispatch) => {
                     userName: data.user.userName,
                     email: data.user.email,
                     password: data.user.password,
-                    profilePhoto: data.user.profile_photo,
-                    profilePhotoRef: data.user.profile_photo_ref,
+                    profile_photo: data.user.profile_photo,
+                    profile_photo_ref: data.user.profile_photo_ref,
                     shop_name: data.user.shop_name, 
                     location: data.user.location, 
                     phone_number: data.user.phone_number, 
@@ -167,14 +168,16 @@ export const loginAction = (userData) => async (dispatch) => {
                     about: data.user.about,
                 },
             });
-            Alert.alert("Login Successful.");
+            Alert.alert("SUCCESS", "Login successfully.");
+            dispatch(hideLoader());
         }
     } catch (error) {
         dispatch({
             type: LOGIN_FAILURE,
             payload: error,
         });
+        dispatch(hideLoader());
         console.log(error)
-        Alert.alert("Login Unsuccessful.");
+        Alert.alert("FAILED", "Login unsuccessful.");
     }
 };

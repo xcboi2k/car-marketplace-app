@@ -9,25 +9,9 @@ const loginUser = async(req, res) => {
     const {loginEmail, loginPassword} = req.body;
     try {
         const user = await User.login(loginEmail, loginPassword)
-
-        const { _id, userName, email, password, profile_photo} = user;
-
+        console.log(user)
         const token = createToken(user._id);
-        res.status(200).json({user: {
-            _id,
-            firstName,
-            lastName,
-            userName,
-            email, 
-            password,
-            profile_photo, 
-            profile_photo_ref,
-            shop_name, 
-            location, 
-            phone_number, 
-            bio, 
-            about,
-        }, token, message: "Login successfully."})
+        res.status(200).json({user, token, message: "Login successfully."})
     } catch (error) {
         console.log(error.message);
         res.status(500).json({success: false, message: error.message});
@@ -35,7 +19,7 @@ const loginUser = async(req, res) => {
 }
 
 const signUpUser = async(req,res) => {
-    const {userName, email, password, profile_photo, profile_photo_ref} = req.body;
+    const {firstName, lastName, userName, email, password, profile_photo, profile_photo_ref} = req.body;
     try {
         const user = await User.signup(
             firstName,
@@ -57,27 +41,14 @@ const signUpUser = async(req,res) => {
 
 const otherInfoUser = async(req,res) => {
     const {shop_name, location, phone_number, bio, about, id} = req.body;
+
     try {
         const user = await User.otherinfo(
             shop_name, location, phone_number, bio, about, id
         )
         console.log('backend:', user._id);
         const token = createToken(user._id);
-        res.status(200).json({user: {
-            _id,
-            firstName,
-            lastName,
-            userName,
-            email, 
-            password,
-            profile_photo, 
-            profile_photo_ref,
-            shop_name, 
-            location, 
-            phone_number, 
-            bio, 
-            about,
-        }, token, message: "Added information successfully."})
+        res.status(200).json({user, token, message: "Added information successfully."})
     } catch (error) {
         console.log(error.message);
         res.status(500).json({success: false, message: error.message});

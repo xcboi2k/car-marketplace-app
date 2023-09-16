@@ -1,8 +1,7 @@
 import React from 'react'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Provider, useSelector } from 'react-redux'
-import stores from '../../redux/stores';
+import { useSelector } from 'react-redux'
 
 import TabNavigator from '../navigators/TabNavigator/TabNavigator';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
@@ -23,26 +22,23 @@ const MainApp = () => {
                         headerShown: false,
                     }}
                 >
-                    {isLoggedIn ? (
+                    {isLoggedIn === true && isSignedIn === true ? (
                         <>
                             <Stack.Screen
                                 name="Home"
                                 component={TabNavigator}
                             />
                         </>
-                    ) :
+                    ) : (
                         <>
                             <Stack.Screen name="Login" component={LoginScreen} />
                             <Stack.Screen
                                 name="Register"
                                 component={SignUpScreen}
                             />
-                            {isSignedIn ? (
-                                <Stack.Screen name="OtherInfo" component={OtherInfoScreen} />
-                            ) : 
-                                null
-                            }
+                            {isSignedIn && <Stack.Screen name="OtherInfo" component={OtherInfoScreen}/>}
                         </>
+                        )
                     }
                     
                 </Stack.Navigator>

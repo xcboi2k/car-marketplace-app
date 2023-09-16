@@ -104,6 +104,7 @@ userSchema.statics.login = async function(loginEmail, loginPassword) {
 }
 
 userSchema.statics.otherinfo = async function(shop_name, location, phone_number, bio, about, id) {
+    console.log('otherinfo:', id)
     try{
 
         const user = await this.findById(id);
@@ -120,7 +121,6 @@ userSchema.statics.otherinfo = async function(shop_name, location, phone_number,
 
         // Save the updated user document
         const updatedUser = await user.save();
-
         return updatedUser;
     }
     catch(error){

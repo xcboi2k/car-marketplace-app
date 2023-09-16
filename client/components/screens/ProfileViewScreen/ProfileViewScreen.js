@@ -21,6 +21,7 @@ import {
     ButtonContainer,
     UserNameWrapper,
     EditIconWrapper,
+    HandleName,
 } from './styles'
 import { ICON_NAMES } from '../../../constants/constant'
 
@@ -32,7 +33,7 @@ import Icon from '../../../common/Icon';
 import { useSelector } from 'react-redux';
 
 
-const ProfileViewScreen = ({isCurrentUser = true}) => {
+const ProfileViewScreen = () => {
     const navigation = useNavigation();
 
     const goToUserListings = () => {
@@ -94,17 +95,18 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                 </ProfileSection>
                 <UserInfoContainer>
                     <UserNameWrapper>
-                        <UserName>{userInfo.name}</UserName>
-                        {/* { isCurrentUser &&
-                            <EditIconWrapper 
-                                onPress={() => 
-                                    navigation.navigate("Profile", {
-                                        screen: "ProfileEdit"
-                                })}
-                            >
-                                <Icon name={ICON_NAMES.EDIT} color="#153A56" size={25}/>
-                            </EditIconWrapper>
-                        } */}
+                        <UserName>{userInfo.firstName} {userInfo.lastName}</UserName>
+                        <EditIconWrapper 
+                            onPress={() => 
+                                navigation.navigate("Profile", {
+                                    screen: "ProfileEdit"
+                            })}
+                        >
+                            <Icon name={ICON_NAMES.EDIT} color="#153A56" size={25}/>
+                        </EditIconWrapper>
+                    </UserNameWrapper>
+                    <UserNameWrapper>
+                        <HandleName>@{userInfo.userName}</HandleName>
                     </UserNameWrapper>
                     
                     <UserBio>{userInfo.bio}</UserBio>
@@ -128,7 +130,7 @@ const ProfileViewScreen = ({isCurrentUser = true}) => {
                     </InformationItemContainer>
                     <InformationItemContainer>
                     <Icon name={ICON_NAMES.PHONE} color="#153A56" size={15} />
-                        <InformationText>{userInfo.phone}</InformationText>
+                        <InformationText>{userInfo.phone_number}</InformationText>
                     </InformationItemContainer>
                     </UserInformationColumn>
                 </UserInformation>

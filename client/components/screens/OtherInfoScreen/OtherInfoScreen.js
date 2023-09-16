@@ -11,6 +11,7 @@ import TextInput from '../../shared/TextInput/TextInput'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 
 import { otherInfoAction } from '../../../redux/actions/userActions';
+import { showLoader, hideLoader } from '../../../redux/actions/loaderActions';
 
 const OtherInfoScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const OtherInfoScreen = ({ navigation }) => {
                     phoneNumber: values.phoneNumber,
                     bio: values.bio ? values.bio : "",
                     about: values.about ? values.about : "No information about the user/seller.",
-                    id: userInfo._id
+                    id: userInfo.userId
                 };
                 console.log(enteredValues);
                 dispatch(otherInfoAction(enteredValues));
