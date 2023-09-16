@@ -34,6 +34,21 @@ const userSchema = new Schema(
         profile_photo_ref:{
             type: String,
         },
+        shop_name:{
+            type: String,
+        },
+        location:{
+            type: String,
+        },
+        phone_number:{
+            type: String,
+        },
+        bio:{
+            type: String,
+        },
+        about:{
+            type: String,
+        },
     }
 )
 
@@ -86,6 +101,31 @@ userSchema.statics.login = async function(loginEmail, loginPassword) {
         }
 
     return user
+}
+
+userSchema.statics.otherinfo = async function(shop_name, location, phone_number, bio, about, id) {
+    console.log('otherinfo:', id)
+    try{
+
+        const user = await this.findById(id);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        user.shop_name = shop_name;
+        user.location = location;
+        user.phone_number = phone_number;
+        user.bio = bio;
+        user.about = about;
+
+        // Save the updated user document
+        const updatedUser = await user.save();
+        return updatedUser;
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 module.exports = mongoose.model('User', userSchema)

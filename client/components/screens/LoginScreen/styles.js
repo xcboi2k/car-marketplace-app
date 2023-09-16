@@ -15,7 +15,7 @@ export const PageContainer = styled.ScrollView`
 `;
 
 export const BackgroundImage = styled.ImageBackground`
-    height: ${({ height }) => height};
+    height: 290px;
 `;
 
 export const LogoContainer = styled.View`

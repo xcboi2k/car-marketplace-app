@@ -52,7 +52,7 @@ const LoginScreen = ({ navigation }) => {
     return (
         <LoginContainer>
             <PageContainer>
-                <BackgroundImage height={Dimensions.get('window').height / 2.5} source={SampleImage}>
+                <BackgroundImage source={SampleImage}>
                     <LogoContainer>
                         <Logo source={AppLogo}/>
                     </LogoContainer>

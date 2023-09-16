@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Alert, TouchableOpacity } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from "formik";
-import * as ImagePicker from 'expo-image-picker';
 import uuid from 'react-native-uuid';
 
 import { ButtonContainer, FormContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
@@ -13,12 +12,16 @@ import TextInput from '../../shared/TextInput/TextInput'
 import ButtonUploadImage from '../../shared/ButtonUploadImage/ButtonUploadImage';
 
 import { signupAction } from '../../../redux/actions/userActions';
+import { showLoader, hideLoader } from '../../../redux/actions/loaderActions';
 
 import useUploadImage from '../../../hooks/useUploadImage';
 
 const SignUpScreen = ({ navigation }) => {
     let photoId = uuid.v4();
     const dispatch = useDispatch();
+    const isLoading = useSelector((state) => state.loader.isLoading);
+    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+    const isSignedIn = useSelector(state => state.user.isSignedIn);
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "users/");
     
     const initialValues = {
@@ -30,30 +33,43 @@ const SignUpScreen = ({ navigation }) => {
     };
 
     const handleFormikSubmit = async(values, { resetForm }) => {
-        console.log('Checking values: ', values);
-        let imgFile;
-        console.log(image);
-        if (image) {
-            imgFile = await uploadImage();
-            console.log('Checking image: ', imgFile);
-        }
+        try{
+            dispatch(showLoader());
+            console.log('Checking values: ', values);
 
-        if (values.userName === "" || values.email === "" || values.password === "") {
-            Alert.alert("Incomplete Input", "Please fill up your first name, last name, email and password");
-        } else {
-            const enteredValues = {
-                firstName: values.firstName, 
-                lastName: values.lastName,
-                userName: values.userName,
-                email: values.email,
-                password: values.password,
-                profilePhoto: imgFile ? imgFile.imgUri : "",
-                profilePhotoRef: imgFile ? imgFile.imgRef : "",
-            };
-            console.log(enteredValues);
-            dispatch(signupAction(enteredValues));
-            resetForm();
+            let imgFile;
+            console.log(image);
+            if (image) {
+                imgFile = await uploadImage();
+                console.log('Checking image: ', imgFile);
+            }
+
+            if (values.userName === "" || values.email === "" || values.password === "") {
+                Alert.alert("Incomplete Input", "Please fill up your first name, last name, email and password");
+            } else {
+                const enteredValues = {
+                    firstName: values.firstName, 
+                    lastName: values.lastName,
+                    userName: values.userName,
+                    email: values.email,
+                    password: values.password,
+                    profilePhoto: imgFile ? imgFile.imgUri : "",
+                    profilePhotoRef: imgFile ? imgFile.imgRef : "",
+                };
+                console.log(enteredValues);
+                dispatch(signupAction(enteredValues));
+                resetForm();
+
+                if(isLoggedIn === false && isSignedIn === true){
+                    navigation.navigate('OtherInfo')
+                }
+            }
         }
+        catch(error){
+            dispatch(hideLoader());
+            Alert.alert("Error", "There was an error when submitting the information you entered.");
+        }
+        
     };
 
     const formik = useFormik({
@@ -118,10 +134,19 @@ const SignUpScreen = ({ navigation }) => {
                     customLabel="Password:"
                     labelTextSize = '16px'
                 />
-                <ButtonContainer>
-                    <ButtonText text='Sign Up' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'
-                    onPress={formik.handleSubmit}/>
-                </ButtonContainer>
+                {
+                    isLoading ? (
+                        <HeaderHolder>
+                            <ActivityIndicator size="large" color="#234791" />
+                            <SubText>Authenticating user ...</SubText>
+                        </HeaderHolder>
+                    ) : (
+                        <ButtonContainer>
+                            <ButtonText text='Sign Up' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'
+                            onPress={formik.handleSubmit}/>
+                        </ButtonContainer>
+                    )
+                }
                 <SubText>
                     Already have an account?
                     <TouchableOpacity onPress={() => navigation.goBack()}>
