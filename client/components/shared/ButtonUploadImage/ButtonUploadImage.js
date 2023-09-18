@@ -5,9 +5,10 @@ import Icon from '../../../common/Icon'
 import { ButtonUploadContainer } from './styles'
 import { ICON_NAMES } from '../../../constants/constant';
 
-const ButtonUploadImage = ({ onPress, imageUri }) => {
+const ButtonUploadImage = ({ onPress, imageUri, width, height, borderRadius }) => {
     return (
-        <ButtonUploadContainer onPress={onPress} buttonColor="#234791">
+        <ButtonUploadContainer onPress={onPress} buttonWidth={width} buttonHeight={height} 
+        buttonColor="#234791" buttonBorderRadius={borderRadius}>
             {imageUri ? (
                 <Image source={{ uri: imageUri.uri }} style={{ width: 100, height: 100, borderRadius: 50 }} />
                 ) : (
