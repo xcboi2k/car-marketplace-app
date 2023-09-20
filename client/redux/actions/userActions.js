@@ -10,6 +10,8 @@ export const OTHERINFO_SUCCESS = 'OTHERINFO_SUCCESS';
 export const OTHERINFO_FAILURE = 'OTHERINFO_FAILURE';
 export const UPDATEPHOTO_SUCCESS = 'UPDATEPHOTO_SUCCESS';
 export const UPDATEPHOTO_FAILURE = 'UPDATEPHOTO_FAILURE';
+export const UPDATEINFO_SUCCESS = 'UPDATEINFO_SUCCESS';
+export const UPDATEINFO_FAILURE = 'UPDATEINFO_FAILURE';
 
 export const signupSuccess = (user) => ({
     type: SIGNUP_SUCCESS,
@@ -43,6 +45,16 @@ export const updatePhotoSuccess = (user) => ({
 
 export const updatePhotoFailure = (user) => ({
     type: UPDATEPHOTO_FAILURE,
+    payload: user,
+});
+
+export const updateInfoSuccess = (user) => ({
+    type: UPDATEINFO_SUCCESS,
+    payload: user,
+});
+
+export const updateInfoFailure = (user) => ({
+    type: UPDATEINFO_FAILURE,
     payload: user,
 });
 
@@ -232,5 +244,53 @@ export const updatePhotoAction = (imgData) => async (dispatch) => {
         dispatch(hideLoader());
         console.log(error)
         Alert.alert("FAILED", "Update photo unsuccessful.");
+    }
+};
+
+export const updateInfoAction = (updateData) => async (dispatch) => {
+    try{
+        // for updatePhoto
+        const response = await fetch("http://192.168.100.24:4000/api/user/updateInfo", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstName: updateData.firstName,
+                lastName: updateData.lastName,
+                userName: updateData.userName,
+                email: updateData.email,
+                shop_name: updateData.shopName, 
+                location: updateData.location,
+                phone_number: updateData.phoneNumber,
+                bio: updateData.bio,
+                about: updateData.about,
+                id: updateData.id
+            }),
+        })
+        const data = await response.json();
+
+        // checks if data is present
+        if (data.user._id) {
+            dispatch({
+                type: UPDATEINFO_SUCCESS,
+                payload: data.user,
+            });
+            dispatch(hideLoader());
+            Alert.alert("SUCCESS", "User information updated successfully.");
+        } else {
+            // Handle the case where user or _id is not present in the response
+            console.log('Invalid response from server:', data);
+            dispatch(hideLoader());
+        }
+    }catch(error){
+        dispatch({
+            type: UPDATEINFO_FAILURE,
+            payload: error,
+        });
+
+        dispatch(hideLoader());
+        console.log(error)
+        Alert.alert("FAILED", "User information update unsuccessful.");
     }
 };

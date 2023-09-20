@@ -32,3 +32,9 @@ export const ButtonContainer = styled.View`
         mode === "edit" ? "space-between" : "flex-end"};
     margin-bottom: 20px;
 `;
+
+export const SubText = styled.Text`
+    color: black;
+    font-size: 13px;
+    text-align: center;
+`;

@@ -150,4 +150,33 @@ userSchema.statics.updatePhoto = async function(id, profile_photo, profile_photo
     }
 }
 
+userSchema.statics.updateInfo = async function(id, firstName, lastName, userName, email, shop_name, location, phone_number, bio, about) {
+    console.log('updateInfo:', id)
+    try{
+
+        const user = await this.findById(id);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.userName = userName;
+        user.email = email,
+        user.shop_name = shop_name;
+        user.location = location;
+        user.phone_number = phone_number;
+        user.bio = bio;
+        user.about = about;
+
+        // Save the updated user document
+        const updatedUser = await user.save();
+        return updatedUser;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = mongoose.model('User', userSchema)
