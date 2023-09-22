@@ -143,9 +143,9 @@ const ProfileViewScreen = () => {
 
                 <ButtonContainer>
                     <ButtonText text='Listings' buttonColor='#234791' textColor='#F4F6F8' 
-                    width='45%' textSize='16' onPress={isCurrentUser === true ? goToUserListings : goToSellerListings}/>
+                    width='45%' textSize='16' onPress={goToUserListings}/>
                     <ButtonText text='Reviews' buttonColor='#234791' textColor='#F4F6F8' 
-                    width='45%' textSize='16'onPress={isCurrentUser && goToReviews}/>
+                    width='45%' textSize='16'onPress={goToReviews}/>
                 </ButtonContainer>
                 <ButtonContainer>
                     

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import uuid from 'react-native-uuid';
 import { deleteObject, ref } from "firebase/storage";
 
-import { ModalButtonContainer, ModalContainer, ModalPhoto, ModalText } from './styles';
+import { ModalButtonContainer, ModalContainer, ModalContent, ModalPhoto, ModalText } from './styles';
 
 import ButtonText from '../ButtonText/ButtonText';
 import ButtonUploadImage from '../ButtonUploadImage/ButtonUploadImage';
@@ -17,14 +17,15 @@ import useUploadImage from '../../../hooks/useUploadImage';
 
 import { storage } from '../../../firebase';
 
-const ChangePhotoModal = ({ userID, targetImage, targetImageRef, isVisible, onClose }) => {
+const ChangePhotoModal = ({ targetImage, targetImageRef, isVisible, onClose }) => {
     let photoId = uuid.v4();
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "users/");
 
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.loader.isLoading);
+    const userInfo = useSelector(state => state.user);
 
-    const handleSubmitPhoto = () => {
+    const handleSubmitPhoto = async() => {
         dispatch(showLoader());
         try{
             let imgFile,
@@ -44,10 +45,11 @@ const ChangePhotoModal = ({ userID, targetImage, targetImageRef, isVisible, onCl
             let updatedImg = imgFile ? imgFile.imgUri : targetImage;
 
             const imgValues = {
-                id: userID,
+                id: userInfo.userId,
                 profilePhoto: updatedImg,
                 profilePhotoRef: updatedImgRef,
             }
+
             dispatch(updatePhotoAction(imgValues));
             onClose();
         }catch(error){
@@ -69,32 +71,40 @@ const ChangePhotoModal = ({ userID, targetImage, targetImageRef, isVisible, onCl
             onRequestClose={onClose}
         >
             <ModalContainer onPress={handleCloseModal}>
-                <ModalButtonContainer>
+                <ModalContent>
+                    <ModalButtonContainer>
+                        {
+                            targetImage || image ? (
+                                image ? (
+                                    <ButtonUploadImage onPress={chooseImage} imageUri={image}
+                                    width="250px" height="250px" borderRadius="0px"/>
+                                ) : (
+                                    <ButtonUploadImage onPress={chooseImage} imageUri={targetImage}
+                                    width="250px" height="250px" borderRadius="0px"/>
+                                )
+                            ) : (
+                                <TouchableOpacity onPress={chooseImage}>
+                                    <ModalPhoto source={PicturePlaceholder}/>
+                                </TouchableOpacity>
+                            )
+                        }
+                        
+                    </ModalButtonContainer>
                     {
-                        targetImage || image ? (
-                            <ButtonUploadImage onPress={chooseImage} imageUri={targetImage || image}
-                            buttonWidth="80px" buttonHeight="80px" buttonBorderRadius="50px" />
+                        isLoading ? (
+                            <ModalButtonContainer>
+                                <ActivityIndicator size="large" color="#234791" />
+                                <ModalText>Submitting updated image ...</ModalText>
+                            </ModalButtonContainer>
                         ) : (
-                            <TouchableOpacity onPress={chooseImage}>
-                                <ModalPhoto source={PicturePlaceholder}/>
-                            </TouchableOpacity>
+                            image ? (
+                                <ModalButtonContainer>
+                                    <ButtonText text='Update Photo' buttonColor='#58F5D9' textColor='#15191E' width='100%' textSize='16' onPress={handleSubmitPhoto} />
+                                </ModalButtonContainer>
+                            ) : null
                         )
                     }
-                    
-                </ModalButtonContainer>
-                {
-                    isLoading ? (
-                        <ModalButtonContainer>
-                            <ActivityIndicator size="large" color="#234791" />
-                            <ModalText>Submitting updated image ...</ModalText>
-                        </ModalButtonContainer>
-                    ) : (
-                        <ModalButtonContainer>
-                            <ButtonText text='Update Photo' buttonColor='#58F5D9' textColor='#15191E' width='100%' textSize='16'
-                            onPress={handleSubmitPhoto}/>
-                        </ModalButtonContainer>
-                    )
-                }
+                </ModalContent>
             </ModalContainer>
         </Modal>
     )

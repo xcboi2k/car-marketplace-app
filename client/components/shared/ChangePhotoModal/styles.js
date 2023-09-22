@@ -17,6 +17,7 @@ export const ModalContent = styled.View`
 export const ModalButtonContainer = styled.View`
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 export const ModalText = styled.Text`
@@ -26,8 +27,8 @@ export const ModalText = styled.Text`
 `
 
 export const ModalPhoto = styled.Image`
-  width: 80px;
-  height: 80px;
-  border-radius: 50px;
+  width: 250px;
+  height: 250px;
+  border-radius: 0px;
   margin-right: 10px;
 `;

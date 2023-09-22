@@ -87,7 +87,7 @@ const SignUpScreen = ({ navigation }) => {
             </HeaderHolder>
             <FormContainer>
             <ButtonUploadImage onPress={chooseImage} imageUri={image}
-                buttonWidth="100px" buttonHeight="100px" buttonBorderRadius="50px" />
+                width="100px" height="100px" borderRadius="50px" />
             <SubText>Upload Image</SubText>
             <HolderContainer>
                 <TextInput 
