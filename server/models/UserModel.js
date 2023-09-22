@@ -128,4 +128,55 @@ userSchema.statics.otherinfo = async function(shop_name, location, phone_number,
     }
 }
 
+userSchema.statics.updatePhoto = async function(id, profile_photo, profile_photo_ref) {
+    console.log('updatePhoto:', id)
+    try{
+
+        const user = await this.findById(id);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        user.profile_photo = profile_photo;
+        user.profile_photo_ref = profile_photo_ref;
+
+        // Save the updated user document
+        const updatedUser = await user.save();
+        return updatedUser;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+userSchema.statics.updateInfo = async function(id, firstName, lastName, userName, email, shop_name, location, phone_number, bio, about) {
+    console.log('updateInfo:', id)
+    try{
+
+        const user = await this.findById(id);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.userName = userName;
+        user.email = email,
+        user.shop_name = shop_name;
+        user.location = location;
+        user.phone_number = phone_number;
+        user.bio = bio;
+        user.about = about;
+
+        // Save the updated user document
+        const updatedUser = await user.save();
+        return updatedUser;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = mongoose.model('User', userSchema)

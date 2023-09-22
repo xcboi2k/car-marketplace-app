@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { 
     ProfileViewContainer, 
@@ -24,17 +26,22 @@ import {
     HandleName,
 } from './styles'
 import { ICON_NAMES } from '../../../constants/constant'
+import Icon from '../../../common/Icon';
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import ButtonText from '../../shared/ButtonText/ButtonText'
+import ChangePhotoModal from '../../shared/ChangePhotoModal/ChangePhotoModal';
 
 import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
-import Icon from '../../../common/Icon';
-import { useSelector } from 'react-redux';
-
 
 const ProfileViewScreen = () => {
     const navigation = useNavigation();
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const handleOpenChangePhotoModal = () => {
+        setIsModalVisible(true);
+    };
 
     const goToUserListings = () => {
         navigation.navigate("Profile", {
@@ -55,16 +62,9 @@ const ProfileViewScreen = () => {
     console.log(userInfo);
 
     const user = {
-        name: 'John Doe',
-        bio: 'Car Enthusiast | Automotive Lover',
-        business: 'Sakura Motors',
-        location: 'New York, USA',
-        email: 'johndoe@example.com',
-        phone: '+1 234-567-8900',
         currentListings: 10,
         soldListings: 120,
         rating: 4.5,
-        about: "Hi, I'm John Doe, a passionate car enthusiast with a love for all things automotive. I have been in the car dealership business for over a decade and take pride in providing top-notch service to my customers. Feel free to reach out to me for any car-related inquiries!",
     };
     
     return (
@@ -79,7 +79,9 @@ const ProfileViewScreen = () => {
             />
             <HolderContainer>
                 <ProfileSection>
-                    <ProfilePicture source={userInfo.profile_photo ? { uri: userInfo.profile_photo } : PicturePlaceholder} />
+                    <TouchableOpacity onPress={handleOpenChangePhotoModal}>
+                        <ProfilePicture source={userInfo.profile_photo ? { uri: userInfo.profile_photo } : PicturePlaceholder} />
+                    </TouchableOpacity>
                     <InformationSection>
                     <InformationValue>{user.currentListings}</InformationValue>
                     <InformationLabel>For Sale</InformationLabel>
@@ -108,7 +110,6 @@ const ProfileViewScreen = () => {
                     <UserNameWrapper>
                         <HandleName>@{userInfo.userName}</HandleName>
                     </UserNameWrapper>
-                    
                     <UserBio>{userInfo.bio}</UserBio>
                 </UserInfoContainer>
                 
@@ -142,15 +143,17 @@ const ProfileViewScreen = () => {
 
                 <ButtonContainer>
                     <ButtonText text='Listings' buttonColor='#234791' textColor='#F4F6F8' 
-                    width='45%' textSize='16' onPress={isCurrentUser === true ? goToUserListings : goToSellerListings}/>
+                    width='45%' textSize='16' onPress={goToUserListings}/>
                     <ButtonText text='Reviews' buttonColor='#234791' textColor='#F4F6F8' 
-                    width='45%' textSize='16'onPress={isCurrentUser && goToReviews}/>
+                    width='45%' textSize='16'onPress={goToReviews}/>
                 </ButtonContainer>
                 <ButtonContainer>
                     
                 </ButtonContainer>
             </HolderContainer>
-            
+            <ChangePhotoModal targetImage={userInfo.profile_photo ? { uri: userInfo.profile_photo } : null} 
+            targetImageRef={userInfo.profile_photo_ref} userID={userInfo.userId} isVisible={isModalVisible} 
+            onClose={() => setIsModalVisible(false)}/>
         </ProfileViewContainer>
     )
 }
