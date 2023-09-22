@@ -57,7 +57,7 @@ listingSchema.statics.addlisting = async function(car_model, location, price, pr
             const listing = await this.create({ car_model, location, price, production_year, transmission_type, total_kms,
                 description, features, vehicle_information, car_photo, car_photo_ref, createdAt, userId})
             
-                return listing
+            return listing
         }
         catch(error){
             console.log(error);

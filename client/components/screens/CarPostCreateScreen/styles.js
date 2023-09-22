@@ -48,3 +48,9 @@ export const ButtonContainer = styled.View`
     justify-content: space-between;
     margin-bottom: 20px;
 `;
+
+export const SubText = styled.Text`
+    color: black;
+    font-size: 13px;
+    text-align: center;
+`;
