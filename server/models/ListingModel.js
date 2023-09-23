@@ -108,25 +108,9 @@ listingSchema.statics.deletelisting = async function(listingId){
 
         }
         catch(error){
-            console.log(error);
+            console.log('Error deleting listing:', error);
+            throw new Error('Failed to delete listing');
         }
-}
-
-listingSchema.statics.fetchlistings = async function(userId){
-    try{
-        if(userId){
-            const listings = await listingSchema.find({userId});
-            return listings;
-        }
-        else{
-            const listings = await listingSchema.find();
-            return listings;
-        }
-
-    }
-    catch(error){
-        console.log(error);
-    }
 }
 
 module.exports = mongoose.model('Listing', listingSchema)

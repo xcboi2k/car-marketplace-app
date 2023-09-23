@@ -1,11 +1,12 @@
 const express = require('express')
-const { addListing, updateListing, deleteListing, fetchListings } = require('../controllers/ListingController')
+const { addListing, updateListing, deleteListing, fetchUserListings, fetchAllListings } = require('../controllers/ListingController')
 
 const router = express.Router();
 
 router.post('/addListing', addListing )
 router.post('/updateListing', updateListing)
 router.post('/deleteListing', deleteListing)
-router.post('/fetchListings', fetchListings)
+router.post('/fetchAllListings', fetchAllListings)
+router.post('/fetchUserListings', fetchUserListings)
 
 module.exports = router

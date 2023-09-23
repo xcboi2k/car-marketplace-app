@@ -90,16 +90,36 @@ export const deleteListingAction = (id) => async (dispatch) => {
     }
 }
 
-export const fetchListingsAction = (userId) => async (dispatch) => {
+export const fetchAllListingsAction = () => async (dispatch) => {
     try{
-        const response = await fetch("http://192.168.100.24:4000/api/listing/fetchListings", {
-            method: 'POST',
+        const response = await fetch(`http://192.168.100.24:4000/api/listing/fetchAllListings`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                userId: userId
-            }),
+        })
+        const data = await response.json();
+
+        dispatch(fetchListingsSuccess(data));
+        dispatch(hideLoader());
+        Alert.alert("SUCCESS", "Fetched listings successfully.");
+    }catch(error){
+        dispatch({
+            type: LISTING_FAILURE,
+        });
+        dispatch(hideLoader());
+        console.log('fetchListingsAction Error:', error.message);
+        Alert.alert("FAILED", "Fetching listings unsuccessful.");
+    }
+}
+
+export const fetchUserListingsAction = (userId) => async (dispatch) => {
+    try{
+        const response = await fetch(`http://192.168.100.24:4000/api/listing/fetchUserListings?userId=${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
         const data = await response.json();
 

@@ -40,10 +40,9 @@ const deleteListing = async(req, res) => {
     }
 }
 
-const fetchListings = async(req, res) => {
-    const { userId } = req.body;
+const fetchAllListings = async(req, res) => {
     try {
-        const listings = await Listing.fetchlistings(userId)
+        const listings = await Listing.find()
         console.log(listings)
         res.status(200).json({listings, message: "Listings fetched successfully."})
     } catch (error) {
@@ -52,4 +51,16 @@ const fetchListings = async(req, res) => {
     }
 }
 
-module.exports = { addListing, updateListing, deleteListing, fetchListings }
+const fetchUserListings = async(req, res) => {
+    const { userId } = req.query;
+    try {
+        const listings = await Listing.find({userId})
+        console.log(listings)
+        res.status(200).json({listings, message: "Listings fetched successfully."})
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({success: false, message: error.message});
+    }
+}
+
+module.exports = { addListing, updateListing, deleteListing, fetchAllListings, fetchUserListings }

@@ -6,6 +6,7 @@ const cors = require('cors')
 
 const UserRouter = require('./routers/UserRouter')
 const ListingRouter = require('./routers/ListingRouter')
+const { fetchAllListings, fetchUserListings } = require('./controllers/ListingController')
 
 // express app
 const app = express()
@@ -22,6 +23,8 @@ app.use((req, res, next) => {
 // routes
 app.use('/api/user', UserRouter)
 app.use('/api/listing', ListingRouter)
+app.get('/api/listing/fetchAllListings', fetchAllListings);
+app.get('/api/listing/fetchUserListings', fetchUserListings);
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
