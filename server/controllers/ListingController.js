@@ -1,11 +1,11 @@
 const Listing = require('../models/ListingModel')
 
 const addListing = async(req, res) => {
-    const {car_model, location, price, production_year, transmission_type, total_kms,
-        description, features, vehicle_information, car_photo, car_photo_ref, listingId} = req.body;
+    const {car_model, location, price, production_year, transmission_type, total_kms, description, features, 
+        vehicle_information, car_photo, car_photo_ref, created_at, userId, user_name, user_photo} = req.body;
     try {
         const listing = await Listing.addlisting(car_model, location, price, production_year, transmission_type, total_kms,
-            description, features, vehicle_information, car_photo, car_photo_ref, listingId)
+            description, features, vehicle_information, car_photo, car_photo_ref, created_at, userId, user_name, user_photo)
         console.log(listing)
         res.status(200).json({listing, message: "Listing added successfully."})
     } catch (error) {
@@ -19,7 +19,7 @@ const updateListing = async(req, res) => {
         description, features, vehicle_information, car_photo, car_photo_ref, listingId} = req.body;
     try {
         const listing = await Listing.updatelisting(car_model, location, price, production_year, transmission_type, total_kms,
-            description, features, vehicle_information, car_photo, car_photo_ref, createdAt, userId)
+            description, features, vehicle_information, car_photo, car_photo_ref, listingId)
         console.log(listing)
         res.status(200).json({listing, message: "Listing updated successfully."})
     } catch (error) {
@@ -29,7 +29,7 @@ const updateListing = async(req, res) => {
 }
 
 const deleteListing = async(req, res) => {
-    const {listingId} = req.body;
+    const { listingId } = req.body;
     try {
         const listing = await Listing.deletelisting(listingId)
         console.log(listing)
@@ -40,4 +40,16 @@ const deleteListing = async(req, res) => {
     }
 }
 
-module.exports = { addListing, updateListing, deleteListing }
+const fetchListings = async(req, res) => {
+    const { userId } = req.body;
+    try {
+        const listings = await Listing.fetchlistings(userId)
+        console.log(listings)
+        res.status(200).json({listings, message: "Listings fetched successfully."})
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({success: false, message: error.message});
+    }
+}
+
+module.exports = { addListing, updateListing, deleteListing, fetchListings }

@@ -1,7 +1,7 @@
-import { ADDLISTING_SUCCESS, UPDATELISTING_SUCCESS, DELETELISTING_SUCCESS, LISTING_FAILURE } from "../actions/listingActions";
+import { ADDLISTING_SUCCESS, UPDATELISTING_SUCCESS, DELETELISTING_SUCCESS, FETCHLISTINGS_SUCCESS, LISTING_FAILURE } from "../actions/listingActions";
 
 const initialState = {
-    items: [],
+    listings: [],
 };
 
 const listingReducer = (state = initialState, action) => {
@@ -9,22 +9,27 @@ const listingReducer = (state = initialState, action) => {
         case ADDLISTING_SUCCESS:
             return {
                 ...state,
-                items: [...state.items, action.payload],
+                listings: [...state.listings, action.payload],
             };
         case UPDATELISTING_SUCCESS:
             return {
                 ...state,
-                items: [...state.items, action.payload],
+                listings: [...state.listings, action.payload],
             };
         case DELETELISTING_SUCCESS:
             return {
                 ...state,
-                items: [...state.items, action.payload],
+                listings: [...state.listings, action.payload],
+            };
+        case FETCHLISTINGS_SUCCESS:
+            return{
+                ...state,
+                listings: action.payload,
             };
         case LISTING_FAILURE:
             return {
                 ...state,
-                items: [...state.items, action.payload],
+                listings: [...state.listings, action.payload],
             };
         default:
             return state;

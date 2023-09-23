@@ -15,6 +15,7 @@ const MainApp = () => {
     const isSignedIn = useSelector(state => state.user.isSignedIn);
     console.log("Login State",isLoggedIn)
     console.log("Sign In State",isSignedIn)
+
     return (
         <NavigationContainer>
                 <Stack.Navigator

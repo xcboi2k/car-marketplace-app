@@ -23,6 +23,7 @@ const CarPostCreateScreen = ({ navigation }) => {
     let photoId = uuid.v4();
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.loader.isLoading);
+    const userInfo = useSelector(state => state.user);
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "listings/");
 
     const [selectedTransmission, setSelectedTransmission] = useState("");
@@ -35,10 +36,8 @@ const CarPostCreateScreen = ({ navigation }) => {
 
     const initialValues = {
         carModel: "",
-        location: "",
         price: "",
         productionYear: "",
-        transmissionType: "",
         totalKMs: "",
         description: "",
         features: "",
@@ -62,7 +61,7 @@ const CarPostCreateScreen = ({ navigation }) => {
             } else {
                 const enteredValues = {
                     carModel: values.carModel,
-                    location: values.location,
+                    location: userInfo.location,
                     price: values.price,
                     productionYear: values.productionYear,
                     transmissionType: selectedTransmission,
@@ -72,10 +71,14 @@ const CarPostCreateScreen = ({ navigation }) => {
                     vehicleInformation: values.vehicleInformation ? values.vehicleInformation : 'No vehicle information.',
                     carPhoto: imgFile ? imgFile.imgUri : "",
                     carPhotoRef: imgFile ? imgFile.imgRef : "",
+                    createdAt: Date(),
+                    userId: userInfo.userId,
+                    userName: userInfo.firstName + " " + userInfo.lastName,
+                    userPhoto: userInfo.profile_photo
                 };
                 console.log(enteredValues);
-                // dispatch(addListingAction(enteredValues));
-                // resetForm();
+                dispatch(addListingAction(enteredValues));
+                resetForm();
 
                 navigation.navigate("Home", {
                     screen: "Feed"
@@ -202,7 +205,7 @@ const CarPostCreateScreen = ({ navigation }) => {
                         </HeaderHolder>
                     ) : (
                         <ButtonContainer>
-                            <ButtonText text='Sign Up' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
+                            <ButtonText text='Add Listing' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
                             onPress={formik.handleSubmit}/>
                         </ButtonContainer>
                     )

@@ -60,3 +60,9 @@ export const PostList = styled.FlatList`
     flex: 1;
     padding: 5px;
 `;
+
+export const SubText = styled.Text`
+    color: black;
+    font-size: 13px;
+    text-align: center;
+`;

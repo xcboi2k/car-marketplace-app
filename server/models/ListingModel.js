@@ -29,15 +29,12 @@ const listingSchema = new Schema({
     },
     description: {
         type: String,
-        required: true
     },
     features: {
         type: String,
-        required: true
     },
     vehicle_information: {
         type: String,
-        required: true
     },
     car_photo:{
         type: String,
@@ -45,17 +42,25 @@ const listingSchema = new Schema({
     car_photo_ref:{
         type: String,
     },
-    createdAt: Date,
+    created_at: {
+        type: String,
+    },
     userId:{
         type: String,
     },
+    user_name:{
+        type: String,
+    },
+    user_photo:{
+        type: String,
+    }
 }, { timestamps: true })
 
 listingSchema.statics.addlisting = async function(car_model, location, price, production_year, transmission_type, total_kms,
-    description, features, vehicle_information, car_photo, car_photo_ref, createdAt, userId){
+    description, features, vehicle_information, car_photo, car_photo_ref, created_at, userId, user_name, user_photo){
         try{
             const listing = await this.create({ car_model, location, price, production_year, transmission_type, total_kms,
-                description, features, vehicle_information, car_photo, car_photo_ref, createdAt, userId})
+                description, features, vehicle_information, car_photo, car_photo_ref, created_at, userId, user_name, user_photo})
             
             return listing
         }
@@ -105,6 +110,23 @@ listingSchema.statics.deletelisting = async function(listingId){
         catch(error){
             console.log(error);
         }
+}
+
+listingSchema.statics.fetchlistings = async function(userId){
+    try{
+        if(userId){
+            const listings = await listingSchema.find({userId});
+            return listings;
+        }
+        else{
+            const listings = await listingSchema.find();
+            return listings;
+        }
+
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 module.exports = mongoose.model('Listing', listingSchema)

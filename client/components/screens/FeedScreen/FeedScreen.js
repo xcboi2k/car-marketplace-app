@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
+
 import { 
     FeedContainer, 
     Header, 
@@ -8,7 +10,8 @@ import {
     FilterButton, 
     FilterButtonText, 
     PostList, 
-    PostListContainer} from './styles'
+    PostListContainer,
+    SubText} from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader.js'
 import FeedCard from '../../shared/FeedCard/FeedCard';
@@ -17,23 +20,27 @@ import ProfilePlaceholder from '../../../assets/images/profile-pic-placeholder.p
 import ItemPlaceholder from '../../../assets/images/item-pic-placeholder.png'
 import Icon from '../../../common/Icon';
 import { ICON_NAMES } from '../../../constants/constant';
+import useFetchListings from '../../../hooks/useFetchListings';
 
 const FeedScreen = () => {
     const filters = ['car', 'van', 'truck', 'motorcycle'];
     const [activeFilter, setActiveFilter] = useState(filters[0]);
 
+    useFetchListings();
+    const listings = useSelector((state) => state.listings);
+
     const handleFilterPress = (filter) => {
         setActiveFilter(filter);
     };
 
-    const posts = [
-        { id: '1', title: 'Sakura Motors', description: 'Osaka, Japan', category: 'car' },
-        { id: '2', title: 'Gunma Racing', description: 'Gunma Prefecture, Japan', category: 'truck' },
-        { id: '3', title: 'TopRank', description: 'Tokyo, Japan', category: 'motorcycle' },
-    ];
+    // const posts = [
+    //     { id: '1', title: 'Sakura Motors', description: 'Osaka, Japan', category: 'car' },
+    //     { id: '2', title: 'Gunma Racing', description: 'Gunma Prefecture, Japan', category: 'truck' },
+    //     { id: '3', title: 'TopRank', description: 'Tokyo, Japan', category: 'motorcycle' },
+    // ];
 
     const renderItem = ({ item }) => (
-        <FeedCard sellerProfilePic={ProfilePlaceholder} sellerName={item.title} sellerLocation={item.description} itemImage={ItemPlaceholder}/>
+        <FeedCard sellerProfilePic={item.user_photo} sellerName={item.user_name} sellerLocation={item.location} itemImage={item.car_photo}/>
     );
 
     const getFilterIconName = (filter) => {
@@ -70,14 +77,20 @@ const FeedScreen = () => {
                 </FilterContainer>
             </Header>
             <PostListContainer>
-                <PostList
-                    data={posts}
-                    keyExtractor={(item) => item.id}
-                    renderItem={renderItem}
-                    // Add additional FlatList props as needed
-                />
+                {
+                    listings ? (
+                        <PostList
+                            data={listings}
+                            keyExtractor={(item) => item._id}
+                            renderItem={renderItem}
+                            // Add additional FlatList props as needed
+                        />
+                    ) : (
+                        <SubText>There are no listings available right now.</SubText>
+                    )
+                }
+                
             </PostListContainer>
-            
         </FeedContainer>
     )
 }
