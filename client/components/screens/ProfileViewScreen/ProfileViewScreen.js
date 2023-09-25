@@ -48,11 +48,6 @@ const ProfileViewScreen = () => {
             screen: "UserListing",}); // Navigate to the profile view screen
     };
 
-    const goToSellerListings = () => {
-        navigation.navigate("Profile", {
-            screen: "SellerListing",}); // Navigate to the profile view screen
-    };
-
     const goToReviews = () => {
         navigation.navigate("Reviews", {
             screen: "ReviewsMain",}); // Navigate to the car details screen
@@ -142,13 +137,10 @@ const ProfileViewScreen = () => {
                 </AboutContainer>
 
                 <ButtonContainer>
-                    <ButtonText text='Listings' buttonColor='#234791' textColor='#F4F6F8' 
+                    <ButtonText text='My Listings' buttonColor='#234791' textColor='#F4F6F8' 
                     width='45%' textSize='16' onPress={goToUserListings}/>
-                    <ButtonText text='Reviews' buttonColor='#234791' textColor='#F4F6F8' 
-                    width='45%' textSize='16'onPress={goToReviews}/>
-                </ButtonContainer>
-                <ButtonContainer>
-                    
+                    <ButtonText text='My Reviews' buttonColor='#234791' textColor='#F4F6F8' 
+                    width='45%' textSize='16' onPress={goToReviews}/>
                 </ButtonContainer>
             </HolderContainer>
             <ChangePhotoModal targetImage={userInfo.profile_photo ? { uri: userInfo.profile_photo } : null} 

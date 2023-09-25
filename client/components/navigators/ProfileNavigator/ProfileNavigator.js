@@ -2,6 +2,7 @@ import React from 'react'
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import ProfileViewScreen from '../../screens/ProfileViewScreen/ProfileViewScreen';
+import SellerProfileViewScreen from '../../screens/SellerProfileViewScreen/SellerProfileViewScreen';
 import ProfileEditScreen from '../../screens/ProfileEditScreen/ProfileEditScreen';
 import ReviewsScreen from '../../screens/ReviewsScreen/ReviewsScreen';
 import ReviewCreateScreen from '../../screens/ReviewCreateScreen/ReviewCreateScreen';
@@ -26,6 +27,10 @@ const ProfileNavigator = () => {
             <ProfileStack.Screen
                 name="ProfileEdit"
                 component={ProfileEditScreen}
+            />
+            <ProfileStack.Screen
+                name="SellerProfile"
+                component={SellerProfileViewScreen}
             />
             <ProfileStack.Screen
                 name="UserListing"

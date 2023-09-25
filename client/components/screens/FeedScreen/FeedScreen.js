@@ -20,13 +20,16 @@ import ProfilePlaceholder from '../../../assets/images/profile-pic-placeholder.p
 import ItemPlaceholder from '../../../assets/images/item-pic-placeholder.png'
 import Icon from '../../../common/Icon';
 import { ICON_NAMES } from '../../../constants/constant';
+
 import useFetchListings from '../../../hooks/useFetchListings';
+import useFetchUsers from '../../../hooks/useFetchUsers';
 
 const FeedScreen = () => {
     const filters = ['car', 'van', 'truck', 'motorcycle'];
     const [activeFilter, setActiveFilter] = useState(filters[0]);
 
     useFetchListings();
+    useFetchUsers();
     const listings = useSelector((state) => state.listings);
 
     const handleFilterPress = (filter) => {
@@ -40,7 +43,8 @@ const FeedScreen = () => {
     // ];
 
     const renderItem = ({ item }) => (
-        <FeedCard sellerProfilePic={item.user_photo} sellerName={item.user_name} sellerLocation={item.location} itemImage={item.car_photo}/>
+        <FeedCard itemID={item._id} sellerProfilePic={item.user_photo} sellerName={item.user_name} 
+        sellerLocation={item.location} itemImage={item.car_photo}/>
     );
 
     const getFilterIconName = (filter) => {

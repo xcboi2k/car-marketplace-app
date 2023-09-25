@@ -12,6 +12,7 @@ export const UPDATEPHOTO_SUCCESS = 'UPDATEPHOTO_SUCCESS';
 export const UPDATEPHOTO_FAILURE = 'UPDATEPHOTO_FAILURE';
 export const UPDATEINFO_SUCCESS = 'UPDATEINFO_SUCCESS';
 export const UPDATEINFO_FAILURE = 'UPDATEINFO_FAILURE';
+export const FETCHUSERS_SUCCESS = 'FETCHUSERS_SUCCESS';
 
 export const signupSuccess = (user) => ({
     type: SIGNUP_SUCCESS,
@@ -56,6 +57,11 @@ export const updateInfoSuccess = (user) => ({
 export const updateInfoFailure = (user) => ({
     type: UPDATEINFO_FAILURE,
     payload: user,
+});
+
+export const fetchUsersSuccess = (users) => ({
+    type: FETCHUSERS_SUCCESS,
+    payload: users,
 });
 
 export const signupAction = (userData) => async (dispatch) => {
@@ -292,5 +298,25 @@ export const updateInfoAction = (updateData) => async (dispatch) => {
         dispatch(hideLoader());
         console.log(error)
         Alert.alert("FAILED", "User information update unsuccessful.");
+    }
+};
+
+export const fetchUsersAction = () => async (dispatch) => {
+    try{
+        const response = await fetch(`http://192.168.100.24:4000/api/user/fetchAllUsers`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        const data = await response.json();
+
+        dispatch(fetchUsersSuccess(data));
+        dispatch(hideLoader());
+        Alert.alert("SUCCESS", "Fetched users successfully.");
+    }catch(error){;
+        dispatch(hideLoader());
+        console.log('fetchUsersAction Error:', error.message);
+        Alert.alert("FAILED", "Fetching users unsuccessful.");
     }
 };

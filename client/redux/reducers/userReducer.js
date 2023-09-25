@@ -1,5 +1,5 @@
 import { SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGIN_FAILURE, OTHERINFO_SUCCESS, OTHERINFO_FAILURE, 
-    UPDATEPHOTO_SUCCESS, UPDATEPHOTO_FAILURE, UPDATEINFO_SUCCESS, UPDATEINFO_FAILURE } from "../actions/userActions";
+    UPDATEPHOTO_SUCCESS, UPDATEPHOTO_FAILURE, UPDATEINFO_SUCCESS, UPDATEINFO_FAILURE, FETCHUSERS_SUCCESS } from "../actions/userActions";
 
 const initialState = {
     isLoggedIn: false,
@@ -17,6 +17,8 @@ const initialState = {
     phone_number: "",
     bio: "",
     about: "",
+
+    users: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -174,6 +176,11 @@ const userReducer = (state = initialState, action) => {
                 bio: action.payload.bio, 
                 about: action.payload.about,
                 error: null,
+            };
+        case FETCHUSERS_SUCCESS:
+            return{
+                ...state,
+                users: action.payload,
             };
         default:
             return state;

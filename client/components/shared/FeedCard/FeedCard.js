@@ -12,27 +12,24 @@ import {
     ItemImage 
 } from './styles'
 
-const FeedCard = ({ sellerProfilePic, sellerName, sellerLocation, itemImage }) => {
+const FeedCard = ({ itemID, sellerProfilePic, sellerName, sellerLocation, itemImage }) => {
     const navigation = useNavigation();
 
-    const goToProfile = () => {
-        navigation.navigate("Profile", {
-            screen: "ProfileMain",}); // Navigate to the profile view screen
-    };
-
-    const goToCarDetails = () => {
+    const goToCarDetails = (itemID) => 
+         // Navigate to the car details screen
         navigation.navigate("Home", {
-            screen: "CarPostDetail",}); // Navigate to the car details screen
-    };
+            screen: "CarPostDetail",
+            params: {
+                carPostDetailID: itemID
+            }
+    });
 
     return (
         <CardContainer>
             <SellerContainer>
                 <SellerProfilePicture source={sellerProfilePic} />
                 <SellerInfo>
-                    <TouchableOpacity onPress={goToProfile}>
-                        <SellerName>{sellerName}</SellerName>
-                    </TouchableOpacity>
+                    <SellerName>{sellerName}</SellerName>
                     <SellerLocation>{sellerLocation}</SellerLocation>
                 </SellerInfo>
             </SellerContainer>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 
 import { 
     CarPostDetailContainer, 
@@ -29,14 +30,43 @@ import ButtonText from '../../shared/ButtonText/ButtonText'
 import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
 
 
-const CarPostDetailScreen = ({ navigation }) => {
+const CarPostDetailScreen = ({ route, navigation }) => {
+    const { carPostDetailID } = route.params;
+    
+    const listings = useSelector((state) => state.listings);
+    const [currentCarPost, setCurrentCarPost] = useState(() => {
+        return listings.find(item => item._id === carPostDetailID);
+    });
+
+    const users = useSelector((state) => state.users);
+    const [currentSeller, setCurrentSeller] = useState('');
+
     const sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     const tabs = [
-        { id: 1, title: 'Description', content: sampleText },
-        { id: 2, title: 'Features', content: sampleText },
-        { id: 3, title: 'Vehicle Info', content: sampleText },
-        { id: 4, title: 'About Seller', content: sampleText },
+        { id: 1, title: 'Description', content: currentCarPost.description },
+        { id: 2, title: 'Features', content: currentCarPost.features },
+        { id: 3, title: 'Vehicle Info', content: currentCarPost.vehicle_information },
     ];
+
+    useEffect(() => {
+        const targetListing = listings.find(item => item._id === carPostDetailID);
+        console.log('targetListing', targetListing);
+        setCurrentCarPost(targetListing);
+    }, [carPostDetailID])
+
+    useEffect(() => {
+        const targetSeller = users.find(item => item._id === currentCarPost.userId);
+        console.log('targetSeller', targetSeller);
+        setCurrentSeller(targetSeller);
+    }, [currentCarPost.userId])
+
+    const goToSellerProfile = () => 
+        navigation.navigate("Profile", {
+            screen: "SellerProfile",
+            params: {
+                sellerID: currentSeller
+            }
+    }); // Navigate to seller profile
 
     return (
         <CarPostDetailContainer>
@@ -47,34 +77,34 @@ const CarPostDetailScreen = ({ navigation }) => {
                 })}
             />
             <CarImageContainer>
-                <CarImage source={Sample} />
+                <CarImage source={currentCarPost.car_photo} />
             </CarImageContainer>
             <HolderContainer>
             <CarDateLocationContainer>
                 <CarInfoColumn>
                     <Icon name={ICON_NAMES.TIME} size={15} color='#C2C7CB'/>
-                    <CarInfoText>July 31, 2023</CarInfoText>
+                    <CarInfoText>{currentCarPost.created_at}</CarInfoText>
                 </CarInfoColumn>
                 <CarInfoColumn>
                     <Icon name={ICON_NAMES.LOCATION} size={13} color='#C2C7CB'/>
-                    <CarInfoText>Philippines</CarInfoText>
+                    <CarInfoText>{currentCarPost.location}</CarInfoText>
                 </CarInfoColumn>
             </CarDateLocationContainer>
 
-            <Price>Php 2,000,000</Price>
-            <Model>Nissan Skyline R33 GTR</Model>
+            <Price>Php {currentCarPost.price}</Price>
+            <Model>{currentCarPost.car_model}</Model>
 
             <YearTransmissionKmContainer>
                 <YearContainer>
-                    <SetTitleText>1996</SetTitleText>
+                    <SetTitleText>{currentCarPost.production_year}</SetTitleText>
                     <TitleText>Year</TitleText>
                 </YearContainer>
                 <TransmissionContainer>
-                    <SetTitleText>Manual</SetTitleText>
+                    <SetTitleText>{currentCarPost.transmission_type}</SetTitleText>
                     <TitleText>Transmission</TitleText>
                 </TransmissionContainer>
                 <KMContainer>
-                    <SetTitleText>100,000</SetTitleText>
+                    <SetTitleText>{currentCarPost.total_kms}</SetTitleText>
                     <TitleText>Km</TitleText>
                 </KMContainer>
             </YearTransmissionKmContainer>
@@ -84,7 +114,8 @@ const CarPostDetailScreen = ({ navigation }) => {
                 <ButtonIconContainer>
                     <ButtonIcon iconName={ICON_NAMES.CHAT} iconSize={26} buttonColor='#FFFFFF' iconColor='#234791' borderColor='#F4F6F8'/>
                 </ButtonIconContainer>
-                <ButtonText text='Contact the Seller' buttonColor='#234791' textColor='#F4F6F8' width ='70%' textSize='18'/>
+                <ButtonText text='Check Seller Profile' buttonColor='#234791' textColor='#F4F6F8' width ='70%' textSize='18'
+                onPress={goToSellerProfile}/>
             </ContactContainer>
         </CarPostDetailContainer>
     )
