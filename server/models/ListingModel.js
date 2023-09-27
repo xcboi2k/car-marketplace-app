@@ -54,7 +54,7 @@ const listingSchema = new Schema({
     user_photo:{
         type: String,
     }
-}, { timestamps: true })
+})
 
 listingSchema.statics.addlisting = async function(car_model, location, price, production_year, transmission_type, total_kms,
     description, features, vehicle_information, car_photo, car_photo_ref, created_at, userId, user_name, user_photo){

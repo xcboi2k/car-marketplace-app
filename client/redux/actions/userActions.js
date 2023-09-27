@@ -313,10 +313,10 @@ export const fetchUsersAction = () => async (dispatch) => {
 
         dispatch(fetchUsersSuccess(data));
         dispatch(hideLoader());
-        Alert.alert("SUCCESS", "Fetched users successfully.");
+        console.log("SUCCESS", "Fetched users successfully.");
     }catch(error){;
         dispatch(hideLoader());
         console.log('fetchUsersAction Error:', error.message);
-        Alert.alert("FAILED", "Fetching users unsuccessful.");
+        console.log("FAILED", "Fetching users unsuccessful.");
     }
 };

@@ -1,5 +1,7 @@
 import { Alert } from "react-native";
 
+import { hideLoader } from "./loaderActions";
+
 export const ADDLISTING_SUCCESS = 'ADDLISTING_SUCCESS';
 export const UPDATELISTING_SUCCESS = 'UPDATELISTING_SUCCESS';
 export const DELETELISTING_SUCCESS = 'DELETELISTING_SUCCESS';
@@ -102,14 +104,14 @@ export const fetchAllListingsAction = () => async (dispatch) => {
 
         dispatch(fetchListingsSuccess(data));
         dispatch(hideLoader());
-        Alert.alert("SUCCESS", "Fetched listings successfully.");
+        console.log("SUCCESS", "Fetched listings successfully.");
     }catch(error){
         dispatch({
             type: LISTING_FAILURE,
         });
         dispatch(hideLoader());
         console.log('fetchListingsAction Error:', error.message);
-        Alert.alert("FAILED", "Fetching listings unsuccessful.");
+        console.log("FAILED", "Fetching listings unsuccessful.");
     }
 }
 
@@ -125,13 +127,13 @@ export const fetchUserListingsAction = (userId) => async (dispatch) => {
 
         dispatch(fetchListingsSuccess(data));
         dispatch(hideLoader());
-        Alert.alert("SUCCESS", "Fetched user's listings successfully.");
+        console.log("SUCCESS", "Fetched user's listings successfully.");
     }catch(error){
         dispatch({
             type: LISTING_FAILURE,
         });
         dispatch(hideLoader());
         console.log('fetchListingsAction Error:', error.message);
-        Alert.alert("FAILED", "Fetching listings unsuccessful.");
+        console.log("FAILED", "Fetching listings unsuccessful.");
     }
 }

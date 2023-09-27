@@ -42,7 +42,7 @@ const deleteListing = async(req, res) => {
 
 const fetchAllListings = async(req, res) => {
     try {
-        const listings = await Listing.find()
+        const listings = await Listing.find({})
         console.log(listings)
         res.status(200).json({listings, message: "Listings fetched successfully."})
     } catch (error) {

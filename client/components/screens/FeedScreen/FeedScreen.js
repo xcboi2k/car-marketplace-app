@@ -30,16 +30,18 @@ const FeedScreen = () => {
 
     useFetchListings();
     useFetchUsers();
-    const listings = useSelector((state) => state.listings);
-
+    const listings = useSelector((state) => state.listingReducer.listings);
+    const users = useSelector((state) => state.users);
+    console.log('LISTINGS', listings);
+    console.log('USERS', users);
     const handleFilterPress = (filter) => {
         setActiveFilter(filter);
     };
 
     // const posts = [
-    //     { id: '1', title: 'Sakura Motors', description: 'Osaka, Japan', category: 'car' },
-    //     { id: '2', title: 'Gunma Racing', description: 'Gunma Prefecture, Japan', category: 'truck' },
-    //     { id: '3', title: 'TopRank', description: 'Tokyo, Japan', category: 'motorcycle' },
+    //     { _id: '1', user_name: 'Sakura Motors', location: 'Osaka, Japan' },
+    //     { _id: '2', user_name: 'Gunma Racing', location: 'Gunma Prefecture, Japan' },
+    //     { _id: '3', user_name: 'TopRank', location: 'Tokyo, Japan' },
     // ];
 
     const renderItem = ({ item }) => (

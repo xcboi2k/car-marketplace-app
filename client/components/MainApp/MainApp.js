@@ -26,7 +26,7 @@ const MainApp = () => {
                     {isLoggedIn === true && isSignedIn === true ? (
                         <>
                             <Stack.Screen
-                                name="Home"
+                                name="AppScreens"
                                 component={TabNavigator}
                             />
                         </>

@@ -89,7 +89,7 @@ const updateInfoUser = async(req,res) => {
 
 const fetchAllUsers = async(req, res) => {
     try {
-        const users = await User.find()
+        const users = await User.find({})
         console.log(users)
         res.status(200).json({users, message: "Users fetched successfully."})
     } catch (error) {
