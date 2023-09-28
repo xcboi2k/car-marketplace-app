@@ -101,8 +101,8 @@ export const fetchAllListingsAction = () => async (dispatch) => {
             },
         })
         const data = await response.json();
-
-        dispatch(fetchListingsSuccess(data));
+        console.log('fetchAllListingsAction', data.listings)
+        dispatch(fetchListingsSuccess(data.listings));
         dispatch(hideLoader());
         console.log("SUCCESS", "Fetched listings successfully.");
     }catch(error){
@@ -124,7 +124,6 @@ export const fetchUserListingsAction = (userId) => async (dispatch) => {
             },
         })
         const data = await response.json();
-
         dispatch(fetchListingsSuccess(data));
         dispatch(hideLoader());
         console.log("SUCCESS", "Fetched user's listings successfully.");

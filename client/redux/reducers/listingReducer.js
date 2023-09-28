@@ -1,9 +1,7 @@
 import { ADDLISTING_SUCCESS, UPDATELISTING_SUCCESS, DELETELISTING_SUCCESS, FETCHLISTINGS_SUCCESS, LISTING_FAILURE } from "../actions/listingActions";
 
 const initialState = {
-    listings: [{ _id: '1', user_name: 'Sakura Motors', location: 'Osaka, Japan' },
-        { _id: '2', user_name: 'Gunma Racing', location: 'Gunma Prefecture, Japan' },
-        { _id: '3', user_name: 'TopRank', location: 'Tokyo, Japan' },],
+    listings: [],
 };
 
 const listingReducer = (state = initialState, action) => {
@@ -26,7 +24,7 @@ const listingReducer = (state = initialState, action) => {
         case FETCHLISTINGS_SUCCESS:
             return{
                 ...state,
-                listings: [...listings, action.payload]
+                listings: [...state.listings, action.payload]
             };
         case LISTING_FAILURE:
             return {

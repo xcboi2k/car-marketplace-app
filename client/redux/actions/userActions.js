@@ -311,7 +311,7 @@ export const fetchUsersAction = () => async (dispatch) => {
         })
         const data = await response.json();
 
-        dispatch(fetchUsersSuccess(data));
+        dispatch(fetchUsersSuccess(data.users));
         dispatch(hideLoader());
         console.log("SUCCESS", "Fetched users successfully.");
     }catch(error){;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigation } from "@react-navigation/native";
 import { useSelector } from 'react-redux';
 
 import { 
@@ -23,17 +24,26 @@ import { ICON_NAMES } from '../../../constants/constant';
 
 import useFetchListings from '../../../hooks/useFetchListings';
 import useFetchUsers from '../../../hooks/useFetchUsers';
+import { FlatList } from 'react-native';
 
 const FeedScreen = () => {
-    const filters = ['car', 'van', 'truck', 'motorcycle'];
-    const [activeFilter, setActiveFilter] = useState(filters[0]);
-
     useFetchListings();
     useFetchUsers();
-    const listings = useSelector((state) => state.listingReducer.listings);
-    const users = useSelector((state) => state.users);
-    console.log('LISTINGS', listings);
-    console.log('USERS', users);
+    const listings = useSelector((state) => state.listing.listings);
+    const users = useSelector((state) => state.user.users);
+
+    const navigation = useNavigation();
+
+    const handleNavigation = (id) =>
+        navigation.navigate("Home", {
+            screen: "CarPostDetail",
+            params: {
+                carPostDetailID: id
+            }
+    });
+
+    const filters = ['car', 'van', 'truck', 'motorcycle'];
+    const [activeFilter, setActiveFilter] = useState(filters[0]);
     const handleFilterPress = (filter) => {
         setActiveFilter(filter);
     };
@@ -44,8 +54,10 @@ const FeedScreen = () => {
     //     { _id: '3', user_name: 'TopRank', location: 'Tokyo, Japan' },
     // ];
 
-    const renderItem = ({ item }) => (
-        <FeedCard itemID={item._id} sellerProfilePic={item.user_photo} sellerName={item.user_name} 
+    const renderCardItem = ({ item }) => (
+        <FeedCard 
+        onPress={() => { handleNavigation(item.id); }}
+        sellerProfilePic={item.user_photo} sellerName={item.user_name} 
         sellerLocation={item.location} itemImage={item.car_photo}/>
     );
 
@@ -85,10 +97,10 @@ const FeedScreen = () => {
             <PostListContainer>
                 {
                     listings ? (
-                        <PostList
+                        <FlatList
                             data={listings}
                             keyExtractor={(item) => item._id}
-                            renderItem={renderItem}
+                            renderItem={renderCardItem}
                             // Add additional FlatList props as needed
                         />
                     ) : (
