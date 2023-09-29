@@ -33,7 +33,6 @@ const FeedScreen = () => {
     const users = useSelector((state) => state.user.users);
 
     const navigation = useNavigation();
-
     const handleNavigation = (id) =>
         navigation.navigate("Home", {
             screen: "CarPostDetail",
@@ -47,20 +46,6 @@ const FeedScreen = () => {
     const handleFilterPress = (filter) => {
         setActiveFilter(filter);
     };
-
-    // const posts = [
-    //     { _id: '1', user_name: 'Sakura Motors', location: 'Osaka, Japan' },
-    //     { _id: '2', user_name: 'Gunma Racing', location: 'Gunma Prefecture, Japan' },
-    //     { _id: '3', user_name: 'TopRank', location: 'Tokyo, Japan' },
-    // ];
-
-    const renderCardItem = ({ item }) => (
-        <FeedCard 
-        onPress={() => { handleNavigation(item.id); }}
-        sellerProfilePic={item.user_photo} sellerName={item.user_name} 
-        sellerLocation={item.location} itemImage={item.car_photo}/>
-    );
-
     const getFilterIconName = (filter) => {
         switch (filter) {
             case 'car':
@@ -75,6 +60,19 @@ const FeedScreen = () => {
                 return ICON_NAMES.CAR; // Default icon name if no match is found
         }
     };
+
+    // const posts = [
+    //     { _id: '1', user_name: 'Sakura Motors', location: 'Osaka, Japan' },
+    //     { _id: '2', user_name: 'Gunma Racing', location: 'Gunma Prefecture, Japan' },
+    //     { _id: '3', user_name: 'TopRank', location: 'Tokyo, Japan' },
+    // ];
+
+    const renderCardItem = ({ item }) => (
+        <FeedCard 
+        onPress={() => { handleNavigation(item._id); }}
+        sellerProfilePic={item.user_photo} sellerName={item.user_name} 
+        sellerLocation={item.location} itemImage={item.car_photo}/>
+    );
 
     return (
         <FeedContainer>

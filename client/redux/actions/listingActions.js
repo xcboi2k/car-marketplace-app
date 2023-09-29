@@ -46,6 +46,7 @@ export const addListingAction = (newListingData) => async (dispatch) => {
                 price: newListingData.price,
                 production_year: newListingData.productionYear,
                 transmission_type: newListingData.transmissionType,
+                classification_type: newListingData.classificationType,
                 total_kms: newListingData.totalKMs,
                 description: newListingData.description,
                 features: newListingData.features,

@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from "formik";
 import uuid from 'react-native-uuid';
 
-import { ButtonContainer, CarPostCreateContainer, DropdownContainer, HeaderHolder, HeaderText, HolderContainer, InfoContainer, PriceYearContainer, SubText } from './styles'
+import { ButtonContainer, ButtonUploadContainer, ButtonUploadText, CarPostCreateContainer, DropdownContainer, HeaderHolder, HeaderText, HolderContainer, InfoContainer, OptionButton, OptionContainer, OptionsHolderContainer, OptionText, OptionTitleText, OtherInfoContainer, PriceYearContainer, SubText } from './styles'
 
 import ButtonText from '../../shared/ButtonText/ButtonText'
 import ButtonUploadImage from '../../shared/ButtonUploadImage/ButtonUploadImage'
 import CommentInput from '../../shared/CommentInput/CommentInput'
-import Dropdown from '../../shared/Dropdown/Dropdown'
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import TextInput from '../../shared/TextInput/TextInput'
 import { ICON_NAMES } from '../../../constants/constant'
@@ -26,13 +25,17 @@ const CarPostCreateScreen = ({ navigation }) => {
     const userInfo = useSelector(state => state.user);
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "listings/");
 
-    const [selectedTransmission, setSelectedTransmission] = useState("");
-    const [transmissionItems, setTransmissionItems] = useState([
-        {label: 'Manual', value: 'Manual'},
-        {label: 'Automatic', value: 'Automatic'},
-        {label: 'Sequential', value: 'Sequential'},
-        {label: 'CVT', value: 'CVT'},
-    ]);
+    const transmissionItems = ['Manual', 'Automatic', 'Sequential', 'CVT'];
+    const [selectedTransmission, setSelectedTransmission] = useState(transmissionItems[0]);
+    const handleTransmissionItemPress = (transType) => {
+        setSelectedTransmission(transType);
+    };
+
+    const classificationItems = ['Car', 'Van', 'Truck/Bus', 'Motorcycle'];
+    const [selectedClassification, setSelectedClassification] = useState(classificationItems[0]);
+    const handleClassificationItemPress = (classificationType) => {
+        setSelectedClassification(classificationType);
+    };
 
     const initialValues = {
         carModel: "",
@@ -65,6 +68,7 @@ const CarPostCreateScreen = ({ navigation }) => {
                     price: values.price,
                     productionYear: values.productionYear,
                     transmissionType: selectedTransmission,
+                    classificationType: selectedClassification,
                     totalKMs: values.totalKMs,
                     description: values.description ? values.description : 'No description.',
                     features: values.features ? values.features : 'No features.',
@@ -149,25 +153,27 @@ const CarPostCreateScreen = ({ navigation }) => {
                     customLabel="Total Kilometers:"
                     labelTextSize = '16px'
                 />
-                <Dropdown 
-                    dropdownItems={transmissionItems}
-                    setDropdownItems={setTransmissionItems}
-                    dropdownProps={{
-                        placeholder: "Choose Transmission Type",
-                        zIndex: 1, 
-                        zIndexInverse: 1000,
-                        onChangeValue: (value) => {
-                            console.log("dropdown:", value);
-                        }
-                    }}
-                    customLabel={"Enter Transmission Type:"}
-                    width="100%"
-                    setValue={setSelectedTransmission}
-                    value={selectedTransmission}
-                />
+                <OptionsHolderContainer>
+                    <OptionTitleText>Transmission:</OptionTitleText>
+                    <OptionContainer>
+                        {transmissionItems.map((item) => (
+                            <OptionButton key={item} onPress={() => handleTransmissionItemPress(item)} active={selectedTransmission === item}>
+                                <OptionText active={selectedTransmission === item}>{item}</OptionText>
+                            </OptionButton>
+                        ))}
+                    </OptionContainer>
+                </OptionsHolderContainer>
                 
-            </InfoContainer>
-            <HolderContainer>
+                <OptionsHolderContainer>
+                    <OptionTitleText>Classification:</OptionTitleText>
+                    <OptionContainer>
+                        {classificationItems.map((item) => (
+                            <OptionButton key={item} onPress={() => handleClassificationItemPress(item)} active={selectedClassification === item}>
+                                <OptionText active={selectedClassification === item}>{item}</OptionText>
+                            </OptionButton>
+                        ))}
+                    </OptionContainer>
+                </OptionsHolderContainer>
                 <CommentInput 
                     inputProps={{
                         placeholder: "Make a short description about the car",
@@ -195,8 +201,11 @@ const CarPostCreateScreen = ({ navigation }) => {
                     customLabel="Vehicle Information:"
                     textSize = '16px'
                 />
-                <ButtonUploadImage onPress={chooseImage} imageUri={image}
-                width="100px" height="100px" borderRadius="0px" />
+                <ButtonUploadContainer>
+                    <ButtonUploadText>Upload Photo:</ButtonUploadText>
+                    <ButtonUploadImage onPress={chooseImage} imageUri={image} iconName={ICON_NAMES.ADD}
+                    width="100px" height="100px" borderRadius="0px" />
+                </ButtonUploadContainer>
                 {
                     isLoading ? (
                         <HeaderHolder>
@@ -205,12 +214,12 @@ const CarPostCreateScreen = ({ navigation }) => {
                         </HeaderHolder>
                     ) : (
                         <ButtonContainer>
-                            <ButtonText text='Add Listing' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
+                            <ButtonText text='Submit' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='18'
                             onPress={formik.handleSubmit}/>
                         </ButtonContainer>
                     )
                 }
-            </HolderContainer>
+            </InfoContainer>
         </CarPostCreateContainer>
     )
 }
