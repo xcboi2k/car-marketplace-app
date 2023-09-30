@@ -70,7 +70,6 @@ const SignUpScreen = ({ navigation }) => {
             dispatch(hideLoader());
             Alert.alert("Error", "There was an error when submitting the information you entered.");
         }
-        
     };
 
     const formik = useFormik({

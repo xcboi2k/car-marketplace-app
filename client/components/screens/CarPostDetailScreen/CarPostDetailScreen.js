@@ -33,12 +33,13 @@ import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
 const CarPostDetailScreen = ({ route, navigation }) => {
     const { carPostDetailID } = route.params;
     
-    const listings = useSelector((state) => state.listings);
+    const listings = useSelector((state) => state.listing.listings);
+    console.log(listings)
     const [currentCarPost, setCurrentCarPost] = useState(() => {
         return listings.find(item => item._id === carPostDetailID);
     });
 
-    const users = useSelector((state) => state.users);
+    const users = useSelector((state) => state.user.users);
     const [currentSeller, setCurrentSeller] = useState('');
 
     const sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -68,6 +69,8 @@ const CarPostDetailScreen = ({ route, navigation }) => {
             }
     }); // Navigate to seller profile
 
+    const dateArray = currentCarPost.created_at.split(" ");
+    const newDate = dateArray[1] + ' ' + dateArray[2] + ' ' + dateArray[3];
     return (
         <CarPostDetailContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}
@@ -77,13 +80,13 @@ const CarPostDetailScreen = ({ route, navigation }) => {
                 })}
             />
             <CarImageContainer>
-                <CarImage source={currentCarPost.car_photo} />
+                <CarImage source={{uri: currentCarPost.car_photo}} />
             </CarImageContainer>
             <HolderContainer>
             <CarDateLocationContainer>
                 <CarInfoColumn>
                     <Icon name={ICON_NAMES.TIME} size={15} color='#C2C7CB'/>
-                    <CarInfoText>{currentCarPost.created_at}</CarInfoText>
+                    <CarInfoText>{newDate}</CarInfoText>
                 </CarInfoColumn>
                 <CarInfoColumn>
                     <Icon name={ICON_NAMES.LOCATION} size={13} color='#C2C7CB'/>

@@ -97,7 +97,7 @@ const FeedScreen = () => {
                     listings ? (
                         <FlatList
                             data={listings}
-                            keyExtractor={(item) => item._id}
+                            keyExtractor={(item, index) => item._id.toString()}
                             renderItem={renderCardItem}
                             // Add additional FlatList props as needed
                         />

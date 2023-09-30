@@ -102,7 +102,7 @@ export const fetchAllListingsAction = () => async (dispatch) => {
             },
         })
         const data = await response.json();
-        console.log('fetchAllListingsAction', data.listings)
+
         dispatch(fetchListingsSuccess(data.listings));
         dispatch(hideLoader());
         console.log("SUCCESS", "Fetched listings successfully.");

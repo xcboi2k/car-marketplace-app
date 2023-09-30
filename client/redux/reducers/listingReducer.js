@@ -24,7 +24,7 @@ const listingReducer = (state = initialState, action) => {
         case FETCHLISTINGS_SUCCESS:
             return{
                 ...state,
-                listings: [...state.listings, action.payload]
+                listings: action.payload,
             };
         case LISTING_FAILURE:
             return {

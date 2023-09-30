@@ -17,13 +17,13 @@ const FeedCard = ({ onPress, sellerProfilePic, sellerName, sellerLocation, itemI
     return (
         <CardContainer onPress={onPress}>
             <SellerContainer>
-                <SellerProfilePicture source={sellerProfilePic} />
+                <SellerProfilePicture source={{uri: sellerProfilePic}} />
                 <SellerInfo>
                     <SellerName>{sellerName}</SellerName>
                     <SellerLocation>{sellerLocation}</SellerLocation>
                 </SellerInfo>
             </SellerContainer>
-            <ItemImage source={itemImage} />
+            <ItemImage source={{uri: itemImage}} />
         </CardContainer>
     )
 }

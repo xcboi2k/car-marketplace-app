@@ -14,6 +14,10 @@ export const PageContainer = styled.ScrollView`
     width: 100%;
 `;
 
+export const HeaderHolder = styled.View`
+    width: 85%;
+`;
+
 export const BackgroundImage = styled.ImageBackground`
     height: 290px;
 `;
