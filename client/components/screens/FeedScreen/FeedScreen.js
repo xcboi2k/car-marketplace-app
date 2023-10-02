@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FlatList } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from 'react-redux';
 
@@ -24,7 +25,6 @@ import { ICON_NAMES } from '../../../constants/constant';
 
 import useFetchListings from '../../../hooks/useFetchListings';
 import useFetchUsers from '../../../hooks/useFetchUsers';
-import { FlatList } from 'react-native';
 
 const FeedScreen = () => {
     useFetchListings();
@@ -41,13 +41,15 @@ const FeedScreen = () => {
             }
     });
 
-    const filters = ['car', 'van', 'truck', 'motorcycle'];
+    const filters = ['all','car', 'van', 'truck', 'motorcycle'];
     const [activeFilter, setActiveFilter] = useState(filters[0]);
     const handleFilterPress = (filter) => {
         setActiveFilter(filter);
     };
     const getFilterIconName = (filter) => {
         switch (filter) {
+            case 'all':
+                return ICON_NAMES.HOME; // Example icon name for the 'car' filter
             case 'car':
                 return ICON_NAMES.CAR; // Example icon name for the 'car' filter
             case 'van':
@@ -61,15 +63,9 @@ const FeedScreen = () => {
         }
     };
 
-    // const posts = [
-    //     { _id: '1', user_name: 'Sakura Motors', location: 'Osaka, Japan' },
-    //     { _id: '2', user_name: 'Gunma Racing', location: 'Gunma Prefecture, Japan' },
-    //     { _id: '3', user_name: 'TopRank', location: 'Tokyo, Japan' },
-    // ];
-
     const renderCardItem = ({ item }) => (
         <FeedCard 
-        onPress={() => { handleNavigation(item._id); }}
+        onPress={() => {handleNavigation(item._id)}}
         sellerProfilePic={item.user_photo} sellerName={item.user_name} 
         sellerLocation={item.location} itemImage={item.car_photo}/>
     );
@@ -87,7 +83,7 @@ const FeedScreen = () => {
                 <FilterContainer>
                 {filters.map((filter) => (
                     <FilterButton key={filter} onPress={() => handleFilterPress(filter)} active={activeFilter === filter}>
-                        <Icon name={getFilterIconName(filter)} size={32} color={activeFilter === filter ? '#FFFFFF' : '#C2C7CB'} />
+                        <Icon name={getFilterIconName(filter)} size={28} color={activeFilter === filter ? '#FFFFFF' : '#C2C7CB'} />
                     </FilterButton>
                 ))}
                 </FilterContainer>
@@ -105,7 +101,6 @@ const FeedScreen = () => {
                         <SubText>There are no listings available right now.</SubText>
                     )
                 }
-                
             </PostListContainer>
         </FeedContainer>
     )

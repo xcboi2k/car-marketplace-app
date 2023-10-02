@@ -20,10 +20,11 @@ import { addListingAction } from '../../../redux/actions/listingActions';
 
 const CarPostCreateScreen = ({ navigation }) => {
     let photoId = uuid.v4();
+    const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "listings/");
+    
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.loader.isLoading);
     const userInfo = useSelector(state => state.user);
-    const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "listings/");
 
     const transmissionItems = ['Manual', 'Automatic', 'Sequential', 'CVT'];
     const [selectedTransmission, setSelectedTransmission] = useState(transmissionItems[0]);
@@ -76,7 +77,7 @@ const CarPostCreateScreen = ({ navigation }) => {
                     carPhoto: imgFile ? imgFile.imgUri : "",
                     carPhotoRef: imgFile ? imgFile.imgRef : "",
                     createdAt: Date(),
-                    userId: userInfo.userId,
+                    userID: userInfo.userId,
                     userName: userInfo.firstName + " " + userInfo.lastName,
                     userPhoto: userInfo.profile_photo
                 };

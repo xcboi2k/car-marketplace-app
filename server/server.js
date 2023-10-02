@@ -7,7 +7,7 @@ const cors = require('cors')
 const UserRouter = require('./routers/UserRouter')
 const ListingRouter = require('./routers/ListingRouter')
 
-const { fetchAllListings, fetchUserListings } = require('./controllers/ListingController')
+const { fetchAllListings, fetchUserListings, fetchSellerListings } = require('./controllers/ListingController')
 const { fetchAllUsers } = require('./controllers/UserController')
 
 // express app
@@ -27,6 +27,7 @@ app.use('/api/user', UserRouter)
 app.use('/api/listing', ListingRouter)
 app.get('/api/listing/fetchAllListings', fetchAllListings);
 app.get('/api/listing/fetchUserListings', fetchUserListings);
+app.get('/api/listing/fetchSellerListings', fetchSellerListings);
 app.get('/api/user/fetchAllUsers', fetchAllUsers);
 
 // connect to db

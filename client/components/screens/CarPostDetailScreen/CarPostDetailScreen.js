@@ -33,8 +33,8 @@ import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
 const CarPostDetailScreen = ({ route, navigation }) => {
     const { carPostDetailID } = route.params;
     
+    const currentUserID = useSelector((state) => state.user.userId);
     const listings = useSelector((state) => state.listing.listings);
-    console.log(listings)
     const [currentCarPost, setCurrentCarPost] = useState(() => {
         return listings.find(item => item._id === carPostDetailID);
     });
@@ -42,7 +42,6 @@ const CarPostDetailScreen = ({ route, navigation }) => {
     const users = useSelector((state) => state.user.users);
     const [currentSeller, setCurrentSeller] = useState('');
 
-    const sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     const tabs = [
         { id: 1, title: 'Description', content: currentCarPost.description },
         { id: 2, title: 'Features', content: currentCarPost.features },
@@ -65,12 +64,13 @@ const CarPostDetailScreen = ({ route, navigation }) => {
         navigation.navigate("Profile", {
             screen: "SellerProfile",
             params: {
-                sellerID: currentSeller
+                sellerID: currentSeller._id
             }
     }); // Navigate to seller profile
 
     const dateArray = currentCarPost.created_at.split(" ");
     const newDate = dateArray[1] + ' ' + dateArray[2] + ' ' + dateArray[3];
+
     return (
         <CarPostDetailContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}
@@ -113,13 +113,17 @@ const CarPostDetailScreen = ({ route, navigation }) => {
             </YearTransmissionKmContainer>
             </HolderContainer>
             <Tabs tabs={tabs} active={tabs[0].id}/>
-            <ContactContainer>
-                <ButtonIconContainer>
-                    <ButtonIcon iconName={ICON_NAMES.CHAT} iconSize={26} buttonColor='#FFFFFF' iconColor='#234791' borderColor='#F4F6F8'/>
-                </ButtonIconContainer>
-                <ButtonText text='Check Seller Profile' buttonColor='#234791' textColor='#F4F6F8' width ='70%' textSize='18'
-                onPress={goToSellerProfile}/>
-            </ContactContainer>
+            {
+                currentCarPost.userId !== currentUserID ? (
+                    <ContactContainer>
+                        <ButtonIconContainer>
+                            <ButtonIcon iconName={ICON_NAMES.CHAT} iconSize={26} buttonColor='#FFFFFF' iconColor='#234791' borderColor='#F4F6F8'/>
+                        </ButtonIconContainer>
+                        <ButtonText text='Check Seller Profile' buttonColor='#234791' textColor='#F4F6F8' width ='70%' textSize='18'
+                        onPress={goToSellerProfile}/>
+                    </ContactContainer>
+                ) : null
+            }
         </CarPostDetailContainer>
     )
 }

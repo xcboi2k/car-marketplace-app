@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 
+import { AboutContainer, AboutText, AboutTitle, ButtonContainer, HandleName, HolderContainer, InformationItemContainer, InformationLabel, InformationSection, InformationText, InformationValue, ProfilePicture, ProfileSection, SellerProfileViewContainer, UserBio, UserInfoContainer, UserInformation, UserInformationColumn, UserName, UserNameWrapper } from './styles';
+
+import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
 import { ICON_NAMES } from '../../../constants/constant'
 import Icon from '../../../common/Icon';
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 
-import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
-import { AboutContainer, AboutText, AboutTitle, ButtonContainer, HandleName, HolderContainer, InformationItemContainer, InformationLabel, InformationSection, InformationText, InformationValue, ProfilePicture, SellerProfileViewContainer, UserBio, UserInfoContainer, UserInformation, UserInformationColumn, UserName, UserNameWrapper } from './styles';
-import { ProfileSection } from '../ProfileViewScreen/styles';
+import useFetchSellerListings from '../../../hooks/useFetchSellerListings';
 
 const SellerProfileViewScreen = ({ route, navigation }) => {
     const { sellerID } = route.params;
 
+    useFetchSellerListings(sellerID)
     const users = useSelector((state) => state.users);
     const [currentSeller, setCurrentSeller] = useState(() => {
         return users.find(item => item._id === sellerID)
@@ -58,15 +60,15 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
                 <ProfileSection>
                     <ProfilePicture source={currentSeller.profile_photo ? { uri: currentSeller.profile_photo } : PicturePlaceholder}/>
                     <InformationSection>
-                        <InformationValue>{currentSeller.currentListings}</InformationValue>
+                        <InformationValue>{user.currentListings}</InformationValue>
                         <InformationLabel>For Sale</InformationLabel>
                     </InformationSection>
                     <InformationSection>
-                        <InformationValue>{currentSeller.soldListings}</InformationValue>
+                        <InformationValue>{user.soldListings}</InformationValue>
                         <InformationLabel>Sold</InformationLabel>
                     </InformationSection>
                     <InformationSection>
-                        <InformationValue>{currentSeller.rating}</InformationValue>
+                        <InformationValue>{user.rating}</InformationValue>
                         <InformationLabel>Rating</InformationLabel>
                     </InformationSection>
                 </ProfileSection>

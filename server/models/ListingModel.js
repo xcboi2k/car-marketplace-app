@@ -73,7 +73,7 @@ listingSchema.statics.addlisting = async function(car_model, location, price, pr
         }
 }
 
-listingSchema.statics.updatelisting = async function(car_model, location, price, production_year, transmission_type, classification_type,
+listingSchema.statics.updatelisting = async function(car_model, price, production_year, transmission_type, classification_type,
     total_kms, description, features, vehicle_information, car_photo, car_photo_ref, listingId){
         try{
             const listing = await this.findById(listingId);
@@ -82,7 +82,6 @@ listingSchema.statics.updatelisting = async function(car_model, location, price,
             }
             
             listing.car_model = car_model;
-            listing.location = location;
             listing.price = price;
             listing.production_year = production_year;
             listing.transmission_type = transmission_type;

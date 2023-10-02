@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from "formik";
 
@@ -19,7 +20,6 @@ const ProfileEditScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.loader.isLoading);
     const userInfo = useSelector(state => state.user);
-    console.log(userInfo);
 
     const initialValues = {
         firstName: userInfo.firstName,
@@ -73,7 +73,8 @@ const ProfileEditScreen = ({ navigation }) => {
     const EditButtonGroup = () => (
         <>
             <ButtonText
-                text='Save' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
+                text='Update' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
+                onPress={formik.handleSubmit}
             />
         </>
     );

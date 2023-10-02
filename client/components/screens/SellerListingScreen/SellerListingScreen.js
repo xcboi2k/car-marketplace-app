@@ -1,39 +1,26 @@
 import React from 'react'
 import { FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
+
+import { ListingsHeader, ListingsHeaderContainer, ListingsSection, SellerListingContainer, SubText } from './styles'
+
 import { ICON_NAMES } from '../../../constants/constant';
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import UserListingsCard from '../../shared/UserListingsCard/UserListingsCard';
-import { ListingsHeader, ListingsHeaderContainer, ListingsSection, SellerListingContainer } from './styles'
 
-const carListings = [
-    {
-        id: '1',
-        price: 1250000,
-        name: '2021 Toyota Camry',
-    },
-    {
-        id: '2',
-        price: 1500000,
-        name: '2022 Ford Mustang GT',
-    },
-    {
-        id: '3',
-        price: 1000000,
-        name: '1998 Nissan Silvia S15',
-    },
-    {
-        id: '4',
-        price: 750000,
-        name: '1995 Toyota Chaser',
-    },
-    {
-        id: '5',
-        price: 2000000,
-        name: '1989 Nissan Skyline R32 GTR',
-    },
-]
+
 
 const SellerListingScreen = ({ navigation }) => {
+    const sellerListings = useSelector((state) => state.listing.sellerListings)
+
+    const handleNavigation = (id) =>
+        navigation.navigate("Home", {
+            screen: "CarPostDetail",
+            params: {
+                carPostDetailID: id
+            }
+    });
+
     return (
         <SellerListingContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK}
@@ -46,18 +33,21 @@ const SellerListingScreen = ({ navigation }) => {
                 <ListingsHeader>Seller Listings</ListingsHeader>
             </ListingsHeaderContainer>
             <ListingsSection>
-                <FlatList
-                    data={carListings}
-                    renderItem={({ item }) => (
-                        <UserListingsCard price={item.price} name={item.name} isEdit={false}
-                        onPress={() => 
-                            navigation.navigate("Home", {
-                                screen: "CarPostDetail"
-                            })}
-                        />
-                    )}
-                    keyExtractor={(item) => item.id}
-                />
+            {
+                sellerListings ? (
+                    <FlatList
+                        data={sellerListings}
+                        renderItem={({ item }) => (
+                            <UserListingsCard price={item.price} name={item.car_model} image={item.car_photo}
+                            onPress={() => {handleNavigation(item._id)}}
+                            />
+                        )}
+                        keyExtractor={(item) => item.id}
+                    />
+                ) : (
+                    <SubText>There are no listings available right now.</SubText>
+                )
+            }
             </ListingsSection>
         </SellerListingContainer>
     )

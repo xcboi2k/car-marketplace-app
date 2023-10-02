@@ -33,28 +33,26 @@ import ButtonText from '../../shared/ButtonText/ButtonText'
 import ChangePhotoModal from '../../shared/ChangePhotoModal/ChangePhotoModal';
 
 import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
+import useFetchUserListings from '../../../hooks/useFetchUserListings';
 
 const ProfileViewScreen = () => {
     const navigation = useNavigation();
-
-    const [isModalVisible, setIsModalVisible] = useState(false);
-
-    const handleOpenChangePhotoModal = () => {
-        setIsModalVisible(true);
-    };
-
     const goToUserListings = () => {
         navigation.navigate("Profile", {
             screen: "UserListing",}); // Navigate to the profile view screen
     };
-
     const goToReviews = () => {
         navigation.navigate("Reviews", {
             screen: "ReviewsMain",}); // Navigate to the car details screen
     };
 
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const handleOpenChangePhotoModal = () => {
+        setIsModalVisible(true);
+    };
+
+    useFetchUserListings();
     const userInfo = useSelector(state => state.user);
-    console.log(userInfo);
 
     const user = {
         currentListings: 10,
