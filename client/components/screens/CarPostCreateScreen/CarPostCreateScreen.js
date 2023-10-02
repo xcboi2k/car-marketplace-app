@@ -204,7 +204,7 @@ const CarPostCreateScreen = ({ navigation }) => {
                 />
                 <ButtonUploadContainer>
                     <ButtonUploadText>Upload Photo:</ButtonUploadText>
-                    <ButtonUploadImage onPress={chooseImage} imageUri={image} iconName={ICON_NAMES.ADD}
+                    <ButtonUploadImage onPress={chooseImage} imageUri={image} iconName={ICON_NAMES.ADDPHOTO}
                     width="100px" height="100px" borderRadius="0px" />
                 </ButtonUploadContainer>
                 {

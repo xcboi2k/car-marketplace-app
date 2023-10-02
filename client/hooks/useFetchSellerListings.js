@@ -6,7 +6,7 @@ import { fetchSellerListingsAction } from '../redux/actions/listingActions';
 const useFetchSellerListings = (sellerID) => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchUserListingsAction(sellerID));
+        dispatch(fetchSellerListingsAction(sellerID));
     }, [dispatch]);
 }
 

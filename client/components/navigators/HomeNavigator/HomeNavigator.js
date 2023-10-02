@@ -4,7 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FeedScreen from '../../screens/FeedScreen/FeedScreen';
 import ProfileViewScreen from '../../screens/ProfileViewScreen/ProfileViewScreen';
 import CarPostDetailScreen from '../../screens/CarPostDetailScreen/CarPostDetailScreen';
-import CarPostEditScreen from '../../screens/CarPostEditScreen/CarPostEditScreen';
+import SellerListingScreen from '../../screens/SellerListingScreen/SellerListingScreen';
+import SellerProfileViewScreen from '../../screens/SellerProfileViewScreen/SellerProfileViewScreen';
 
 const HomeStack = createNativeStackNavigator();
 
@@ -29,8 +30,12 @@ const HomeNavigator = () => {
                 component={CarPostDetailScreen}
             />
             <HomeStack.Screen
-                name="CarPostEdit"
-                component={CarPostEditScreen}
+                name="SellerProfile"
+                component={SellerProfileViewScreen}
+            />
+            <HomeStack.Screen
+                name="SellerListing"
+                component={SellerListingScreen}
             />
         </HomeStack.Navigator>
     )

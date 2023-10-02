@@ -180,7 +180,7 @@ const userReducer = (state = initialState, action) => {
         case FETCHUSERS_SUCCESS:
             return{
                 ...state,
-                users: [...state.users, action.payload],
+                users: action.payload,
             };
         default:
             return state;

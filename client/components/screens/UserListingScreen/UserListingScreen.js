@@ -13,7 +13,7 @@ const UserListingScreen = ({ navigation }) => {
   const userListings = useSelector((state) => state.listing.userListings)
 
   const handleNavigation = (id) =>
-    navigation.navigate("Home", {
+    navigation.navigate("Profile", {
     screen: "CarPostEdit",
           params: {
               carPostEditID: id

@@ -61,7 +61,7 @@ const CarPostDetailScreen = ({ route, navigation }) => {
     }, [currentCarPost.userId])
 
     const goToSellerProfile = () => 
-        navigation.navigate("Profile", {
+        navigation.navigate("Home", {
             screen: "SellerProfile",
             params: {
                 sellerID: currentSeller._id

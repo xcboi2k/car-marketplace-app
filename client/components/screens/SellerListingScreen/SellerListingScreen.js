@@ -39,10 +39,10 @@ const SellerListingScreen = ({ navigation }) => {
                         data={sellerListings}
                         renderItem={({ item }) => (
                             <UserListingsCard price={item.price} name={item.car_model} image={item.car_photo}
-                            onPress={() => {handleNavigation(item._id)}}
+                            isEdit={false} onPress={() => {handleNavigation(item._id)}}
                             />
                         )}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item._id}
                     />
                 ) : (
                     <SubText>There are no listings available right now.</SubText>

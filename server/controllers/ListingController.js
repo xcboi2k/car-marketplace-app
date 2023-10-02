@@ -15,10 +15,10 @@ const addListing = async(req, res) => {
 }
 
 const updateListing = async(req, res) => {
-    const {car_model, location, price, production_year, transmission_type, classification_type, total_kms,
+    const {car_model, price, production_year, transmission_type, classification_type, total_kms,
         description, features, vehicle_information, car_photo, car_photo_ref, listingId} = req.body;
     try {
-        const listing = await Listing.updatelisting(car_model, location, price, production_year, transmission_type, classification_type, 
+        const listing = await Listing.updatelisting(car_model, price, production_year, transmission_type, classification_type, 
             total_kms, description, features, vehicle_information, car_photo, car_photo_ref, listingId)
         console.log(listing)
         res.status(200).json({listing, message: "Listing updated successfully."})

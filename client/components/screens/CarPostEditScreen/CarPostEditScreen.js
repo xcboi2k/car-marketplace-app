@@ -20,12 +20,13 @@ import { showLoader, hideLoader } from '../../../redux/actions/loaderActions';
 import { updateListingAction } from '../../../redux/actions/listingActions';
 
 import useUploadImage from '../../../hooks/useUploadImage';
+import useFetchListings from '../../../hooks/useFetchListings';
 
 import { storage } from '../../../firebase';
 
 const CarPostEditScreen = ({ route, navigation }) => {
     const { carPostEditID } = route.params;
-
+    console.log(carPostEditID);
     let photoId = uuid.v4();
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "listings/");
 
@@ -112,6 +113,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
             navigation.navigate("Profile", {
                 screen: "ProfileMain"
             })
+            useFetchListings()
         }
         catch(error){
             dispatch(hideLoader());
@@ -125,10 +127,30 @@ const CarPostEditScreen = ({ route, navigation }) => {
         onSubmit: handleFormikSubmit,
     });
 
+    const showDeletePrompt = () => {
+        Alert.alert("Deleting file", "Are you sure ?", [{
+            text: "Yes",
+            onPress: handleDelete,
+            style: "destructive"
+        }, {
+            text: "No",
+            onPress: () => { },
+            style: "cancel"
+        }]);
+
+    };
+
+    const handleDelete = () => {
+        dispatch(updateListingAction(carPostEditID, currentCarPost.car_photo_ref));
+        Alert.alert("Success", "Item Deleted.");
+        navigation.navigate("Home", { screen: "Feed" });
+    };
+
     const EditButtonGroup = () => (
         <>
             <ButtonText
                 text='Save' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
+                onPress={formik.handleSubmit}
             />
             <ButtonText
                 text='Delete' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
@@ -152,6 +174,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
                         placeholder: "Enter Car Model",
                         onChangeText: formik.handleChange("carModel"),
                         value: formik.values.carModel,
+                        editable: mode === "edit"
                     }}
                     customLabel="Car Model:"
                     labelTextSize = '16px'
@@ -162,6 +185,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
                             placeholder: "Enter Price",
                             onChangeText: formik.handleChange("price"),
                             value: formik.values.price,
+                            editable: mode === "edit"
                         }}
                         customLabel="Price:"
                         labelTextSize = '16px'
@@ -172,6 +196,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
                             placeholder: "Enter Year",
                             onChangeText: formik.handleChange("productionYear"),
                             value: formik.values.productionYear,
+                            editable: mode === "edit"
                         }}
                         customLabel="Year:"
                         labelTextSize = '16px'
@@ -183,6 +208,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
                         placeholder: "Enter Total Kilometers",
                         onChangeText: formik.handleChange("totalKMs"),
                         value: formik.values.totalKMs,
+                        editable: mode === "edit"
                     }}
                     customLabel="Total Kilometers:"
                     labelTextSize = '16px'
@@ -212,6 +238,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
                         placeholder: "Make a short description about the car",
                         onChangeText: formik.handleChange("description"),
                         value: formik.values.description,
+                        editable: mode === "edit"
                     }}
                     customLabel="Description:"
                     textSize = '16px'
@@ -221,6 +248,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
                         placeholder: "Features about the car",
                         onChangeText: formik.handleChange("features"),
                         value: formik.values.features,
+                        editable: mode === "edit"
                     }}
                     customLabel="Features:"
                     textSize = '16px'
@@ -230,6 +258,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
                         placeholder: "Enter necessary vehicle information",
                         onChangeText: formik.handleChange("vehicleInformation"),
                         value: formik.values.vehicleInformation,
+                        editable: mode === "edit"
                     }}
                     customLabel="Vehicle Information:"
                     textSize = '16px'

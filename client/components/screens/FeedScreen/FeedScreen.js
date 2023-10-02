@@ -49,7 +49,7 @@ const FeedScreen = () => {
     const getFilterIconName = (filter) => {
         switch (filter) {
             case 'all':
-                return ICON_NAMES.HOME; // Example icon name for the 'car' filter
+                return ICON_NAMES.ALL; // Example icon name for the 'car' filter
             case 'car':
                 return ICON_NAMES.CAR; // Example icon name for the 'car' filter
             case 'van':

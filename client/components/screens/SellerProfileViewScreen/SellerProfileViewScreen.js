@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
 import { AboutContainer, AboutText, AboutTitle, ButtonContainer, HandleName, HolderContainer, InformationItemContainer, InformationLabel, InformationSection, InformationText, InformationValue, ProfilePicture, ProfileSection, SellerProfileViewContainer, UserBio, UserInfoContainer, UserInformation, UserInformationColumn, UserName, UserNameWrapper } from './styles';
@@ -14,9 +14,9 @@ import useFetchSellerListings from '../../../hooks/useFetchSellerListings';
 
 const SellerProfileViewScreen = ({ route, navigation }) => {
     const { sellerID } = route.params;
-
+    console.log(sellerID)
     useFetchSellerListings(sellerID)
-    const users = useSelector((state) => state.users);
+    const users = useSelector((state) => state.user.users);
     const [currentSeller, setCurrentSeller] = useState(() => {
         return users.find(item => item._id === sellerID)
     });
@@ -28,7 +28,7 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
     }, [sellerID])
 
     const goToSellerListings = () => 
-        navigation.navigate("Profile", {
+        navigation.navigate("Home", {
             screen: "SellerListing",
             params: {
                 sellerListingsID: currentSeller._id

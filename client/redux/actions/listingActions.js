@@ -1,5 +1,7 @@
 import { Alert } from "react-native";
+import { deleteObject, ref } from 'firebase/storage';
 
+import { storage } from '../../firebase'
 import { hideLoader } from "./loaderActions";
 
 export const ADDLISTING_SUCCESS = 'ADDLISTING_SUCCESS';
@@ -109,19 +111,53 @@ export const updateListingAction = (updateListingData) => async (dispatch) => {
             }),
         })
         const data = await response.json();
-
-        dispatch(updateListingSuccess(data));
-        dispatch(hideLoader());
-        Alert.alert("SUCCESS", "Information updated successfully.");
+        
+        if(data){
+            try{
+                const response = await fetch(`http://192.168.100.24:4000/api/listing/fetchAllListings`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                const data = await response.json();
+        
+                dispatch(updateListingSuccess(data.listings));
+                dispatch(hideLoader());
+                Alert.alert("SUCCESS", "Information updated successfully.");
+            }catch(error){
+                dispatch({
+                    type: LISTING_FAILURE,
+                });
+                dispatch(hideLoader());
+                console.log('updateListingAction Error:', error.message);
+                console.log("FAILED", "Updating listing unsuccessful.");
+            }
+        }
     }catch(error){
         console.log('updateListingAction Error:', error.message);
         dispatch(hideLoader());
     }
 }
 
-export const deleteListingAction = (id) => async (dispatch) => {
+export const deleteListingAction = (id, fileReference) => async (dispatch) => {
     try{
+        const response = await fetch(`http://192.168.100.24:4000/api/listing/deleteListing/listingId=${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        const data = await response.json();
 
+        const fileRef = ref(storage, fileReference);
+        if (fileReference) {
+            await deleteObject(fileRef);
+        }
+
+        dispatch(deleteListingSuccess(data));
+        dispatch(hideLoader());
+        Alert.alert("SUCCESS", "Information added successfully.");
     }catch(error){
         console.log('deleteListingAction Error:', error.message);
         dispatch(hideLoader());
