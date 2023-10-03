@@ -51,8 +51,8 @@ const ProfileViewScreen = () => {
         setIsModalVisible(true);
     };
 
-    useFetchUserListings();
     const userInfo = useSelector(state => state.user);
+    useFetchUserListings(userInfo.userId);
 
     const user = {
         currentListings: 10,

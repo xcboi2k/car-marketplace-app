@@ -141,23 +141,27 @@ export const updateListingAction = (updateListingData) => async (dispatch) => {
 }
 
 export const deleteListingAction = (id, fileReference) => async (dispatch) => {
+    console.log('deleteListing', id)
     try{
-        const response = await fetch(`http://192.168.100.24:4000/api/listing/deleteListing/listingId=${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        const data = await response.json();
-
         const fileRef = ref(storage, fileReference);
         if (fileReference) {
             await deleteObject(fileRef);
         }
 
-        dispatch(deleteListingSuccess(data));
+        const response = await fetch(`http://192.168.100.24:4000/api/listing/deleteListing/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        console.log('Response Status:', response.status);
+        console.log('Response Text:', await response.text());
+        // const data = await response.json();
+
+        // dispatch(deleteListingSuccess(data));
         dispatch(hideLoader());
-        Alert.alert("SUCCESS", "Information added successfully.");
+        Alert.alert("SUCCESS", "Information deleted successfully.");
     }catch(error){
         console.log('deleteListingAction Error:', error.message);
         dispatch(hideLoader());

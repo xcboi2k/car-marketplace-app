@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ActivityIndicator, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Alert, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from "formik";
 import uuid from 'react-native-uuid';
@@ -17,16 +17,13 @@ import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import TextInput from '../../shared/TextInput/TextInput'
 
 import { showLoader, hideLoader } from '../../../redux/actions/loaderActions';
-import { updateListingAction } from '../../../redux/actions/listingActions';
+import { updateListingAction, deleteListingAction } from '../../../redux/actions/listingActions';
 
 import useUploadImage from '../../../hooks/useUploadImage';
-import useFetchListings from '../../../hooks/useFetchListings';
-
 import { storage } from '../../../firebase';
 
 const CarPostEditScreen = ({ route, navigation }) => {
     const { carPostEditID } = route.params;
-    console.log(carPostEditID);
     let photoId = uuid.v4();
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "listings/");
 
@@ -113,7 +110,6 @@ const CarPostEditScreen = ({ route, navigation }) => {
             navigation.navigate("Profile", {
                 screen: "ProfileMain"
             })
-            useFetchListings()
         }
         catch(error){
             dispatch(hideLoader());
@@ -126,6 +122,12 @@ const CarPostEditScreen = ({ route, navigation }) => {
         initialValues: initialValues,
         onSubmit: handleFormikSubmit,
     });
+
+    const handleDelete = () => {
+        dispatch(deleteListingAction(carPostEditID, currentCarPost.car_photo_ref));
+        Alert.alert("Success", "Item Deleted.");
+        navigation.navigate("Profile", { screen: "ProfileMain" });
+    };
 
     const showDeletePrompt = () => {
         Alert.alert("Deleting file", "Are you sure ?", [{
@@ -140,20 +142,11 @@ const CarPostEditScreen = ({ route, navigation }) => {
 
     };
 
-    const handleDelete = () => {
-        dispatch(updateListingAction(carPostEditID, currentCarPost.car_photo_ref));
-        Alert.alert("Success", "Item Deleted.");
-        navigation.navigate("Home", { screen: "Feed" });
-    };
-
     const EditButtonGroup = () => (
         <>
             <ButtonText
                 text='Save' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
                 onPress={formik.handleSubmit}
-            />
-            <ButtonText
-                text='Delete' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
             />
         </>
     );
@@ -292,10 +285,16 @@ const CarPostEditScreen = ({ route, navigation }) => {
                             {mode === "edit" ? (
                                 <EditButtonGroup />
                             ) : (
-                                <ButtonText
-                                    text='Edit' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
-                                    onPress={() => setMode("edit")}
-                                />
+                                <>
+                                    <ButtonText
+                                        text='Edit' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
+                                        onPress={() => setMode("edit")}
+                                    />
+                                    <ButtonText
+                                        text='Delete' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='16'
+                                        onPress={showDeletePrompt}
+                                    />
+                                </>
                             )}
                         </ButtonContainer>
                     )

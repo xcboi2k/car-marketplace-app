@@ -29,7 +29,7 @@ const updateListing = async(req, res) => {
 }
 
 const deleteListing = async(req, res) => {
-    const { listingId } = req.body;
+    const { listingId } = req.params;
     try {
         const listing = await Listing.deletelisting(listingId)
         console.log(listing)

@@ -103,12 +103,12 @@ listingSchema.statics.updatelisting = async function(car_model, price, productio
 
 listingSchema.statics.deletelisting = async function(listingId){
         try{
-            const listing = await this.findById(listingId);
+            const listing = await this.findByIdAndDelete(listingId);
             if (!listing) {
                 throw new Error('Listing not found');
             }
             
-            await listing.deleteOne();
+            console.log('Deleted listing:', listing);
 
         }
         catch(error){
