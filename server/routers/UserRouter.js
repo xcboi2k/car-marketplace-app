@@ -14,5 +14,5 @@ router.post('/otherinfo', otherInfoUser)
 router.post('/updatePhoto', updatePhotoUser)
 router.post('/updateInfo', updateInfoUser)
 
-router.post('/fetchAllUsers', fetchAllUsers)
+router.get('/fetchAllUsers', fetchAllUsers)
 module.exports = router

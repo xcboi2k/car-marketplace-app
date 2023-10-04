@@ -55,9 +55,9 @@ const TabNavigator = () => {
             ...TabBarProps(route),
         })}
     >
-        <Tab.Screen name="Home" component={HomeNavigator} />
+        <Tab.Screen name="Home" component={HomeNavigator}/>
         <Tab.Screen name="Add" component={CarPostCreateScreen} />
-        <Tab.Screen name="Profile" component={ProfileNavigator} />
+        <Tab.Screen name="Profile" component={ProfileNavigator}/>
         <Tab.Screen name="Settings" component={SettingsNavigator} />
     </Tab.Navigator>
     )

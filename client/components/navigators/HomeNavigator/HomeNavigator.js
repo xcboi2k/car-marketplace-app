@@ -20,10 +20,7 @@ const HomeNavigator = () => {
             <HomeStack.Screen
                 name="Feed"
                 component={FeedScreen}
-            />
-            <HomeStack.Screen
-                name="ProfileView"
-                component={ProfileViewScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <HomeStack.Screen
                 name="CarPostDetail"

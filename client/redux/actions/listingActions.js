@@ -140,15 +140,15 @@ export const updateListingAction = (updateListingData) => async (dispatch) => {
     }
 }
 
-export const deleteListingAction = (id, fileReference) => async (dispatch) => {
-    console.log('deleteListing', id)
+export const deleteListingAction = (listingId, fileReference) => async (dispatch) => {
+    console.log('deleteListing', listingId)
     try{
         const fileRef = ref(storage, fileReference);
         if (fileReference) {
             await deleteObject(fileRef);
         }
 
-        const response = await fetch(`http://192.168.100.24:4000/api/listing/deleteListing/${id}`, {
+        const response = await fetch(`http://192.168.100.24:4000/api/listing/deleteListing/${listingId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

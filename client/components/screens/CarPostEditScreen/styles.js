@@ -75,7 +75,7 @@ export const ButtonContainer = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: ${({ mode }) =>
-        mode === "edit" ? "space-between" : "flex-end"};
+        mode === "edit" ? "flex-end" : "space-between"};
     margin-bottom: 20px;
 `;
 

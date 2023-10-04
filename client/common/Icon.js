@@ -45,7 +45,6 @@ const Icon = ({ name, size = 40, color }) => {
     if (name === ICON_NAMES.TRUCK) return <TruckIcon color={color} size={size} />;
     if (name === ICON_NAMES.USER) return <UserIcon color={color} size={size} />;
     if (name === ICON_NAMES.VAN) return <VanIcon color={color} size={size} />;
-
 }
 
 export default Icon

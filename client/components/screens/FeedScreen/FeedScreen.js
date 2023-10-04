@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FlatList } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { 
     FeedContainer, 
@@ -18,20 +18,28 @@ import {
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader.js'
 import FeedCard from '../../shared/FeedCard/FeedCard';
 
-import ProfilePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
-import ItemPlaceholder from '../../../assets/images/item-pic-placeholder.png'
 import Icon from '../../../common/Icon';
 import { ICON_NAMES } from '../../../constants/constant';
 
-import useFetchListings from '../../../hooks/useFetchListings';
-import useFetchUsers from '../../../hooks/useFetchUsers';
+import { fetchAllListingsAction } from '../../../redux/actions/listingActions';
+import { fetchUsersAction } from '../../../redux/actions/userActions';
 
-const FeedScreen = () => {
-    useFetchListings();
-    useFetchUsers();
-    const listings = useSelector((state) => state.listing.listings);
-    const users = useSelector((state) => state.user.users);
-
+const FeedScreen = ({ route }) => {
+    //initial calls
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchAllListingsAction());
+        dispatch(fetchUsersAction());
+    }, [dispatch]);
+    
+    //for reloading after making changes (add listing)
+    const key = route.params?.key || 'defaultKey';
+    useEffect(() => {
+        dispatch(fetchAllListingsAction());
+        dispatch(fetchUsersAction());
+    }, [dispatch, key]);
+    
+    //handling navigation when feedcard is pressed
     const navigation = useNavigation();
     const handleNavigation = (id) =>
         navigation.navigate("Home", {
@@ -41,28 +49,34 @@ const FeedScreen = () => {
             }
     });
 
-    const filters = ['all','car', 'van', 'truck', 'motorcycle'];
+    //initialize listings that will be used in flatlist
+    const listings = useSelector((state) => state.listing.listings);
+
+    //initializing filters
+    const filters = ['All','Car', 'Van', 'Truck/Bus', 'Motorcycle'];
     const [activeFilter, setActiveFilter] = useState(filters[0]);
     const handleFilterPress = (filter) => {
         setActiveFilter(filter);
     };
     const getFilterIconName = (filter) => {
         switch (filter) {
-            case 'all':
-                return ICON_NAMES.ALL; // Example icon name for the 'car' filter
-            case 'car':
-                return ICON_NAMES.CAR; // Example icon name for the 'car' filter
-            case 'van':
-                return ICON_NAMES.VAN; // Example icon name for the 'car' filter
-            case 'truck':
-                return ICON_NAMES.TRUCK; // Example icon name for the 'truck' filter
-            case 'motorcycle':
-                return ICON_NAMES.MOTORCYCLE; // Example icon name for the 'motorcycle' filter
+            case 'All':
+                return ICON_NAMES.ALL;
+            case 'Car':
+                return ICON_NAMES.CAR;
+            case 'Van':
+                return ICON_NAMES.VAN;
+            case 'Truck/Bus':
+                return ICON_NAMES.TRUCK;
+            case 'Motorcycle':
+                return ICON_NAMES.MOTORCYCLE;
             default:
-                return ICON_NAMES.CAR; // Default icon name if no match is found
+                return ICON_NAMES.ALL;
         }
     };
+    const filteredListings = listings.filter(listing => listing.classification_type === activeFilter);
 
+    //render feedcard
     const renderCardItem = ({ item }) => (
         <FeedCard 
         onPress={() => {handleNavigation(item._id)}}
@@ -92,10 +106,9 @@ const FeedScreen = () => {
                 {
                     listings ? (
                         <FlatList
-                            data={listings}
+                            data={activeFilter === 'All' ? listings : filteredListings}
                             keyExtractor={(item, index) => item._id.toString()}
                             renderItem={renderCardItem}
-                            // Add additional FlatList props as needed
                         />
                     ) : (
                         <SubText>There are no listings available right now.</SubText>

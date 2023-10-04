@@ -22,6 +22,7 @@ const ProfileNavigator = () => {
             <ProfileStack.Screen
                 name="ProfileMain"
                 component={ProfileViewScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <ProfileStack.Screen
                 name="ProfileEdit"

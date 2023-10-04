@@ -85,8 +85,10 @@ const CarPostCreateScreen = ({ navigation }) => {
                 dispatch(addListingAction(enteredValues));
                 resetForm();
 
+                const newKey = Math.random().toString();
                 navigation.navigate("Home", {
-                    screen: "Feed"
+                    screen: "Feed",
+                    key: newKey
                 })
             }
         }

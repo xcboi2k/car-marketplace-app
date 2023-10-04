@@ -26,12 +26,12 @@ app.use((req, res, next) => {
 app.use('/api/user', UserRouter)
 app.use('/api/listing', ListingRouter)
 
-app.get('/api/listing/fetchAllListings', fetchAllListings);
-app.get('/api/listing/fetchUserListings', fetchUserListings);
-app.get('/api/listing/fetchSellerListings', fetchSellerListings);
-app.get('/api/user/fetchAllUsers', fetchAllUsers);
+// app.get('/api/listing/fetchAllListings', fetchAllListings);
+// app.get('/api/listing/fetchUserListings', fetchUserListings);
+// app.get('/api/listing/fetchSellerListings', fetchSellerListings);
+// app.get('/api/user/fetchAllUsers', fetchAllUsers);
 
-app.delete('/api/listing/deleteListing', deleteListing);
+// app.delete('/api/listing/deleteListing', deleteListing);
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)

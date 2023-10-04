@@ -104,11 +104,14 @@ const CarPostEditScreen = ({ route, navigation }) => {
                 carPhotoRef: updatedImgRef,
                 listingID: carPostEditID,
             };
-            console.log(enteredValues);
+
             dispatch(updateListingAction(enteredValues));
             resetForm();
+
+            const newKey = Math.random().toString();
             navigation.navigate("Profile", {
-                screen: "ProfileMain"
+                screen: "ProfileMain",
+                key: newKey
             })
         }
         catch(error){
@@ -126,7 +129,12 @@ const CarPostEditScreen = ({ route, navigation }) => {
     const handleDelete = () => {
         dispatch(deleteListingAction(carPostEditID, currentCarPost.car_photo_ref));
         Alert.alert("Success", "Item Deleted.");
-        navigation.navigate("Profile", { screen: "ProfileMain" });
+
+        const newKey = Math.random().toString();
+            navigation.navigate("Profile", {
+                screen: "ProfileMain",
+                key: newKey
+            });
     };
 
     const showDeletePrompt = () => {

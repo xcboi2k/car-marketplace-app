@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.post('/addListing', addListing )
 router.post('/updateListing', updateListing)
-router.post('/deleteListing', deleteListing)
-router.post('/fetchAllListings', fetchAllListings)
-router.post('/fetchUserListings', fetchUserListings)
-router.post('/fetchSellerListings', fetchSellerListings)
+router.delete('/deleteListing/:listingId', deleteListing)
+router.get('/fetchAllListings', fetchAllListings)
+router.get('/fetchUserListings', fetchUserListings)
+router.get('/fetchSellerListings', fetchSellerListings)
 
 module.exports = router
