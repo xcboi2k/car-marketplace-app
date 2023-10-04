@@ -1,5 +1,4 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
 import { 
@@ -12,33 +11,19 @@ import {
     ItemImage 
 } from './styles'
 
-const FeedCard = ({ sellerProfilePic, sellerName, sellerLocation, itemImage }) => {
+const FeedCard = ({ onPress, sellerProfilePic, sellerName, sellerLocation, itemImage }) => {
     const navigation = useNavigation();
 
-    const goToProfile = () => {
-        navigation.navigate("Profile", {
-            screen: "ProfileMain",}); // Navigate to the profile view screen
-    };
-
-    const goToCarDetails = () => {
-        navigation.navigate("Home", {
-            screen: "CarPostDetail",}); // Navigate to the car details screen
-    };
-
     return (
-        <CardContainer>
+        <CardContainer onPress={onPress}>
             <SellerContainer>
-                <SellerProfilePicture source={sellerProfilePic} />
+                <SellerProfilePicture source={{uri: sellerProfilePic}} />
                 <SellerInfo>
-                    <TouchableOpacity onPress={goToProfile}>
-                        <SellerName>{sellerName}</SellerName>
-                    </TouchableOpacity>
+                    <SellerName>{sellerName}</SellerName>
                     <SellerLocation>{sellerLocation}</SellerLocation>
                 </SellerInfo>
             </SellerContainer>
-            <TouchableOpacity onPress={goToCarDetails}>
-                <ItemImage source={itemImage} />
-            </TouchableOpacity>
+            <ItemImage source={{uri: itemImage}} />
         </CardContainer>
     )
 }

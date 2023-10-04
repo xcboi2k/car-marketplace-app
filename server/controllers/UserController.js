@@ -87,4 +87,15 @@ const updateInfoUser = async(req,res) => {
     }
 }
 
-module.exports = { signUpUser, loginUser, otherInfoUser, updatePhotoUser, updateInfoUser }
+const fetchAllUsers = async(req, res) => {
+    try {
+        const users = await User.find({})
+        console.log(users)
+        res.status(200).json({users, message: "Users fetched successfully."})
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({success: false, message: error.message});
+    }
+}
+
+module.exports = { signUpUser, loginUser, otherInfoUser, updatePhotoUser, updateInfoUser, fetchAllUsers }

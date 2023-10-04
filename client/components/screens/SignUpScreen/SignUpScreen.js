@@ -7,6 +7,7 @@ import uuid from 'react-native-uuid';
 import { ButtonContainer, FormContainer, HeaderHolder, HeaderText, HolderContainer, Logo, LogoHolder, SignInText, SignUpContainer, SubText } from './styles'
 
 import AppLogo from '../../../assets/images/logo.png'
+import { ICON_NAMES } from '../../../constants/constant';
 import ButtonText from '../../shared/ButtonText/ButtonText'
 import TextInput from '../../shared/TextInput/TextInput'
 import ButtonUploadImage from '../../shared/ButtonUploadImage/ButtonUploadImage';
@@ -69,7 +70,6 @@ const SignUpScreen = ({ navigation }) => {
             dispatch(hideLoader());
             Alert.alert("Error", "There was an error when submitting the information you entered.");
         }
-        
     };
 
     const formik = useFormik({
@@ -86,7 +86,7 @@ const SignUpScreen = ({ navigation }) => {
                 <HeaderText>Get Started</HeaderText>
             </HeaderHolder>
             <FormContainer>
-            <ButtonUploadImage onPress={chooseImage} imageUri={image}
+            <ButtonUploadImage onPress={chooseImage} imageUri={image} iconName={ICON_NAMES.USER}
                 width="100px" height="100px" borderRadius="50px" />
             <SubText>Upload Image</SubText>
             <HolderContainer>

@@ -4,8 +4,7 @@ const validator = require('validator')
 
 const Schema = mongoose.Schema
 
-const userSchema = new Schema(
-    {
+const userSchema = new Schema({
         firstName:{
             type: String,
             required: true
@@ -49,8 +48,7 @@ const userSchema = new Schema(
         about:{
             type: String,
         },
-    }
-)
+    })
 
 userSchema.statics.signup = async function(firstName, lastName, userName, email, password, profile_photo, profile_photo_ref) {
     try{

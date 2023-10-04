@@ -15,6 +15,7 @@ const MainApp = () => {
     const isSignedIn = useSelector(state => state.user.isSignedIn);
     console.log("Login State",isLoggedIn)
     console.log("Sign In State",isSignedIn)
+
     return (
         <NavigationContainer>
                 <Stack.Navigator
@@ -25,7 +26,7 @@ const MainApp = () => {
                     {isLoggedIn === true && isSignedIn === true ? (
                         <>
                             <Stack.Screen
-                                name="Home"
+                                name="AppScreens"
                                 component={TabNavigator}
                             />
                         </>

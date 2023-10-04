@@ -1,4 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { FlatList } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+import { useSelector, useDispatch } from 'react-redux';
+
 import { 
     FeedContainer, 
     Header, 
@@ -8,48 +12,77 @@ import {
     FilterButton, 
     FilterButtonText, 
     PostList, 
-    PostListContainer} from './styles'
+    PostListContainer,
+    SubText} from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader.js'
 import FeedCard from '../../shared/FeedCard/FeedCard';
 
-import ProfilePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
-import ItemPlaceholder from '../../../assets/images/item-pic-placeholder.png'
 import Icon from '../../../common/Icon';
 import { ICON_NAMES } from '../../../constants/constant';
 
-const FeedScreen = () => {
-    const filters = ['car', 'van', 'truck', 'motorcycle'];
-    const [activeFilter, setActiveFilter] = useState(filters[0]);
+import { fetchAllListingsAction } from '../../../redux/actions/listingActions';
+import { fetchUsersAction } from '../../../redux/actions/userActions';
 
+const FeedScreen = ({ route }) => {
+    //initial calls
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchAllListingsAction());
+        dispatch(fetchUsersAction());
+    }, [dispatch]);
+    
+    //for reloading after making changes (add listing)
+    const key = route.params?.key || 'defaultKey';
+    useEffect(() => {
+        dispatch(fetchAllListingsAction());
+        dispatch(fetchUsersAction());
+    }, [dispatch, key]);
+    
+    //handling navigation when feedcard is pressed
+    const navigation = useNavigation();
+    const handleNavigation = (id) =>
+        navigation.navigate("Home", {
+            screen: "CarPostDetail",
+            params: {
+                carPostDetailID: id
+            }
+    });
+
+    //initialize listings that will be used in flatlist
+    const listings = useSelector((state) => state.listing.listings);
+
+    //initializing filters
+    const filters = ['All','Car', 'Van', 'Truck/Bus', 'Motorcycle'];
+    const [activeFilter, setActiveFilter] = useState(filters[0]);
     const handleFilterPress = (filter) => {
         setActiveFilter(filter);
     };
-
-    const posts = [
-        { id: '1', title: 'Sakura Motors', description: 'Osaka, Japan', category: 'car' },
-        { id: '2', title: 'Gunma Racing', description: 'Gunma Prefecture, Japan', category: 'truck' },
-        { id: '3', title: 'TopRank', description: 'Tokyo, Japan', category: 'motorcycle' },
-    ];
-
-    const renderItem = ({ item }) => (
-        <FeedCard sellerProfilePic={ProfilePlaceholder} sellerName={item.title} sellerLocation={item.description} itemImage={ItemPlaceholder}/>
-    );
-
     const getFilterIconName = (filter) => {
         switch (filter) {
-            case 'car':
-                return ICON_NAMES.CAR; // Example icon name for the 'car' filter
-            case 'van':
-                return ICON_NAMES.VAN; // Example icon name for the 'car' filter
-            case 'truck':
-                return ICON_NAMES.TRUCK; // Example icon name for the 'truck' filter
-            case 'motorcycle':
-                return ICON_NAMES.MOTORCYCLE; // Example icon name for the 'motorcycle' filter
+            case 'All':
+                return ICON_NAMES.ALL;
+            case 'Car':
+                return ICON_NAMES.CAR;
+            case 'Van':
+                return ICON_NAMES.VAN;
+            case 'Truck/Bus':
+                return ICON_NAMES.TRUCK;
+            case 'Motorcycle':
+                return ICON_NAMES.MOTORCYCLE;
             default:
-                return ICON_NAMES.CAR; // Default icon name if no match is found
+                return ICON_NAMES.ALL;
         }
     };
+    const filteredListings = listings.filter(listing => listing.classification_type === activeFilter);
+
+    //render feedcard
+    const renderCardItem = ({ item }) => (
+        <FeedCard 
+        onPress={() => {handleNavigation(item._id)}}
+        sellerProfilePic={item.user_photo} sellerName={item.user_name} 
+        sellerLocation={item.location} itemImage={item.car_photo}/>
+    );
 
     return (
         <FeedContainer>
@@ -64,20 +97,24 @@ const FeedScreen = () => {
                 <FilterContainer>
                 {filters.map((filter) => (
                     <FilterButton key={filter} onPress={() => handleFilterPress(filter)} active={activeFilter === filter}>
-                        <Icon name={getFilterIconName(filter)} size={32} color={activeFilter === filter ? '#FFFFFF' : '#C2C7CB'} />
+                        <Icon name={getFilterIconName(filter)} size={28} color={activeFilter === filter ? '#FFFFFF' : '#C2C7CB'} />
                     </FilterButton>
                 ))}
                 </FilterContainer>
             </Header>
             <PostListContainer>
-                <PostList
-                    data={posts}
-                    keyExtractor={(item) => item.id}
-                    renderItem={renderItem}
-                    // Add additional FlatList props as needed
-                />
+                {
+                    listings ? (
+                        <FlatList
+                            data={activeFilter === 'All' ? listings : filteredListings}
+                            keyExtractor={(item, index) => item._id.toString()}
+                            renderItem={renderCardItem}
+                        />
+                    ) : (
+                        <SubText>There are no listings available right now.</SubText>
+                    )
+                }
             </PostListContainer>
-            
         </FeedContainer>
     )
 }

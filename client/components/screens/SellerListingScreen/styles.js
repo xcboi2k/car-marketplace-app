@@ -29,3 +29,9 @@ export const ListingsHeaderContainer = styled.View`
     margin-bottom: 3px;
     width: 90%;
 `;
+
+export const SubText = styled.Text`
+    color: black;
+    font-size: 13px;
+    text-align: center;
+`;

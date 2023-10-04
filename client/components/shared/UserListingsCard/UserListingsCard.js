@@ -6,10 +6,10 @@ import { ICON_NAMES } from '../../../constants/constant'
 
 import PicturePlaceholder from '../../../assets/images/sample.jpeg'
 
-const UserListingsCard = ({ imageSource, price, name, onPress, isEdit=true }) => {
+const UserListingsCard = ({ image, price, name, onPress, isEdit=true }) => {
     return (
         <CardContainer>
-            <CarImage source={PicturePlaceholder} />
+            <CarImage source={{uri: image}} />
             <CarDetails>
                 <CarInfo>
                 <CarPrice>PHP {price}</CarPrice>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { 
     ProfileViewContainer, 
@@ -33,50 +33,49 @@ import ButtonText from '../../shared/ButtonText/ButtonText'
 import ChangePhotoModal from '../../shared/ChangePhotoModal/ChangePhotoModal';
 
 import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
+import { fetchUserListingsAction } from '../../../redux/actions/listingActions';
 
-const ProfileViewScreen = () => {
+const ProfileViewScreen = ({ route }) => {
+    //navigation
     const navigation = useNavigation();
-
-    const [isModalVisible, setIsModalVisible] = useState(false);
-
-    const handleOpenChangePhotoModal = () => {
-        setIsModalVisible(true);
-    };
-
     const goToUserListings = () => {
         navigation.navigate("Profile", {
             screen: "UserListing",}); // Navigate to the profile view screen
     };
-
-    const goToSellerListings = () => {
-        navigation.navigate("Profile", {
-            screen: "SellerListing",}); // Navigate to the profile view screen
-    };
-
     const goToReviews = () => {
         navigation.navigate("Reviews", {
             screen: "ReviewsMain",}); // Navigate to the car details screen
     };
 
+    //handling changephoto modal
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const handleOpenChangePhotoModal = () => {
+        setIsModalVisible(true);
+    };
+
+    //initializing user state
     const userInfo = useSelector(state => state.user);
-    console.log(userInfo);
+    const dispatch = useDispatch();
+
+    //initializing user listing state
+    useEffect(() => {
+        dispatch(fetchUserListingsAction(userInfo.userId));
+    }, [dispatch]);
+
+    //for reloading after making changes (edit and delete listing)
+    const key = route.params?.key || 'defaultKey';
+    useEffect(() => {
+        dispatch(fetchUserListingsAction(userInfo.userId));
+    }, [dispatch, key]);
 
     const user = {
         currentListings: 10,
-        soldListings: 120,
-        rating: 4.5,
+        rating: 9.5,
     };
     
     return (
         <ProfileViewContainer>
-            <ScreenHeader 
-            leftIconName={ICON_NAMES.BACK} 
-            rightIconName={ICON_NAMES.SHARE}
-            onLeftPress={() => 
-                navigation.navigate("Home", {
-                    screen: "Feed"
-                })}
-            />
+            <ScreenHeader />
             <HolderContainer>
                 <ProfileSection>
                     <TouchableOpacity onPress={handleOpenChangePhotoModal}>
@@ -84,14 +83,10 @@ const ProfileViewScreen = () => {
                     </TouchableOpacity>
                     <InformationSection>
                     <InformationValue>{user.currentListings}</InformationValue>
-                    <InformationLabel>For Sale</InformationLabel>
+                    <InformationLabel>Listings</InformationLabel>
                     </InformationSection>
                     <InformationSection>
-                    <InformationValue>{user.soldListings}</InformationValue>
-                    <InformationLabel>Sold</InformationLabel>
-                    </InformationSection>
-                    <InformationSection>
-                    <InformationValue>{user.rating}</InformationValue>
+                    <InformationValue>{user.rating}/10</InformationValue>
                     <InformationLabel>Rating</InformationLabel>
                     </InformationSection>
                 </ProfileSection>
@@ -142,13 +137,10 @@ const ProfileViewScreen = () => {
                 </AboutContainer>
 
                 <ButtonContainer>
-                    <ButtonText text='Listings' buttonColor='#234791' textColor='#F4F6F8' 
+                    <ButtonText text='My Listings' buttonColor='#234791' textColor='#F4F6F8' 
                     width='45%' textSize='16' onPress={goToUserListings}/>
-                    <ButtonText text='Reviews' buttonColor='#234791' textColor='#F4F6F8' 
-                    width='45%' textSize='16'onPress={goToReviews}/>
-                </ButtonContainer>
-                <ButtonContainer>
-                    
+                    <ButtonText text='My Reviews' buttonColor='#234791' textColor='#F4F6F8' 
+                    width='45%' textSize='16' onPress={goToReviews}/>
                 </ButtonContainer>
             </HolderContainer>
             <ChangePhotoModal targetImage={userInfo.profile_photo ? { uri: userInfo.profile_photo } : null} 

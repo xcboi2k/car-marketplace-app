@@ -6,7 +6,7 @@ import ProfileEditScreen from '../../screens/ProfileEditScreen/ProfileEditScreen
 import ReviewsScreen from '../../screens/ReviewsScreen/ReviewsScreen';
 import ReviewCreateScreen from '../../screens/ReviewCreateScreen/ReviewCreateScreen';
 import UserListingScreen from '../../screens/UserListingScreen/UserListingScreen';
-import SellerListingScreen from '../../screens/SellerListingScreen/SellerListingScreen';
+import CarPostEditScreen from '../../screens/CarPostEditScreen/CarPostEditScreen';
 
 
 const ProfileStack = createNativeStackNavigator();
@@ -22,6 +22,7 @@ const ProfileNavigator = () => {
             <ProfileStack.Screen
                 name="ProfileMain"
                 component={ProfileViewScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <ProfileStack.Screen
                 name="ProfileEdit"
@@ -32,8 +33,8 @@ const ProfileNavigator = () => {
                 component={UserListingScreen}
             />
             <ProfileStack.Screen
-                name="SellerListing"
-                component={SellerListingScreen}
+                name="CarPostEdit"
+                component={CarPostEditScreen}
             />
             <ProfileStack.Screen
                 name="Reviews"

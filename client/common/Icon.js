@@ -2,6 +2,8 @@ import React from 'react'
 import { ICON_NAMES } from '../constants/constant'
 
 import AddIcon from '../assets/icons/AddIcon'
+import AddPhotoIcon from '../assets/icons/AddPhotoIcon'
+import AllIcon from '../assets/icons/AllIcon'
 import BackIcon from '../assets/icons/BackIcon'
 import CarIcon from '../assets/icons/CarIcon'
 import ChatIcon from '../assets/icons/ChatIcon'
@@ -23,6 +25,8 @@ import VanIcon from '../assets/icons/VanIcon'
 
 const Icon = ({ name, size = 40, color }) => {
     if (name === ICON_NAMES.ADD) return <AddIcon color={color} size={size} />;
+    if (name === ICON_NAMES.ADDPHOTO) return <AddPhotoIcon color={color} size={size} />;
+    if (name === ICON_NAMES.ALL) return <AllIcon color={color} size={size} />;
     if (name === ICON_NAMES.BACK) return <BackIcon color={color} size={size} />;
     if (name === ICON_NAMES.CAR) return <CarIcon color={color} size={size} />;
     if (name === ICON_NAMES.CHAT) return <ChatIcon color={color} size={size} />;
@@ -41,7 +45,6 @@ const Icon = ({ name, size = 40, color }) => {
     if (name === ICON_NAMES.TRUCK) return <TruckIcon color={color} size={size} />;
     if (name === ICON_NAMES.USER) return <UserIcon color={color} size={size} />;
     if (name === ICON_NAMES.VAN) return <VanIcon color={color} size={size} />;
-
 }
 
 export default Icon

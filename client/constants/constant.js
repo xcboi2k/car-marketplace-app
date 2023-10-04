@@ -1,5 +1,7 @@
 export const ICON_NAMES = {
     ADD: "AddIcon",
+    ADDPHOTO: "AddPhotoIcon",
+    ALL: "AllIcon",
     BACK: "BackIcon",
     CAR: "CarIcon",
     CHAT: "ChatIcon",

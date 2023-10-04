@@ -38,12 +38,11 @@ export const FilterContainer = styled.View`
 `;
 
 export const FilterButton = styled.TouchableOpacity`
-    width: 72px;
+    width: 60px;
     height: 48px;
-    border-radius: 24px;
     align-items: center;
     justify-content: center;
-    margin-right: 5px;
+    margin-right: 2px;
     background-color: ${({ active }) => (active ? '#234791' : '#F4F6F8')};
 `;
 
@@ -59,4 +58,10 @@ export const PostListContainer = styled.View`
 export const PostList = styled.FlatList`
     flex: 1;
     padding: 5px;
+`;
+
+export const SubText = styled.Text`
+    color: black;
+    font-size: 13px;
+    text-align: center;
 `;
