@@ -19,9 +19,7 @@ const ReviewCreateScreen = ({ navigation }) => {
         <ReviewsCreateContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK}
             onLeftPress={() => 
-                navigation.navigate("Profile", {
-                    screen: "Reviews"
-                })}
+                navigation.goBack()}
             />
             <HeaderHolder>
                 <HeaderText>Add Rating</HeaderText>
@@ -42,7 +40,6 @@ const ReviewCreateScreen = ({ navigation }) => {
                 />
                 <ButtonText text='Submit' buttonColor='#234791' textColor='#F4F6F8' width='60%' textSize='18'/>
             </FormContainer>
-            
         </ReviewsCreateContainer>
     )
 }

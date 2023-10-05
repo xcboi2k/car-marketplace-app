@@ -108,9 +108,7 @@ const CarPostCreateScreen = ({ navigation }) => {
         <CarPostCreateContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK}
             onLeftPress={() => 
-                navigation.navigate("Home", {
-                    screen: "Feed"
-                })}
+                navigation.goBack()}
             />
             <HeaderHolder>
                 <HeaderText>Create Listing</HeaderText>

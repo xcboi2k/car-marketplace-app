@@ -25,9 +25,7 @@ const SellerListingScreen = ({ navigation }) => {
         <SellerListingContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK}
             onLeftPress={() => 
-                navigation.navigate("Profile", {
-                    screen: "SellerListing"
-                })}
+                navigation.goBack()}
             />
             <ListingsHeaderContainer>
                 <ListingsHeader>Seller Listings</ListingsHeader>

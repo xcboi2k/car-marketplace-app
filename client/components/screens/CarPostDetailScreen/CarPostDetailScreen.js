@@ -75,9 +75,7 @@ const CarPostDetailScreen = ({ route, navigation }) => {
         <CarPostDetailContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}
             onLeftPress={() => 
-                navigation.navigate("Home", {
-                    screen: "Feed"
-                })}
+                navigation.goBack()}
             />
             <CarImageContainer>
                 <CarImage source={{uri: currentCarPost.car_photo}} />

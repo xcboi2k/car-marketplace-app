@@ -36,8 +36,8 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
     });
 
     const goToReviews = () => {
-        navigation.navigate("Reviews", {
-            screen: "ReviewsMain",}); // Navigate to the car details screen
+        navigation.navigate("Home", {
+            screen: "SellerReview",}); // Navigate to the car details screen
     };
 
     const user = {
@@ -52,9 +52,7 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
             leftIconName={ICON_NAMES.BACK} 
             rightIconName={ICON_NAMES.SHARE}
             onLeftPress={() => 
-                navigation.navigate("Home", {
-                    screen: "Feed"
-                })}
+                navigation.goBack()}
             />
             <HolderContainer>
                 <ProfileSection>

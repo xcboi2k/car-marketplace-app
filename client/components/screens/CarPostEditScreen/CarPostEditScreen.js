@@ -163,9 +163,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
         <CarPostEditContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK}
             onLeftPress={() => 
-                navigation.navigate("Profile", {
-                    screen: "UserListing"
-                })}/>
+                navigation.goBack()}/>
             <HeaderHolder>
                 <HeaderText>Edit Listing</HeaderText>
             </HeaderHolder>
