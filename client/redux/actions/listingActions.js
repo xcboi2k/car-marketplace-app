@@ -110,30 +110,11 @@ export const updateListingAction = (updateListingData) => async (dispatch) => {
                 listingId: updateListingData.listingID,
             }),
         })
-        const data = await response.json();
-        
-        if(data){
-            try{
-                const response = await fetch(`http://192.168.100.24:4000/api/listing/fetchAllListings`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
-                const data = await response.json();
-        
-                dispatch(updateListingSuccess(data.listings));
-                dispatch(hideLoader());
-                Alert.alert("SUCCESS", "Information updated successfully.");
-            }catch(error){
-                dispatch({
-                    type: LISTING_FAILURE,
-                });
-                dispatch(hideLoader());
-                console.log('updateListingAction Error:', error.message);
-                console.log("FAILED", "Updating listing unsuccessful.");
-            }
-        }
+        console.log('Response Status:', response.status);
+        console.log('Response Text:', await response.text());
+
+        dispatch(hideLoader());
+        Alert.alert("SUCCESS", "Information updated successfully.");
     }catch(error){
         console.log('updateListingAction Error:', error.message);
         dispatch(hideLoader());
@@ -157,9 +138,7 @@ export const deleteListingAction = (listingId, fileReference) => async (dispatch
 
         console.log('Response Status:', response.status);
         console.log('Response Text:', await response.text());
-        // const data = await response.json();
 
-        // dispatch(deleteListingSuccess(data));
         dispatch(hideLoader());
         Alert.alert("SUCCESS", "Information deleted successfully.");
     }catch(error){
