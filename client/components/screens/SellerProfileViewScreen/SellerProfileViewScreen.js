@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { AboutContainer, AboutText, AboutTitle, ButtonContainer, HandleName, HolderContainer, InformationItemContainer, InformationLabel, InformationSection, InformationText, InformationValue, ProfilePicture, ProfileSection, SellerProfileViewContainer, UserBio, UserInfoContainer, UserInformation, UserInformationColumn, UserName, UserNameWrapper } from './styles';
 
@@ -11,22 +11,33 @@ import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 
 import useFetchSellerListings from '../../../hooks/useFetchSellerListings';
+import useFetchSellerReviews from '../../../hooks/useFetchSellerReviews';
 
 const SellerProfileViewScreen = ({ route, navigation }) => {
+    //initializing route parameters needed
     const { sellerID } = route.params;
     console.log(sellerID)
-    useFetchSellerListings(sellerID)
     const users = useSelector((state) => state.user.users);
     const [currentSeller, setCurrentSeller] = useState(() => {
         return users.find(item => item._id === sellerID)
     });
-
     useEffect(() => {
         const targetSeller = users.find(item => item._id === sellerID);
         console.log('targetSeller', targetSeller);
         setCurrentSeller(targetSeller);
     }, [sellerID])
 
+    //initial calls
+    useFetchSellerListings(currentSeller._id)
+    useFetchSellerReviews(currentSeller._id)
+
+    //for reloading after making changes in reviews
+    const key = route.params?.key || 'defaultKey';
+    useEffect(() => {
+        useFetchSellerReviews(currentSeller._id)
+    }, [key]);
+
+    //navigation
     const goToSellerListings = () => 
         navigation.navigate("Home", {
             screen: "SellerListing",
@@ -34,16 +45,17 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
                 sellerListingsID: currentSeller._id
             }
     });
-
-    const goToReviews = () => {
+    const goToSellerReviews = () => 
         navigation.navigate("Home", {
-            screen: "SellerReview",}); // Navigate to the car details screen
-    };
+            screen: "SellerReview",
+            params: {
+                sellerReviewsID: currentSeller._id
+            }
+    });
 
     const user = {
         currentListings: 10,
-        soldListings: 120,
-        rating: 4.5,
+        rating: 9.5,
     };
 
     return (
@@ -62,11 +74,7 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
                         <InformationLabel>For Sale</InformationLabel>
                     </InformationSection>
                     <InformationSection>
-                        <InformationValue>{user.soldListings}</InformationValue>
-                        <InformationLabel>Sold</InformationLabel>
-                    </InformationSection>
-                    <InformationSection>
-                        <InformationValue>{user.rating}</InformationValue>
+                        <InformationValue>{user.rating}/10</InformationValue>
                         <InformationLabel>Rating</InformationLabel>
                     </InformationSection>
                 </ProfileSection>
@@ -113,7 +121,7 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
                     <ButtonText text='Seller Listings' buttonColor='#234791' textColor='#F4F6F8' 
                     width='45%' textSize='16' onPress={goToSellerListings}/>
                     <ButtonText text='Seller Reviews' buttonColor='#234791' textColor='#F4F6F8' 
-                    width='45%' textSize='16' onPress={goToReviews}/>
+                    width='45%' textSize='16' onPress={goToSellerReviews}/>
                 </ButtonContainer>
             </HolderContainer>
         </SellerProfileViewContainer>

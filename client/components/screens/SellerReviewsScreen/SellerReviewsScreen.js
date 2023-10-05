@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import { FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -7,6 +8,7 @@ import { ButtonContainer, OverallRating, RatingContainer, RatingSubText, ReviewC
 import { ICON_NAMES } from '../../../constants/constant';
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import ButtonText from '../../shared/ButtonText/ButtonText';
+import { fetchSellerReviewsAction } from '../../../redux/actions/reviewActions';
 
 const reviewsData = [
     { id: '1', name: 'Alice', text: 'Great product! Highly recommended.', rating: 5 },
@@ -18,9 +20,26 @@ const reviewsData = [
     // Add more reviews as needed
 ];
 
-const SellerReviewsScreen = ({navigation}) => {
+const SellerReviewsScreen = ({route, navigation}) => {
+    //initializing route parameters needed
+    const { sellerReviewsID } = route.params;
+    const users = useSelector((state) => state.user.users);
+    const [currentSeller, setCurrentSeller] = useState(() => {
+        return users.find(item => item._id === sellerReviewsID)
+    });
+
+    useEffect(() => {
+        const targetSeller = users.find(item => item._id === sellerReviewsID);
+        console.log('targetSeller', targetSeller);
+        setCurrentSeller(targetSeller);
+    }, [sellerReviewsID])
+
+    //fetch reviews
+    const sellerReviews = useSelector((state) => state.review.sellerReviews)
+
     const overallRating = 4.7;
 
+    //navigation
     const handleNavigation = (id) =>
     navigation.navigate("Home", {
     screen: "SellerReviewEdit",
@@ -29,19 +48,20 @@ const SellerReviewsScreen = ({navigation}) => {
             }
     });
 
+    //rendering objects
     const renderReviewItem = ({ item }) => (
         <ReviewContainer>
             <ReviewInfoContainer>
-                <ReviewName>{item.name}</ReviewName>
+                <ReviewName>{item.user_name}</ReviewName>
                 <ReviewRatingContainer>
                     <Ionicons name="md-star" size={13} color="#153A56" />
                     <ReviewRating>{item.rating}/10</ReviewRating>
                 </ReviewRatingContainer>
             </ReviewInfoContainer>
-            <ReviewText>{item.text}</ReviewText>
+            <ReviewText>{item.review_description}</ReviewText>
             <ButtonContainer>
                 <ButtonText text='Edit' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='18'
-                onPress={() => {handleNavigation(item.id)}}/>
+                onPress={() => {handleNavigation(item._id)}}/>
             </ButtonContainer>
         </ReviewContainer>
     );
@@ -67,7 +87,10 @@ const SellerReviewsScreen = ({navigation}) => {
                 navigation.goBack()}
             onRightPress={() => 
                 navigation.navigate("Home", {
-                    screen: "SellerReviewCreate"
+                    screen: "SellerReviewCreate",
+                    params: {
+                        sellerID: currentSeller._id
+                    }
                 })}
             />
             <RatingContainer>
@@ -77,11 +100,17 @@ const SellerReviewsScreen = ({navigation}) => {
                 <RatingSubText>Based on 6 reviews</RatingSubText>
             </RatingContainer>
             <ReviewListContainer>
-                <FlatList 
-                    data={reviewsData}
-                    renderItem={renderReviewItem}
-                    keyExtractor={item => item.id}
-                />
+                {
+                    sellerReviews ? (
+                        <FlatList 
+                        data={reviewsData}
+                        renderItem={renderReviewItem}
+                        keyExtractor={item => item.id}
+                        />
+                    ) : (
+                        <RatingSubText>There are no ratings available right now.</RatingSubText>
+                    )
+                }
             </ReviewListContainer>
         </ReviewsContainer>
     )
