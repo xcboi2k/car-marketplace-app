@@ -12,6 +12,7 @@ import ButtonText from '../../shared/ButtonText/ButtonText'
 
 import useFetchSellerListings from '../../../hooks/useFetchSellerListings';
 import useFetchSellerReviews from '../../../hooks/useFetchSellerReviews';
+import useCalculateProfileInfo from '../../../hooks/useCalculateProfileInfo';
 
 import { fetchSellerReviewsAction } from '../../../redux/actions/reviewActions';
 
@@ -56,10 +57,10 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
             }
     });
 
-    const user = {
-        currentListings: 10,
-        rating: 9.5,
-    };
+    //for fetching number of listings and average rating
+    const sellerListings = useSelector((state) => state.listing.sellerListings)
+    const sellerReviews = useSelector((state) => state.review.sellerReviews)
+    const { averageRating, numListings } = useCalculateProfileInfo(sellerListings, sellerReviews)
 
     return (
         <SellerProfileViewContainer>
@@ -73,11 +74,11 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
                 <ProfileSection>
                     <ProfilePicture source={currentSeller.profile_photo ? { uri: currentSeller.profile_photo } : PicturePlaceholder}/>
                     <InformationSection>
-                        <InformationValue>{user.currentListings}</InformationValue>
-                        <InformationLabel>For Sale</InformationLabel>
+                        <InformationValue>{numListings}</InformationValue>
+                        <InformationLabel>Listings</InformationLabel>
                     </InformationSection>
                     <InformationSection>
-                        <InformationValue>{user.rating}/10</InformationValue>
+                        <InformationValue>{averageRating}/10</InformationValue>
                         <InformationLabel>Rating</InformationLabel>
                     </InformationSection>
                 </ProfileSection>

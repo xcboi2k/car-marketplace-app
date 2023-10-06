@@ -40,7 +40,7 @@ const fetchUserReviews = async(req, res) => {
     const { userID } = req.query;
     console.log(userID)
     try {
-        const reviews = await Review.find({userId: userID})
+        const reviews = await Review.find({rated_sellerId: userID})
         console.log(reviews)
         res.status(200).json({reviews, message: "Reviews fetched successfully."})
     } catch (error) {

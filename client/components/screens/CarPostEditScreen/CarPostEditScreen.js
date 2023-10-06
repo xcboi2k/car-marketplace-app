@@ -23,42 +23,45 @@ import useUploadImage from '../../../hooks/useUploadImage';
 import { storage } from '../../../firebase';
 
 const CarPostEditScreen = ({ route, navigation }) => {
-    const { carPostEditID } = route.params;
+    //images
     let photoId = uuid.v4();
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "listings/");
 
+    //initializing redux
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.loader.isLoading);
 
+    //initializing listing to be edited
+    const { carPostEditID } = route.params;
     const userListings = useSelector((state) => state.listing.userListings);
     const [currentCarPost, setCurrentCarPost] = useState(() => {
         return userListings.find(item => item._id === carPostEditID);
     });
-
     useEffect(() => {
         const targetListing = userListings.find(item => item._id === carPostEditID);
         console.log('targetListing', targetListing);
         setCurrentCarPost(targetListing);
     }, [carPostEditID])
 
+    //initializing states
     const [mode, setMode] = useState("details");
-
     const transmissionItems = ['Manual', 'Automatic', 'Sequential', 'CVT'];
     const [selectedTransmission, setSelectedTransmission] = useState(transmissionItems[transmissionItems.indexOf(currentCarPost.transmission_type)]);
     const handleTransmissionItemPress = (transType) => {
         setSelectedTransmission(transType);
     };
-
     const classificationItems = ['Car', 'Van', 'Truck/Bus', 'Motorcycle'];
     const [selectedClassification, setSelectedClassification] = useState(classificationItems[classificationItems.indexOf(currentCarPost.classification_type)]);
     const handleClassificationItemPress = (classificationType) => {
         setSelectedClassification(classificationType);
     };
 
+    //converting integer to string
     let currentPrice = currentCarPost.price.toString();
     let currentYear = currentCarPost.production_year.toString()
     let currentKMs = currentCarPost.total_kms.toString()
 
+    //formik
     const initialValues = {
         carModel: currentCarPost.car_model,
         price: currentPrice,
@@ -126,6 +129,7 @@ const CarPostEditScreen = ({ route, navigation }) => {
         onSubmit: handleFormikSubmit,
     });
 
+    //handling delete
     const handleDelete = () => {
         dispatch(deleteListingAction(carPostEditID, currentCarPost.car_photo_ref));
         Alert.alert("Success", "Item Deleted.");
@@ -147,9 +151,9 @@ const CarPostEditScreen = ({ route, navigation }) => {
             onPress: () => { },
             style: "cancel"
         }]);
-
     };
 
+    //conditional rendering in buttons
     const EditButtonGroup = () => (
         <>
             <ButtonText
