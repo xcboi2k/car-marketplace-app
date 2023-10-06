@@ -76,6 +76,5 @@ export const ReviewText = styled.Text`
 export const ButtonContainer = styled.View`
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+    justify-content: flex-end;
 `;

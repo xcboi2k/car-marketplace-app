@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Alert, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from "formik";
@@ -66,7 +66,7 @@ const ReviewCreateScreen = ({ route, navigation }) => {
 
                 const newKey = Math.random().toString();
                 navigation.navigate("Home", {
-                    screen: "SellerProfile",
+                    screen: "Feed",
                     key: newKey
                 })
             }

@@ -13,6 +13,8 @@ import ButtonText from '../../shared/ButtonText/ButtonText'
 import useFetchSellerListings from '../../../hooks/useFetchSellerListings';
 import useFetchSellerReviews from '../../../hooks/useFetchSellerReviews';
 
+import { fetchSellerReviewsAction } from '../../../redux/actions/reviewActions';
+
 const SellerProfileViewScreen = ({ route, navigation }) => {
     //initializing route parameters needed
     const { sellerID } = route.params;
@@ -32,9 +34,10 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
     useFetchSellerReviews(currentSeller._id)
 
     //for reloading after making changes in reviews
+    const dispatch = useDispatch();
     const key = route.params?.key || 'defaultKey';
     useEffect(() => {
-        useFetchSellerReviews(currentSeller._id)
+        dispatch(fetchSellerReviewsAction(currentSeller._id))
     }, [key]);
 
     //navigation

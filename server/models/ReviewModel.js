@@ -71,3 +71,5 @@ reviewSchema.statics.deletereview = async function(reviewId){
         throw new Error('Failed to delete review');
     }
 }
+
+module.exports = mongoose.model('Review', reviewSchema)

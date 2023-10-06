@@ -3,22 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { ButtonContainer, OverallRating, RatingContainer, RatingSubText, ReviewContainer, ReviewInfoContainer, ReviewListContainer, ReviewName, ReviewRating, ReviewRatingContainer, ReviewsContainer, ReviewText, StarContainer } from './styles';
+import { ButtonContainer, OverallRating, RatingContainer, RatingSubText, RatingText, ReviewContainer, ReviewInfoContainer, ReviewListContainer, ReviewName, ReviewRating, ReviewRatingContainer, ReviewsContainer, ReviewText, StarContainer } from './styles';
 
 import { ICON_NAMES } from '../../../constants/constant';
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import ButtonText from '../../shared/ButtonText/ButtonText';
-import { fetchSellerReviewsAction } from '../../../redux/actions/reviewActions';
 
-const reviewsData = [
-    { id: '1', name: 'Alice', text: 'Great product! Highly recommended.', rating: 5 },
-    { id: '2', name: 'Bob', text: 'Excellent service and fast delivery.', rating: 4 },
-    { id: '3', name: 'Charlie', text: 'Very satisfied with the quality.', rating: 4.5 },
-    { id: '4', name: 'Alice', text: 'Great product! Highly recommended.', rating: 5 },
-    { id: '5', name: 'Bob', text: 'Excellent service and fast delivery.', rating: 4 },
-    { id: '6', name: 'Charlie', text: 'Very satisfied with the quality.', rating: 4.5 },
-    // Add more reviews as needed
-];
+import useCalculateReviews from '../../../hooks/useCalculateReviews';
 
 const SellerReviewsScreen = ({route, navigation}) => {
     //initializing route parameters needed
@@ -36,8 +27,7 @@ const SellerReviewsScreen = ({route, navigation}) => {
 
     //fetch reviews
     const sellerReviews = useSelector((state) => state.review.sellerReviews)
-
-    const overallRating = 4.7;
+    const { averageRating, numObjects } = useCalculateReviews(sellerReviews)
 
     //navigation
     const handleNavigation = (id) =>
@@ -60,7 +50,7 @@ const SellerReviewsScreen = ({route, navigation}) => {
             </ReviewInfoContainer>
             <ReviewText>{item.review_description}</ReviewText>
             <ButtonContainer>
-                <ButtonText text='Edit' buttonColor='#234791' textColor='#F4F6F8' width='45%' textSize='18'
+                <ButtonText text='Edit' buttonColor='#234791' textColor='#F4F6F8' width='25%' textSize='15'
                 onPress={() => {handleNavigation(item._id)}}/>
             </ButtonContainer>
         </ReviewContainer>
@@ -73,7 +63,7 @@ const SellerReviewsScreen = ({route, navigation}) => {
                 <Ionicons 
                 key={i} 
                 name={i <= rating ? 'md-star' : 'md-star-outline'} 
-                size={35} 
+                size={30} 
                 color="#FFD700" />
             );
             }
@@ -95,20 +85,20 @@ const SellerReviewsScreen = ({route, navigation}) => {
             />
             <RatingContainer>
                 <RatingText>Seller Overall Rating:</RatingText>
-                <OverallRating>{overallRating}</OverallRating>
-                <StarContainer>{renderStars(overallRating)}</StarContainer>
-                <RatingSubText>Based on 6 reviews</RatingSubText>
+                <OverallRating>{averageRating}</OverallRating>
+                <StarContainer>{renderStars(averageRating)}</StarContainer>
+                <RatingSubText>Based on {numObjects} {numObjects > 1 ? reviews : review}</RatingSubText>
             </RatingContainer>
             <ReviewListContainer>
                 {
                     sellerReviews ? (
                         <FlatList 
-                        data={reviewsData}
+                        data={sellerReviews}
                         renderItem={renderReviewItem}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item._id}
                         />
                     ) : (
-                        <RatingSubText>There are no ratings available right now.</RatingSubText>
+                        <RatingSubText>There are no reviews available right now.</RatingSubText>
                     )
                 }
             </ReviewListContainer>

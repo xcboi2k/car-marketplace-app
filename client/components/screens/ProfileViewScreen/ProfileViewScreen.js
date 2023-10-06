@@ -34,6 +34,7 @@ import ChangePhotoModal from '../../shared/ChangePhotoModal/ChangePhotoModal';
 
 import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
 import { fetchUserListingsAction } from '../../../redux/actions/listingActions';
+import { fetchUserReviewsAction } from '../../../redux/actions/reviewActions';
 
 const ProfileViewScreen = ({ route }) => {
     //navigation
@@ -60,6 +61,7 @@ const ProfileViewScreen = ({ route }) => {
     //initializing user listing state
     useEffect(() => {
         dispatch(fetchUserListingsAction(userInfo.userId));
+        dispatch(fetchUserReviewsAction(userInfo.userId))
     }, [dispatch]);
 
     //for reloading after making changes (edit and delete listing)
