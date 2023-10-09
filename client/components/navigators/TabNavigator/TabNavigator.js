@@ -15,7 +15,7 @@ import SettingsNavigator from '../SettingsNavigator/SettingsNavigator';
 
 const Tab = createBottomTabNavigator();
 
-const TabBarProps = (route) => ({
+const TabBarProps = (route, navigation) => ({
     tabBarIcon: ({ focused, color, size }) => {
         const iconColor = color,
             iconSize = 30;
@@ -46,13 +46,24 @@ const TabBarProps = (route) => ({
         paddingVertical: 20,
     },
     headerShown: false,
+    tabBarOnPress: ({ navigation, defaultHandler }) => {
+        const { name } = route;
+        const shouldReplaceStack = name === 'Home' || name === 'Profile'; // Adjust conditions as needed
+    
+        if (shouldReplaceStack) {
+          // Replace the stack with the desired screen
+            navigation.replace(name);
+        } else {
+          defaultHandler(); // Let the default handling occur for other tabs
+        }
+    },
 });
 
 const TabNavigator = () => {
     return (
         <Tab.Navigator
-        screenOptions={({ route }) => ({
-            ...TabBarProps(route),
+        screenOptions={({ route, navigation }) => ({
+            ...TabBarProps(route, navigation),
         })}
     >
         <Tab.Screen name="Home" component={HomeNavigator} initialParams={{ key: Math.random().toString() }} />

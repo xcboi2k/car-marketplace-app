@@ -53,7 +53,8 @@ const FeedScreen = ({ route }) => {
     //initialize listings that will be used in flatlist
     const listings = useSelector((state) => state.listing.listings);
 
-    //initializing filters
+    //initializing filters and search
+    const [searchTerm, setSearchTerm] = useState('');
     const filters = ['All','Car', 'Van', 'Truck/Bus', 'Motorcycle'];
     const [activeFilter, setActiveFilter] = useState(filters[0]);
     const handleFilterPress = (filter) => {
@@ -75,7 +76,12 @@ const FeedScreen = ({ route }) => {
                 return 'All';
         }
     };
-    const filteredListings = listings.filter(listing => listing.classification_type === activeFilter);
+    const filteredListings = listings.filter((listing) => {
+            const filterMatch = activeFilter === 'All' || listing.classification_type === activeFilter;
+            const searchTermMatch = searchTerm.length === 0 || listing.car_model.includes(searchTerm);
+        
+            return filterMatch && searchTermMatch;
+    });
 
     //render feedcard
     const renderCardItem = ({ item }) => (
@@ -91,7 +97,11 @@ const FeedScreen = ({ route }) => {
             <Header>
                 <SearchBarContainer>
                     <Icon name={ICON_NAMES.SEARCH} size={20} color='#C2C7CB' />
-                    <SearchBarInput placeholder="Search..." />
+                    <SearchBarInput 
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChangeText={(text) => setSearchTerm(text)}
+                    />
                 </SearchBarContainer>
             </Header>
             <Header>

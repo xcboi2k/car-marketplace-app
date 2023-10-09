@@ -5,6 +5,7 @@ import { hideLoader } from "./loaderActions";
 
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const OTHERINFO_SUCCESS = 'OTHERINFO_SUCCESS';
 export const OTHERINFO_FAILURE = 'OTHERINFO_FAILURE';
@@ -22,6 +23,10 @@ export const signupSuccess = (user) => ({
 export const loginSuccess = (user) => ({
     type: LOGIN_SUCCESS,
     payload: user,
+});
+
+export const logoutSuccess = () => ({
+    type: LOGOUT_SUCCESS,
 });
 
 export const loginFailure = (error) => ({
@@ -209,6 +214,23 @@ export const loginAction = (userData) => async (dispatch) => {
         dispatch(hideLoader());
         console.log(error)
         Alert.alert("FAILED", "Login unsuccessful.");
+    }
+};
+
+export const logoutAction = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: LOGOUT_SUCCESS,
+        });
+        Alert.alert("SUCCESS", "Log-out successfully.");
+    } catch (error) {
+        dispatch({
+            type: LOGIN_FAILURE,
+            payload: error,
+        });
+        dispatch(hideLoader());
+        console.log(error)
+        Alert.alert("FAILED", "Log-out unsuccessful.");
     }
 };
 

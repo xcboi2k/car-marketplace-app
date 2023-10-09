@@ -10,16 +10,13 @@ import Icon from '../../../common/Icon';
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 
-import useFetchSellerListings from '../../../hooks/useFetchSellerListings';
-import useFetchSellerReviews from '../../../hooks/useFetchSellerReviews';
-import useCalculateProfileInfo from '../../../hooks/useCalculateProfileInfo';
-
 import { fetchSellerReviewsAction } from '../../../redux/actions/reviewActions';
+import useCalculateProfileInfo from '../../../hooks/useCalculateProfileInfo';
+import { fetchSellerListingsAction } from '../../../redux/actions/listingActions';
 
 const SellerProfileViewScreen = ({ route, navigation }) => {
     //initializing route parameters needed
     const { sellerID } = route.params;
-    console.log(sellerID)
     const users = useSelector((state) => state.user.users);
     const [currentSeller, setCurrentSeller] = useState(() => {
         return users.find(item => item._id === sellerID)
@@ -30,16 +27,18 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
         setCurrentSeller(targetSeller);
     }, [sellerID])
 
-    //initial calls
-    useFetchSellerListings(currentSeller._id)
-    useFetchSellerReviews(currentSeller._id)
+    //initializing seller state
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchSellerListingsAction(currentSeller._id));
+        dispatch(fetchSellerReviewsAction(currentSeller._id))
+    }, [dispatch]);
 
     //for reloading after making changes in reviews
-    const dispatch = useDispatch();
     const key = route.params?.key || 'defaultKey';
     useEffect(() => {
         dispatch(fetchSellerReviewsAction(currentSeller._id))
-    }, [key]);
+    }, [dispatch, key]);
 
     //navigation
     const goToSellerListings = () => 
@@ -60,6 +59,8 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
     //for fetching number of listings and average rating
     const sellerListings = useSelector((state) => state.listing.sellerListings)
     const sellerReviews = useSelector((state) => state.review.sellerReviews)
+    console.log('seller listings', sellerListings)
+    console.log('seller reviews', sellerReviews)
     const { averageRating, numListings } = useCalculateProfileInfo(sellerListings, sellerReviews)
 
     return (

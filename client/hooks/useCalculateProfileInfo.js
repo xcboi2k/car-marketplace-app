@@ -5,7 +5,6 @@ const useCalculateProfileInfo = (listingObjects, reviewObjects) => {
     const [numListings, setNumListings] = useState(0);
 
     useEffect(() => {
-        setNumListings
         if (reviewObjects && reviewObjects.length > 0) {
             let totalRating = 0;
             reviewObjects.forEach((obj) => {
@@ -16,9 +15,13 @@ const useCalculateProfileInfo = (listingObjects, reviewObjects) => {
 
             const avgRating = totalRating / reviewObjects.length;
             setAverageRating(avgRating);
-            setNumListings(listingObjects.length);
         } else {
             setAverageRating(0);
+        }
+
+        if (listingObjects) {
+            setNumListings(listingObjects.length);
+        } else {
             setNumListings(0);
         }
     }, [listingObjects, reviewObjects]);

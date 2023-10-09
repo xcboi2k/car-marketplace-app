@@ -1,4 +1,4 @@
-import { SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGIN_FAILURE, OTHERINFO_SUCCESS, OTHERINFO_FAILURE, 
+import { SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS, LOGIN_FAILURE, OTHERINFO_SUCCESS, OTHERINFO_FAILURE, 
     UPDATEPHOTO_SUCCESS, UPDATEPHOTO_FAILURE, UPDATEINFO_SUCCESS, UPDATEINFO_FAILURE, FETCHUSERS_SUCCESS } from "../actions/userActions";
 
 const initialState = {
@@ -60,6 +60,28 @@ const userReducer = (state = initialState, action) => {
                 bio: action.payload.bio, 
                 about: action.payload.about,
                 error: null,
+            };
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                isLoggedIn: false,
+                isSignedIn: true,
+                userId: '',
+                firstName: '',
+                lastName: '',
+                userName: '',
+                email: '',
+                password: '',
+                profile_photo: '',
+                profile_photo_ref: '',
+                shop_name: "",
+                location: "",
+                phone_number: "",
+                bio: "",
+                about: "",
+
+                users: [],
+                error: action.payload,
             };
         case LOGIN_FAILURE:
             return {

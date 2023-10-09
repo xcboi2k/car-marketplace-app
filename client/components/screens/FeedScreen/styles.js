@@ -27,7 +27,7 @@ export const SearchBarContainer = styled.View`
 export const SearchBarInput = styled.TextInput`
     flex: 1;
     font-size: 16px;
-    color: #C2C7CB;
+    color: #234791;
     padding-left: 8px;
 `;
 

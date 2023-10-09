@@ -53,7 +53,9 @@ const ReviewsScreen = ({navigation}) => {
                 <RatingText>My Overall Rating:</RatingText>
                 <OverallRating>{averageRating}</OverallRating>
                 <StarContainer>{renderStars(averageRating)}</StarContainer>
-                <RatingSubText>Based on {numObjects} {numObjects > 1 ? reviews : review}</RatingSubText>
+                {numObjects > 1 ?  <RatingSubText>Based on {numObjects} reviews</RatingSubText>
+                : <RatingSubText>Based on {numObjects} review</RatingSubText>
+                }
             </RatingContainer>
             <ReviewListContainer>
                 {

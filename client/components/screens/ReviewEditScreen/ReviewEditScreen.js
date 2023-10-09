@@ -3,7 +3,7 @@ import { Alert, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from "formik";
 
-import { BodyText, FormContainer, HeaderHolder, HeaderText, ReviewsEditContainer, SubText } from './styles';
+import { BodyText, ButtonContainer, FormContainer, HeaderHolder, HeaderText, ReviewsEditContainer, SubText } from './styles';
 
 import { ICON_NAMES } from '../../../constants/constant'
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
