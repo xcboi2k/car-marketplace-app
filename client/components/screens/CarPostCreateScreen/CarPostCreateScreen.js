@@ -108,9 +108,7 @@ const CarPostCreateScreen = ({ navigation }) => {
         <CarPostCreateContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK}
             onLeftPress={() => 
-                navigation.navigate("Home", {
-                    screen: "Feed"
-                })}
+                navigation.goBack()}
             />
             <HeaderHolder>
                 <HeaderText>Create Listing</HeaderText>
@@ -206,7 +204,7 @@ const CarPostCreateScreen = ({ navigation }) => {
                 />
                 <ButtonUploadContainer>
                     <ButtonUploadText>Upload Photo:</ButtonUploadText>
-                    <ButtonUploadImage onPress={chooseImage} imageUri={image} iconName={ICON_NAMES.ADDPHOTO}
+                    <ButtonUploadImage onPress={chooseImage} imageUri={image} iconName={'create'}
                     width="100px" height="100px" borderRadius="0px" />
                 </ButtonUploadContainer>
                 {

@@ -34,6 +34,8 @@ import ChangePhotoModal from '../../shared/ChangePhotoModal/ChangePhotoModal';
 
 import PicturePlaceholder from '../../../assets/images/profile-pic-placeholder.png'
 import { fetchUserListingsAction } from '../../../redux/actions/listingActions';
+import { fetchUserReviewsAction } from '../../../redux/actions/reviewActions';
+import useCalculateProfileInfo from '../../../hooks/useCalculateProfileInfo';
 
 const ProfileViewScreen = ({ route }) => {
     //navigation
@@ -60,6 +62,7 @@ const ProfileViewScreen = ({ route }) => {
     //initializing user listing state
     useEffect(() => {
         dispatch(fetchUserListingsAction(userInfo.userId));
+        dispatch(fetchUserReviewsAction(userInfo.userId))
     }, [dispatch]);
 
     //for reloading after making changes (edit and delete listing)
@@ -68,10 +71,10 @@ const ProfileViewScreen = ({ route }) => {
         dispatch(fetchUserListingsAction(userInfo.userId));
     }, [dispatch, key]);
 
-    const user = {
-        currentListings: 10,
-        rating: 9.5,
-    };
+    //for fetching number of listings and average rating
+    const userListings = useSelector((state) => state.listing.userListings)
+    const userReviews = useSelector((state) => state.review.userReviews)
+    const { averageRating, numListings } = useCalculateProfileInfo(userListings, userReviews)
     
     return (
         <ProfileViewContainer>
@@ -82,11 +85,11 @@ const ProfileViewScreen = ({ route }) => {
                         <ProfilePicture source={userInfo.profile_photo ? { uri: userInfo.profile_photo } : PicturePlaceholder} />
                     </TouchableOpacity>
                     <InformationSection>
-                    <InformationValue>{user.currentListings}</InformationValue>
+                    <InformationValue>{numListings}</InformationValue>
                     <InformationLabel>Listings</InformationLabel>
                     </InformationSection>
                     <InformationSection>
-                    <InformationValue>{user.rating}/10</InformationValue>
+                    <InformationValue>{averageRating}/10</InformationValue>
                     <InformationLabel>Rating</InformationLabel>
                     </InformationSection>
                 </ProfileSection>

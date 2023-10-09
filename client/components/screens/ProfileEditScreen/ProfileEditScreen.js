@@ -83,9 +83,7 @@ const ProfileEditScreen = ({ navigation }) => {
         <ProfileEditContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK}
             onLeftPress={() => 
-                navigation.navigate("Profile", {
-                    screen: "ProfileMain"
-                })}
+                navigation.goBack()}
             />
             <HeaderHolder>
                 <HeaderText>Edit Profile</HeaderText>

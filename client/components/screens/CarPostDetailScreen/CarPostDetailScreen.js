@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { Text } from 'react-native';
 import { useSelector } from 'react-redux';
+import { NumericFormat } from 'react-number-format';
 
 import { 
     CarPostDetailContainer, 
@@ -70,14 +72,16 @@ const CarPostDetailScreen = ({ route, navigation }) => {
 
     const dateArray = currentCarPost.created_at.split(" ");
     const newDate = dateArray[1] + ' ' + dateArray[2] + ' ' + dateArray[3];
+    const formattedTotalKMs = new Intl.NumberFormat('en-US', {
+        style: 'decimal',
+        maximumFractionDigits: 2, // Maximum decimal places
+    }).format(currentCarPost.total_kms);
 
     return (
         <CarPostDetailContainer>
             <ScreenHeader leftIconName={ICON_NAMES.BACK} rightIconName={ICON_NAMES.SHARE}
             onLeftPress={() => 
-                navigation.navigate("Home", {
-                    screen: "Feed"
-                })}
+                navigation.goBack()}
             />
             <CarImageContainer>
                 <CarImage source={{uri: currentCarPost.car_photo}} />
@@ -94,7 +98,16 @@ const CarPostDetailScreen = ({ route, navigation }) => {
                 </CarInfoColumn>
             </CarDateLocationContainer>
 
-            <Price>Php {currentCarPost.price}</Price>
+            <Price>
+                <NumericFormat
+                value={currentCarPost.price}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={'₱'}
+                decimalScale={2}
+                renderText={value => <Text>{value}</Text>}
+                />
+            </Price>
             <Model>{currentCarPost.car_model}</Model>
 
             <YearTransmissionKmContainer>
@@ -107,8 +120,8 @@ const CarPostDetailScreen = ({ route, navigation }) => {
                     <TitleText>Transmission</TitleText>
                 </TransmissionContainer>
                 <KMContainer>
-                    <SetTitleText>{currentCarPost.total_kms}</SetTitleText>
-                    <TitleText>Km</TitleText>
+                    <SetTitleText>{formattedTotalKMs}</SetTitleText>
+                    <TitleText>KM/s</TitleText>
                 </KMContainer>
             </YearTransmissionKmContainer>
             </HolderContainer>

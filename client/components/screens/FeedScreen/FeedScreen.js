@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FlatList } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from 'react-redux';
+import { Feather } from '@expo/vector-icons';
 
 import { 
     FeedContainer, 
@@ -52,7 +53,8 @@ const FeedScreen = ({ route }) => {
     //initialize listings that will be used in flatlist
     const listings = useSelector((state) => state.listing.listings);
 
-    //initializing filters
+    //initializing filters and search
+    const [searchTerm, setSearchTerm] = useState('');
     const filters = ['All','Car', 'Van', 'Truck/Bus', 'Motorcycle'];
     const [activeFilter, setActiveFilter] = useState(filters[0]);
     const handleFilterPress = (filter) => {
@@ -61,7 +63,7 @@ const FeedScreen = ({ route }) => {
     const getFilterIconName = (filter) => {
         switch (filter) {
             case 'All':
-                return ICON_NAMES.ALL;
+                return 'All';
             case 'Car':
                 return ICON_NAMES.CAR;
             case 'Van':
@@ -71,10 +73,15 @@ const FeedScreen = ({ route }) => {
             case 'Motorcycle':
                 return ICON_NAMES.MOTORCYCLE;
             default:
-                return ICON_NAMES.ALL;
+                return 'All';
         }
     };
-    const filteredListings = listings.filter(listing => listing.classification_type === activeFilter);
+    const filteredListings = listings.filter((listing) => {
+            const filterMatch = activeFilter === 'All' || listing.classification_type === activeFilter;
+            const searchTermMatch = searchTerm.length === 0 || listing.car_model.includes(searchTerm);
+        
+            return filterMatch && searchTermMatch;
+    });
 
     //render feedcard
     const renderCardItem = ({ item }) => (
@@ -90,14 +97,25 @@ const FeedScreen = ({ route }) => {
             <Header>
                 <SearchBarContainer>
                     <Icon name={ICON_NAMES.SEARCH} size={20} color='#C2C7CB' />
-                    <SearchBarInput placeholder="Search..." />
+                    <SearchBarInput 
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChangeText={(text) => setSearchTerm(text)}
+                    />
                 </SearchBarContainer>
             </Header>
             <Header>
                 <FilterContainer>
                 {filters.map((filter) => (
                     <FilterButton key={filter} onPress={() => handleFilterPress(filter)} active={activeFilter === filter}>
-                        <Icon name={getFilterIconName(filter)} size={28} color={activeFilter === filter ? '#FFFFFF' : '#C2C7CB'} />
+                        {
+                            getFilterIconName(filter) !== 'All' ? (
+                                <Icon name={getFilterIconName(filter)} size={28} color={activeFilter === filter ? '#FFFFFF' : '#C2C7CB'} />
+                            ) : (
+                                <Feather name="menu" size={28} color={activeFilter === filter ? '#FFFFFF' : '#C2C7CB'} />
+                            )
+                        }
+                        
                     </FilterButton>
                 ))}
                 </FilterContainer>

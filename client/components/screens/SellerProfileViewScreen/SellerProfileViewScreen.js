@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { AboutContainer, AboutText, AboutTitle, ButtonContainer, HandleName, HolderContainer, InformationItemContainer, InformationLabel, InformationSection, InformationText, InformationValue, ProfilePicture, ProfileSection, SellerProfileViewContainer, UserBio, UserInfoContainer, UserInformation, UserInformationColumn, UserName, UserNameWrapper } from './styles';
 
@@ -10,23 +10,37 @@ import Icon from '../../../common/Icon';
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import ButtonText from '../../shared/ButtonText/ButtonText'
 
-import useFetchSellerListings from '../../../hooks/useFetchSellerListings';
+import { fetchSellerReviewsAction } from '../../../redux/actions/reviewActions';
+import useCalculateProfileInfo from '../../../hooks/useCalculateProfileInfo';
+import { fetchSellerListingsAction } from '../../../redux/actions/listingActions';
 
 const SellerProfileViewScreen = ({ route, navigation }) => {
+    //initializing route parameters needed
     const { sellerID } = route.params;
-    console.log(sellerID)
-    useFetchSellerListings(sellerID)
     const users = useSelector((state) => state.user.users);
     const [currentSeller, setCurrentSeller] = useState(() => {
         return users.find(item => item._id === sellerID)
     });
-
     useEffect(() => {
         const targetSeller = users.find(item => item._id === sellerID);
         console.log('targetSeller', targetSeller);
         setCurrentSeller(targetSeller);
     }, [sellerID])
 
+    //initializing seller state
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchSellerListingsAction(currentSeller._id));
+        dispatch(fetchSellerReviewsAction(currentSeller._id))
+    }, [dispatch]);
+
+    //for reloading after making changes in reviews
+    const key = route.params?.key || 'defaultKey';
+    useEffect(() => {
+        dispatch(fetchSellerReviewsAction(currentSeller._id))
+    }, [dispatch, key]);
+
+    //navigation
     const goToSellerListings = () => 
         navigation.navigate("Home", {
             screen: "SellerListing",
@@ -34,17 +48,20 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
                 sellerListingsID: currentSeller._id
             }
     });
+    const goToSellerReviews = () => 
+        navigation.navigate("Home", {
+            screen: "SellerReview",
+            params: {
+                sellerReviewsID: currentSeller._id
+            }
+    });
 
-    const goToReviews = () => {
-        navigation.navigate("Reviews", {
-            screen: "ReviewsMain",}); // Navigate to the car details screen
-    };
-
-    const user = {
-        currentListings: 10,
-        soldListings: 120,
-        rating: 4.5,
-    };
+    //for fetching number of listings and average rating
+    const sellerListings = useSelector((state) => state.listing.sellerListings)
+    const sellerReviews = useSelector((state) => state.review.sellerReviews)
+    console.log('seller listings', sellerListings)
+    console.log('seller reviews', sellerReviews)
+    const { averageRating, numListings } = useCalculateProfileInfo(sellerListings, sellerReviews)
 
     return (
         <SellerProfileViewContainer>
@@ -52,23 +69,17 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
             leftIconName={ICON_NAMES.BACK} 
             rightIconName={ICON_NAMES.SHARE}
             onLeftPress={() => 
-                navigation.navigate("Home", {
-                    screen: "Feed"
-                })}
+                navigation.goBack()}
             />
             <HolderContainer>
                 <ProfileSection>
                     <ProfilePicture source={currentSeller.profile_photo ? { uri: currentSeller.profile_photo } : PicturePlaceholder}/>
                     <InformationSection>
-                        <InformationValue>{user.currentListings}</InformationValue>
-                        <InformationLabel>For Sale</InformationLabel>
+                        <InformationValue>{numListings}</InformationValue>
+                        <InformationLabel>Listings</InformationLabel>
                     </InformationSection>
                     <InformationSection>
-                        <InformationValue>{user.soldListings}</InformationValue>
-                        <InformationLabel>Sold</InformationLabel>
-                    </InformationSection>
-                    <InformationSection>
-                        <InformationValue>{user.rating}</InformationValue>
+                        <InformationValue>{averageRating}/10</InformationValue>
                         <InformationLabel>Rating</InformationLabel>
                     </InformationSection>
                 </ProfileSection>
@@ -115,7 +126,7 @@ const SellerProfileViewScreen = ({ route, navigation }) => {
                     <ButtonText text='Seller Listings' buttonColor='#234791' textColor='#F4F6F8' 
                     width='45%' textSize='16' onPress={goToSellerListings}/>
                     <ButtonText text='Seller Reviews' buttonColor='#234791' textColor='#F4F6F8' 
-                    width='45%' textSize='16' onPress={goToReviews}/>
+                    width='45%' textSize='16' onPress={goToSellerReviews}/>
                 </ButtonContainer>
             </HolderContainer>
         </SellerProfileViewContainer>
