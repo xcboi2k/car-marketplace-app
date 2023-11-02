@@ -26,6 +26,7 @@ const ChatMenuScreen = ({ navigation }) => {
                 {
                     sampleMessages.map((item) => (
                         <ChatUserMessageCard 
+                            key={item.id}
                             userImage={PicturePlaceholder} 
                             userName={item.userName} 
                             userLastMessage={item.message} 
