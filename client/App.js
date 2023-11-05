@@ -20,32 +20,18 @@ import SellerListingScreen from './components/screens/SellerListingScreen/Seller
 import ReviewsScreen from './components/screens/ReviewsScreen/ReviewsScreen';
 import ReviewCreateScreen from './components/screens/ReviewCreateScreen/ReviewCreateScreen';
 import stores from './redux/stores';
+import ChatMenuScreen from './components/screens/ChatMenuScreen/ChatMenuScreen';
 
 
 export default function App() {
   return (
-    <Provider store={stores}>
-      <MainApp />
-    </Provider>
+    // <Provider store={stores}>
+    //   <MainApp />
+    // </Provider>
     
-    // <View style={styles.container}>
-    //   {/* <SignUpScreen /> */}
-    //   {/* <OtherInfoScreen /> */}
-    //   {/* <LoginScreen /> */}
-
-    //   {/* <FeedScreen /> */}
-    //   {/* <CarPostDetailScreen /> */}
-    //   {/* <CarPostCreateScreen /> */}
-    //   {/* <CarPostEditScreen /> */}
-
-    //   {/* <ProfileViewScreen /> */}
-    //   {/* <ProfileEditScreen /> */}
-    //   {/* <UserListingScreen /> */}
-    //   {/* <SellerListingScreen /> */}
-    //   {/* <ReviewsScreen /> */}
-    //   {/* <ReviewCreateScreen /> */}
-      
-    // </View>
+    <View style={styles.container}>
+      <ChatMenuScreen />
+    </View>
   );
 }
 
